@@ -55,7 +55,7 @@ make -f /home/$USER/ttHAnalysis/2016Jul19_dR03mvaTight/Makefile_3l_1tau -j 4
 ```
 This runs a python script (`sbatch_analyze_3l_1tau.py`) which submits the analysis jobs to SLURM and waits them to complete (approx 30 min per channel).
 All the results are stored in `outputDir` defined in `tthAnalyzeRun_3l_1tau.py`:
-<details> 
+<details>
   <summary>Directory structure</summary>
 ```text
 /home/$USER/ttHAnalysis/2016Jul19_dR03mvaTight/
