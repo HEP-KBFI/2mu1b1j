@@ -16,7 +16,7 @@ Only point 4 is in the scope of this documentation.
 
 ```bash
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-cd /home/YOUR_USERNAME/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/
+cd /home/`whoami`/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/
 cmsenv
 python tthAnalysis/HiggsToTauTau/test/NtupleList.py
 ```
