@@ -25,14 +25,16 @@ python tthAnalysis/HiggsToTauTau/test/NtupleList.py
 ## Installing latest version
 
 ```bash
-git clone git@github.com:HEP-KBFI/2mu1b1j.git $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau
+cd /tmp
+git clone https://github.com/HEP-KBFI/2mu1b1j
+cp -a 2mu1b1j $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau
 ```
 
 
 ## How I run the tests?
 
 ```bash
-cd /home/YOUR_USERNAME/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/tthAnalysis/HiggsToTauTau/
+cd /home/`whoami`/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/tthAnalysis/HiggsToTauTau/
 python test/tthAnalyzeRun_3l_1tau.py
 ```
 
