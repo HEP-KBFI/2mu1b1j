@@ -12,10 +12,7 @@ For that you need to know:
 Only point 4 is in the scope of this documentation.
 
 
-
-## How I run the tests?
-
-Before doing anything you have to set up your environment variables, use commands:
+## Before doing anything you have to set up your environment variables, use commands:
 
 ```bash
 source /cvmfs/cms.cern.ch/cmsset_default.sh
@@ -24,7 +21,18 @@ cmsenv
 python tthAnalysis/HiggsToTauTau/test/NtupleList.py
 ```
 
+
+## Installing latest version
+
 ```bash
+git clone git@github.com:HEP-KBFI/2mu1b1j.git $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau
+```
+
+
+## How I run the tests?
+
+```bash
+cd /home/YOUR_USERNAME/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/tthAnalysis/HiggsToTauTau/
 python test/tthAnalyzeRun_3l_1tau.py
 ```
 
@@ -32,7 +40,6 @@ Imports files:
 
 * python/tthAnalyzeSamples_3l_1tau.py
 * python/analyzeConfig_3l_1tau.py
-
 
 
 ## How to I specify the cuts?
@@ -54,7 +61,7 @@ modify their logic:
 ### python/tthAnalyzeSamples_3l_1tau.py
 
 * Exports a samples variable of type OrderedDict (basically a simple structure, a Hash (also known as a Map)).
-* May include samples from other "*Samples*.py" files in python directory. In which case triggers file be iteratively overwritten to match particular scenario.
+* May include samples from other "%Samples%.py" files in python directory. In which case triggers file be iteratively overwritten to match particular scenario.
 
 
 ### test/analyzeConfig_3l_1tau.py
@@ -80,7 +87,6 @@ type a:
 * one b–tagged jet pT > 30 GeV, |η| < 2.4 and no other jets with pT > 30 GeV, |η| < 2.4. Jet is tagged with CSV MVA algorithm and is required to have the b–tagging discriminator value greater that 0.783;
 * at least one jet pT > 30 GeV, |η| > 2.4;
 
-
 type b:
 
 * two opposite sign muons with pT > 25 GeV, |η| < 2.1 with tight muon identification and loose tracker isolation;
@@ -92,6 +98,6 @@ type b:
 
 # Steps to be done:
 
-1. Copy important files
+1. Copy important files (remember to rename all the files)
 2. Replace their contents so that type a or b cuts would be applied
 3. Draw histograms (mμμ) for data first (MC later?)
