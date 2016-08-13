@@ -1,7 +1,7 @@
 import os, logging, sys, getpass
 
-import tthAnalysis.HiggsToTauTau.tthAnalyzeSamples_3l_1tau
-from tthAnalysis.HiggsToTauTau.analyzeConfig_3l_1tau import analyzeConfig_3l_1tau
+import tthAnalysis.HiggsToTauTau.tthAnalyzeSamples_2mu1b1j
+from tthAnalysis.HiggsToTauTau.analyzeConfig_2mu1b1j import analyzeConfig_2mu1b1j
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 
 LUMI = 2301. # 1/pb
@@ -14,7 +14,7 @@ if __name__ == '__main__':
     level = logging.INFO,
     format = '%(asctime)s - %(levelname)s: %(message)s')
 
-  analysis = analyzeConfig_3l_1tau(
+  analysis = analyzeConfig_2mu1b1j(
     outputDir = os.path.join("/home", getpass.getuser(), "ttHAnalysis", version),
     executable_analyze = "analyze_2mu1b1j",
     ##lepton_selections = [ "Tight", "Fakeable" ],
