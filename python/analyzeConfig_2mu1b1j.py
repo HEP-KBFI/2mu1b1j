@@ -18,7 +18,8 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
   """
   def __init__(self, outputDir, executable_analyze, lepton_selections, hadTau_selection, central_or_shifts,
                max_files_per_job, use_lumi, lumi, debug, running_method, num_parallel_jobs,
-               histograms_to_fit, select_rle_output = False, executable_prep_dcard="prepareDatacard"):
+               histograms_to_fit, select_rle_output = False, executable_prep_dcard="prepareDatacard",
+               select_root_output = False):
     analyzeConfig.__init__(self, outputDir, executable_analyze, "2mu1b1j", central_or_shifts,
       max_files_per_job, use_lumi, lumi, debug, running_method, num_parallel_jobs,
       histograms_to_fit)
@@ -36,7 +37,8 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
       for lepton_selection in self.lepton_selections:
         key_dir = getKey(sample_name, lepton_selection)
         for dir_type in DIRLIST:
-          if not select_rle_output and dir_type == DKEY_RLES: continue
+          if (not select_rle_output and dir_type == DKEY_RLES) or \
+             (not select_root_output and dir_type == DKEY_ROOT): continue
           initDict(self.dirs, [ key_dir, dir_type ])
           self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
             "_".join([ lepton_selection ]), process_name)
@@ -45,9 +47,10 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
     self.cfgFile_analyze_original = os.path.join(self.workingDir, "analyze_2mu1b1j_cfg.py")
     self.histogramDir_prep_dcard = "2mu1b1j_Tight"
     self.select_rle_output = select_rle_output
+    self.select_root_output = select_root_output
 
   def createCfg_analyze(self, inputFiles, outputFile, sample_category, triggers, lepton_selection, hadTau_selection,
-                        is_mc, central_or_shift, lumi_scale, cfgFile_modified, rle_output_file):
+                        is_mc, central_or_shift, lumi_scale, cfgFile_modified, rle_output_file, root_output_file):
     """Create python configuration file for the analyze_2mu1b1j executable (analysis code)
 
     Args:
@@ -73,6 +76,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
     lines.append("process.analyze_2mu1b1j.central_or_shift = cms.string('%s')" % central_or_shift)
     lines.append("process.analyze_2mu1b1j.lumiScale = cms.double(%f)" % lumi_scale)
     lines.append("process.analyze_2mu1b1j.selEventsFileName_output = cms.string('%s')" % rle_output_file)
+    lines.append("process.analyze_2mu1b1j.selEventsTFileName = cms.string('%s')" % root_output_file)
     create_cfg(self.cfgFile_analyze_original, cfgFile_modified, lines)
 
   def addToMakefile_hadd_stage1(self, lines_makefile):
@@ -137,14 +141,23 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
       triggers = sample_info["triggers"]
 
       for lepton_selection in self.lepton_selections:
+
+        key_dir = getKey(sample_name, lepton_selection)
+
         for central_or_shift in self.central_or_shifts:
+
+          if self.select_root_output:
+            rootOutputSingleFile = os.path.join(self.dirs[key_dir][DKEY_ROOT], "out_%s_%s_%s_%s.root" % \
+              (self.channel, process_name, lepton_selection, central_or_shift))
+            self.rootOutputAux[rootOutputSingleFile] = os.path.join(self.dirs[key_dir][DKEY_ROOT], "out_%s_%s_%s_%s_*.root" % \
+              (self.channel, process_name, lepton_selection, central_or_shift))
+
           for jobId in range(len(self.inputFileIds[sample_name])):
             if central_or_shift != "central" and not is_mc:
               continue
 
             inputFiles = generate_input_list(self.inputFileIds[sample_name][jobId], secondary_files, primary_store, secondary_store, self.debug)
 
-            key_dir = getKey(sample_name, lepton_selection)
             key_file = getKey(sample_name, lepton_selection, central_or_shift, jobId)
 
             self.cfgFiles_analyze_modified[key_file] = os.path.join(self.dirs[key_dir][DKEY_CFGS], "analyze_%s_%s_%s_%s_%i_cfg.py" % \
@@ -155,11 +168,13 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
               (self.channel, process_name, lepton_selection, central_or_shift, jobId))
             self.rleOutputFiles[key_file] = os.path.join(self.dirs[key_dir][DKEY_RLES], "rle_%s_%s_%s_%s_%i.txt" % \
               (self.channel, process_name, lepton_selection, central_or_shift, jobId)) if self.select_rle_output else ""
+            self.rootOutputFiles[key_file] = os.path.join(self.dirs[key_dir][DKEY_ROOT], "out_%s_%s_%s_%s_%i.root" % \
+              (self.channel, process_name, lepton_selection, central_or_shift, jobId)) if self.select_root_output else ""
 
             self.createCfg_analyze(inputFiles, self.histogramFiles[key_file], sample_category, triggers,
               lepton_selection, self.hadTau_selection,
               is_mc, central_or_shift, lumi_scale, self.cfgFiles_analyze_modified[key_file],
-              self.rleOutputFiles[key_file])
+              self.rleOutputFiles[key_file], self.rootOutputFiles[key_file])
 
     if self.is_sbatch:
       logging.info("Creating script for submitting '%s' jobs to batch system" % self.executable_analyze)
@@ -174,6 +189,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
     self.addToMakefile_hadd_stage1(lines_makefile)
     self.addToMakefile_backgrounds_from_data(lines_makefile)
     self.addToMakefile_hadd_stage2(lines_makefile)
+    self.addToMakefile_outRoot(lines_makefile)
     self.addToMakefile_prep_dcard(lines_makefile)
     self.addToMakefile_clean(lines_makefile)
     self.createMakefile(lines_makefile)

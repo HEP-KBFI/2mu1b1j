@@ -26,7 +26,9 @@ python tthAnalysis/HiggsToTauTau/test/NtupleList.py
 
 ```bash
 cd /tmp
+rm -rf /tmp/2mu1b1j
 git clone https://github.com/HEP-KBFI/2mu1b1j
+rm -rf $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau
 cp -a 2mu1b1j $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau
 cd $CMSSW_BASE/src
 scram b -j8
