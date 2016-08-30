@@ -219,4 +219,3 @@ samples["/SingleElectron/Run2015D-16Dec2015-v1/MINIAOD"] = OD([
     ]
   )
 ])
-       
