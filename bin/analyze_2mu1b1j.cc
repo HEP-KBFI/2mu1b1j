@@ -487,16 +487,9 @@ int main(int argc, char* argv[])
   inputTree->SetBranchAddress(LUMI_KEY, &lumi);
   EVT_TYPE event;
   inputTree->SetBranchAddress(EVT_KEY, &event);
-  GENHIGGSDECAYMODE_TYPE genHiggsDecayMode;
-  if ( isSignal ) {
-    inputTree->SetBranchAddress(GENHIGGSDECAYMODE_KEY, &genHiggsDecayMode);
-  }
 
-  hltPaths_setBranchAddresses(inputTree, triggers_1e);
-  hltPaths_setBranchAddresses(inputTree, triggers_2e);
   hltPaths_setBranchAddresses(inputTree, triggers_1mu);
   hltPaths_setBranchAddresses(inputTree, triggers_2mu);
-  hltPaths_setBranchAddresses(inputTree, triggers_1e1mu);
 
   PUWEIGHT_TYPE pileupWeight;
   if ( isMC ) {
@@ -519,23 +512,6 @@ int main(int argc, char* argv[])
   RecoMuonCollectionSelectorTight tightMuonSelector(-1, run_lumi_eventSelector != 0);
   tightMuonSelector.disable_tightCharge_cut();
 
-  RecoElectronReader* electronReader = new RecoElectronReader("nselLeptons", "selLeptons");
-  electronReader->setBranchAddresses(inputTree);
-  RecoElectronCollectionGenMatcher electronGenMatcher;
-  RecoElectronCollectionCleaner electronCleaner(0.3);
-  RecoElectronCollectionSelectorLoose preselElectronSelector;
-  RecoElectronCollectionSelectorFakeable fakeableElectronSelector;
-  RecoElectronCollectionSelectorTight tightElectronSelector(-1, run_lumi_eventSelector != 0);
-  tightElectronSelector.disable_tightCharge_cut();
-
-  RecoHadTauReader* hadTauReader = new RecoHadTauReader("nTauGood", "TauGood");
-  hadTauReader->setHadTauPt_central_or_shift(hadTauPt_option);
-  hadTauReader->setBranchAddresses(inputTree);
-  RecoHadTauCollectionGenMatcher hadTauGenMatcher;
-  RecoHadTauCollectionCleaner hadTauCleaner(0.3);
-  RecoHadTauCollectionSelectorTight hadTauSelector;
-  hadTauSelector.set(hadTauSelection_string);
-
   RecoJetReader* jetReader = new RecoJetReader("nJet", "Jet");
   jetReader->setJetPt_central_or_shift(jetPt_option);
   jetReader->setBranchName_BtagWeight(jet_btagWeight_branch);
@@ -547,56 +523,22 @@ int main(int argc, char* argv[])
   RecoJetCollectionSelectorBtagMedium jetSelectorBtagMedium;
 
   GenLeptonReader* genLeptonReader = 0;
-  GenHadTauReader* genHadTauReader = 0;
   GenJetReader* genJetReader = 0;
   if ( isMC ) {
     genLeptonReader = new GenLeptonReader("nGenLep", "GenLep");
     genLeptonReader->setBranchAddresses(inputTree);
-    genHadTauReader = new GenHadTauReader("nGenHadTaus", "GenHadTaus");
-    genHadTauReader->setBranchAddresses(inputTree);
     genJetReader = new GenJetReader("nGenJet", "GenJet");
     genJetReader->setBranchAddresses(inputTree);
   }
 
-//--- initialize BDTs used to discriminate ttH vs. ttV and ttH vs. ttbar
-//    in 3l category of ttH multilepton analysis
-  std::string mvaFileName_3l_ttV = "tthAnalysis/HiggsToTauTau/data/3l_ttV_BDTG.weights.xml";
-  std::vector<std::string> mvaInputVariables_3l_ttV;
-  mvaInputVariables_3l_ttV.push_back("max(abs(LepGood_eta[iF_Recl[0]]),abs(LepGood_eta[iF_Recl[1]]))");
-  mvaInputVariables_3l_ttV.push_back("MT_met_lep1");
-  mvaInputVariables_3l_ttV.push_back("nJet25_Recl");
-  mvaInputVariables_3l_ttV.push_back("mindr_lep1_jet");
-  mvaInputVariables_3l_ttV.push_back("mindr_lep2_jet");
-  mvaInputVariables_3l_ttV.push_back("LepGood_conePt[iF_Recl[0]]");
-  mvaInputVariables_3l_ttV.push_back("LepGood_conePt[iF_Recl[2]]");
-  TMVAInterface mva_3l_ttV(mvaFileName_3l_ttV, mvaInputVariables_3l_ttV, { "iF_Recl[0]", "iF_Recl[1]", "iF_Recl[2]" });
-
-  std::string mvaFileName_3l_ttbar = "tthAnalysis/HiggsToTauTau/data/3l_ttbar_BDTG.weights.xml";
-  std::vector<std::string> mvaInputVariables_3l_ttbar;
-  mvaInputVariables_3l_ttbar.push_back("max(abs(LepGood_eta[iF_Recl[0]]),abs(LepGood_eta[iF_Recl[1]]))");
-  mvaInputVariables_3l_ttbar.push_back("MT_met_lep1");
-  mvaInputVariables_3l_ttbar.push_back("nJet25_Recl");
-  mvaInputVariables_3l_ttbar.push_back("mhtJet25_Recl");
-  mvaInputVariables_3l_ttbar.push_back("avg_dr_jet");
-  mvaInputVariables_3l_ttbar.push_back("mindr_lep1_jet");
-  mvaInputVariables_3l_ttbar.push_back("mindr_lep2_jet");
-  TMVAInterface mva_3l_ttbar(mvaFileName_3l_ttbar, mvaInputVariables_3l_ttbar, { "iF_Recl[0]", "iF_Recl[1]", "iF_Recl[2]" });
-
-  std::map<std::string, double> mvaInputs;
 
 //--- open output file containing run:lumi:event numbers of events passing final event selection criteria
   std::ostream* selEventsFile = new std::ofstream(selEventsFileName_output.data(), std::ios::out);
 
 //--- declare histograms
-  ElectronHistManager preselElectronHistManager(makeHistManager_cfg(process_string,
-    Form("2mu1b1j_%s/presel/electrons", leptonSelection_string.data()), central_or_shift));
-  preselElectronHistManager.bookHistograms(fs);
   MuonHistManager preselMuonHistManager(makeHistManager_cfg(process_string,
     Form("2mu1b1j_%s/presel/muons", leptonSelection_string.data()), central_or_shift));
   preselMuonHistManager.bookHistograms(fs);
-  HadTauHistManager preselHadTauHistManager(makeHistManager_cfg(process_string,
-    Form("2mu1b1j_%s/presel/hadTaus", leptonSelection_string.data()), central_or_shift));
-  preselHadTauHistManager.bookHistograms(fs);
   JetHistManager preselJetHistManager(makeHistManager_cfg(process_string,
     Form("2mu1b1j_%s/presel/jets", leptonSelection_string.data()), central_or_shift));
   preselJetHistManager.bookHistograms(fs);
@@ -613,17 +555,9 @@ int main(int argc, char* argv[])
     Form("2mu1b1j_%s/presel/evt", leptonSelection_string.data()), central_or_shift));
   preselEvtHistManager.bookHistograms(fs);
 
-  ElectronHistManager selElectronHistManager(makeHistManager_cfg(process_string,
-    Form("2mu1b1j_%s/sel/electrons", leptonSelection_string.data()), central_or_shift));
-  selElectronHistManager.bookHistograms(fs);
-
   MuonHistManager selMuonHistManager(makeHistManager_cfg(process_string,
     Form("2mu1b1j_%s/sel/muons", leptonSelection_string.data()), central_or_shift));
   selMuonHistManager.bookHistograms(fs);
-
-  HadTauHistManager selHadTauHistManager(makeHistManager_cfg(process_string,
-    Form("2mu1b1j_%s/sel/hadTaus", leptonSelection_string.data()), central_or_shift));
-  selHadTauHistManager.bookHistograms(fs);
 
   JetHistManager selJetHistManager(makeHistManager_cfg(process_string,
     Form("2mu1b1j_%s/sel/jets", leptonSelection_string.data()), central_or_shift));
@@ -655,24 +589,6 @@ int main(int argc, char* argv[])
   EvtHistManager_2mu1b1j selEvtHistManager(makeHistManager_cfg(process_string,
     Form("2mu1b1j_%s/sel/evt", leptonSelection_string.data()), central_or_shift));
   selEvtHistManager.bookHistograms(fs);
-  std::map<std::string, EvtHistManager_2mu1b1j*> selEvtHistManager_decayMode; // key = decay mode
-  const std::map<std::string, GENHIGGSDECAYMODE_TYPE> decayMode_idString = {
-    { "ttH_hww", static_cast<GENHIGGSDECAYMODE_TYPE>(24) },
-    { "ttH_hzz", static_cast<GENHIGGSDECAYMODE_TYPE>(23) },
-    { "ttH_htt", static_cast<GENHIGGSDECAYMODE_TYPE>(15) }
-  };
-  vstring decayModes_evt;
-  decayModes_evt.reserve(decayMode_idString.size());
-  boost::copy(decayMode_idString | boost::adaptors::map_keys, std::back_inserter(decayModes_evt));
-  if ( isSignal ) {
-    for ( vstring::const_iterator decayMode = decayModes_evt.begin();
-          decayMode != decayModes_evt.end(); ++decayMode) {
-      EvtHistManager_2mu1b1j* selEvtHistManager_ptr = new EvtHistManager_2mu1b1j(makeHistManager_cfg(decayMode->data(),
-        Form("2mu1b1j_%s/sel/evt", leptonSelection_string.data()), central_or_shift));
-      selEvtHistManager_ptr->bookHistograms(fs);
-      selEvtHistManager_decayMode[*decayMode] = selEvtHistManager_ptr;
-    }
-  }
 
   int numEntries = inputTree->GetEntries();
   int analyzedEntries = 0;
@@ -690,26 +606,17 @@ int main(int argc, char* argv[])
     if ( run_lumi_eventSelector && !(*run_lumi_eventSelector)(run, lumi, event) ) continue;
     cutFlowTable.update("run:ls:event selection");
 
-    bool isTriggered_1e = hltPaths_isTriggered(triggers_1e);
-    bool isTriggered_2e = hltPaths_isTriggered(triggers_2e);
     bool isTriggered_1mu = hltPaths_isTriggered(triggers_1mu);
     bool isTriggered_2mu = hltPaths_isTriggered(triggers_2mu);
-    bool isTriggered_1e1mu = hltPaths_isTriggered(triggers_1e1mu);
 
-    bool selTrigger_1e = use_triggers_1e && isTriggered_1e;
-    bool selTrigger_2e = use_triggers_2e && isTriggered_2e;
     bool selTrigger_1mu = use_triggers_1mu && isTriggered_1mu;
     bool selTrigger_2mu = use_triggers_2mu && isTriggered_2mu;
-    bool selTrigger_1e1mu = use_triggers_1e1mu && isTriggered_1e1mu;
-    if ( !(selTrigger_1e || selTrigger_2e || selTrigger_1mu || selTrigger_2mu || selTrigger_1e1mu) ) {
+    if ( !(selTrigger_1mu || selTrigger_2mu) ) {
       if ( run_lumi_eventSelector ) {
 	std::cout << "event FAILS trigger selection." << std::endl;
-	std::cout << " (selTrigger_1e = " << selTrigger_1e
-		  << ", selTrigger_2e = " << selTrigger_2e
-		  << ", selTrigger_1mu = " << selTrigger_1mu
+	std::cout << ", selTrigger_1mu = " << selTrigger_1mu
 		  << ", selTrigger_2mu = " << selTrigger_2mu
-		  << ", selTrigger_1e1mu = " << selTrigger_1e1mu << ")" << std::endl;
-      }
+		  }
       continue;
     }
 
@@ -717,27 +624,8 @@ int main(int argc, char* argv[])
 //    the ranking of the triggers is as follows: 2mu, 1e1mu, 2e, 1mu, 1e
 // CV: this logic is necessary to avoid that the same event is selected multiple times when processing different primary datasets
     if ( !isMC ) {
-      if ( selTrigger_1e && (isTriggered_2e || isTriggered_1mu || isTriggered_2mu || isTriggered_1e1mu) ) {
-	if ( run_lumi_eventSelector ) {
-	  std::cout << "event FAILS trigger selection." << std::endl;
-	  std::cout << " (selTrigger_1e = " << selTrigger_1e
-		    << ", isTriggered_2e = " << isTriggered_2e
-		    << ", isTriggered_1mu = " << isTriggered_1mu
-		    << ", isTriggered_2mu = " << isTriggered_2mu
-		    << ", isTriggered_1e1mu = " << isTriggered_1e1mu << ")" << std::endl;
-	}
-	continue;
-      }
-      if ( selTrigger_2e && (isTriggered_2mu || isTriggered_1e1mu) ) {
-	if ( run_lumi_eventSelector ) {
-	  std::cout << "event FAILS trigger selection." << std::endl;
-	  std::cout << " (selTrigger_2e = " << selTrigger_2e
-		    << ", isTriggered_2mu = " << isTriggered_2mu
-		    << ", isTriggered_1e1mu = " << isTriggered_1e1mu << ")" << std::endl;
-	}
-	continue;
-      }
-      if ( selTrigger_1mu && (isTriggered_2e || isTriggered_2mu || isTriggered_1e1mu) ) {
+
+      if ( selTrigger_1mu && isTriggered_2mu ) {
 	if ( run_lumi_eventSelector ) {
 	  std::cout << "event FAILS trigger selection." << std::endl;
 	  std::cout << " (selTrigger_1mu = " << selTrigger_1mu
@@ -747,28 +635,10 @@ int main(int argc, char* argv[])
 	}
 	continue;
       }
-      if ( selTrigger_1e1mu && isTriggered_2mu ) {
-	if ( run_lumi_eventSelector ) {
-	  std::cout << "event FAILS trigger selection." << std::endl;
-	  std::cout << " (selTrigger_1e1mu = " << selTrigger_1e1mu
-		    << ", isTriggered_2mu = " << isTriggered_2mu << ")" << std::endl;
-	}
-	continue;
-      }
     }
     cutFlowTable.update("trigger");
 
-    if ( (selTrigger_2mu   && !apply_offline_e_trigger_cuts_2mu)   ||
-	 (selTrigger_1mu   && !apply_offline_e_trigger_cuts_1mu)   ||
-	 (selTrigger_2e    && !apply_offline_e_trigger_cuts_2e)    ||
-	 (selTrigger_1e1mu && !apply_offline_e_trigger_cuts_1e1mu) ||
-	 (selTrigger_1e    && !apply_offline_e_trigger_cuts_1e)    ) {
-      fakeableElectronSelector.disable_offline_e_trigger_cuts();
-      tightElectronSelector.disable_offline_e_trigger_cuts();
-    } else {
-      fakeableElectronSelector.enable_offline_e_trigger_cuts();
-      tightElectronSelector.enable_offline_e_trigger_cuts();
-    }
+
 
 //--- build collections of electrons, muons and hadronic taus;
 //    resolve overlaps in order of priority: muon, electron,
