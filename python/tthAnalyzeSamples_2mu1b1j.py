@@ -3,7 +3,7 @@ from collections import OrderedDict as OD
 from tthAnalyzeSamples_1l_2tau import samples
 
 for sample_name, sample_info in samples.items():
-  sample_info["triggers"] = [ "1e", "2e", "1mu", "2mu", "1e1mu" ]
+  sample_info["triggers"] = [ "2mu" ]
 
 samples["/DoubleMuon/Run2015C_25ns-16Dec2015-v1/MINIAOD"] = OD([
   ("type", "data"),
