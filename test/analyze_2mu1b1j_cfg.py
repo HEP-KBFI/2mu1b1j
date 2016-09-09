@@ -20,6 +20,8 @@ process.analyze_2mu1b1j = cms.PSet(
 
     process = cms.string('ttH'),
 
+    triggers_1mu = cms.vstring("HLT_BIT_HLT_IsoMu20_v", "HLT_BIT_HLT_IsoTkMu20_v"),
+    use_triggers_1mu = cms.bool(True),
     triggers_2mu = cms.vstring("HLT_BIT_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v", "HLT_BIT_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v"),
     use_triggers_2mu = cms.bool(True),
     leptonSelection = cms.string('Tight'),
