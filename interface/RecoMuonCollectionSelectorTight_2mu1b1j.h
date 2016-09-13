@@ -15,10 +15,6 @@ class RecoMuonSelectorTight_2mu1b1j
   RecoMuonSelectorTight_2mu1b1j(int index = -1, bool debug = false);
   ~RecoMuonSelectorTight_2mu1b1j() {}
 
-  // enable/disable tight charge cut
-  void enable_tightCharge_cut() { apply_tightCharge_ = true; }
-  void disable_tightCharge_cut() { apply_tightCharge_ = false; }
-
   /**
    * @brief Check if muon given as function argument passes "tight" muon selection, defined in Table 12 of AN-2015/321
    * @return True if muon passes selection; false otherwise
@@ -47,9 +43,6 @@ class RecoMuonCollectionSelectorTight_2mu1b1j
   {}
   ~RecoMuonCollectionSelectorTight_2mu1b1j() {}
 
-  // enable/disable tight charge cut
-  void enable_tightCharge_cut() { selector_.enable_tightCharge_cut(); }
-  void disable_tightCharge_cut() { selector_.disable_tightCharge_cut(); }
 
   std::vector<const RecoMuon*> operator()(const std::vector<const RecoMuon*>& muons) const
   {
