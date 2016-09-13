@@ -124,6 +124,7 @@ int main(int argc, char* argv[])
         bool use_triggers_2mu = cfg_analyze.getParameter<bool>("use_triggers_2mu");
 
         enum { kLoose, kFakeable, kTight };
+        std::string leptonSelection_string = "Tight";
         int leptonSelection = kTight;
 
 
