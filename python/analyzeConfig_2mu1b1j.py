@@ -67,6 +67,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
         lines.append("process.fwliteInput.fileNames = cms.vstring(%s)" % inputFiles)
         lines.append("process.fwliteOutput.fileName = cms.string('%s')" % outputFile)
         lines.append("process.analyze_2mu1b1j.process = cms.string('%s')" % sample_category)
+        lines.append("process.analyze_2mu1b1j.use_triggers_1mu = cms.bool(%s)" % ("1mu" in triggers))
         lines.append("process.analyze_2mu1b1j.use_triggers_2mu = cms.bool(%s)" % ("2mu" in triggers))
         lines.append("process.analyze_2mu1b1j.leptonSelection = cms.string('%s')" % lepton_selection)
         lines.append("process.analyze_2mu1b1j.isMC = cms.bool(%s)" % is_mc)
@@ -185,7 +186,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
                                                                       (self.channel, process_name, lepton_selection, central_or_shift, jobId)) if self.select_root_output else ""
 
                         self.createCfg_analyze(inputFiles, self.histogramFiles[key_file], sample_category, triggers,
-                                               lepton_selection, self.hadTau_selection,
+                                               lepton_selection,
                                                is_mc, central_or_shift, lumi_scale, self.cfgFiles_analyze_modified[
                                                    key_file],
                                                self.rleOutputFiles[key_file], self.rootOutputFiles[key_file])
