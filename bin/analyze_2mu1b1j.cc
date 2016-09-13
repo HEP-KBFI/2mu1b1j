@@ -382,7 +382,7 @@ int main(int argc, char* argv[])
                         if ( run_lumi_eventSelector ) {
                                 std::cout << "event FAILS trigger selection." << std::endl;
                                 std::cout << ", selTrigger_1mu = " << selTrigger_1mu
-                                          << ", selTrigger_2mu = " << selTrigger_2mu
+                                          << ", selTrigger_2mu = " << selTrigger_2mu;
                         }
                         continue;
                 }
@@ -396,7 +396,6 @@ int main(int argc, char* argv[])
                                 if ( run_lumi_eventSelector ) {
                                         std::cout << "event FAILS trigger selection." << std::endl;
                                         std::cout << " (selTrigger_1mu = " << selTrigger_1mu
-                                                  << ", isTriggered_2e = " << isTriggered_2e
                                                   << ", isTriggered_2mu = " << isTriggered_2mu
                                                   << std::endl;
                                 }
@@ -430,7 +429,7 @@ int main(int argc, char* argv[])
                 //--- build collections of jets and select subset of jets passing b-tagging criteria
                 std::vector<RecoJet> jets = jetReader->read();
                 std::vector<const RecoJet*> jet_ptrs = convert_to_ptrs(jets);
-                std::vector<const RecoJet*> cleanedJets = jetCleaner(jet_ptrs, selMuons, selElectrons, selHadTaus);
+                std::vector<const RecoJet*> cleanedJets = jetCleaner(jet_ptrs, selMuons);
                 std::vector<const RecoJet*> selJets = jetSelector(cleanedJets);
                 std::vector<const RecoJet*> selBJets_loose = jetSelectorBtagLoose(cleanedJets);
                 std::vector<const RecoJet*> selBJets_medium = jetSelectorBtagMedium(cleanedJets);
@@ -470,7 +469,7 @@ int main(int argc, char* argv[])
                         if ( run_lumi_eventSelector ) {
                                 std::cout << "event FAILS preselMuons selection." << std::endl;
                                 std::cout << " (#preselMuons = " << preselMuons.size() << ")" << std::endl;
-                                for ( size_t idxPreselMuon = 0; idxPreselMuon < preselLeptons.size(); ++idxPreselMuon ) {
+                                for ( size_t idxPreselMuon = 0; idxPreselMuon < preselMuons.size(); ++idxPreselMuon ) {
                                         std::cout << "preselMuons #" << idxPreselMuon << ":" << std::endl;
                                         std::cout << (*preselMuons[idxPreselMuon]);
                                 }
@@ -619,7 +618,7 @@ int main(int argc, char* argv[])
                                 std::cout << "event FAILS muon pT selection." << std::endl;
                                 std::cout << " (leading selMuon pT = " << selMuon_lead->pt_
                                           << ", subleading selMuon pT = " << selMuon_sublead->pt_
-                                          << minPt_third << ")" << std::endl;
+                                          << std::endl;
                         }
                         continue;
                 }
@@ -629,8 +628,8 @@ int main(int argc, char* argv[])
                 if ( (selMuon_lead->charge_ + selMuon_sublead->charge_) != 0 ) {
                         if ( run_lumi_eventSelector ) {
                                 std::cout << "event FAILS muon charge selection." << std::endl;
-                                std::cout << " (leading selMuon charge = " << selLepton_lead->charge_
-                                          << ", subleading selMuon charge = " << selLepton_sublead->charge_
+                                std::cout << " (leading selMuon charge = " << selMuon_lead->charge_
+                                          << ", subleading selMuon charge = " << selMuon_sublead->charge_
                                           << ")" << std::endl;
                         }
                         continue;
@@ -731,43 +730,43 @@ int main(int argc, char* argv[])
                 //         }
                 // }
 
-                if(writeSelEventsFile)
-                {
-                        // KE: unique merge loose and medium B-jets, and hadronic jets
-                        std::sort(selBJets_medium.begin(), selBJets_medium.end(), isHigherPt);
-                        std::sort(selBJets_loose.begin(), selBJets_loose.end(), isHigherPt);
-                        std::sort(selJets.begin(), selJets.end(), isHigherCSV);   // optional: sort by pT
-                        std::vector<const RecoJet *> selBJetsMerged(selBJets_medium);
-                        auto unique_push_back = [&selBJetsMerged](const std::vector<const RecoJet *> &v)->void
-                        {
-                                for(const RecoJet * j : v)
-                                        if(std::find(selBJetsMerged.begin(), selBJetsMerged.end(), j) == selBJetsMerged.end())
-                                                selBJetsMerged.push_back(j);
-                        };
-                        unique_push_back(selBJets_loose);
-                        unique_push_back(selJets);
-                        if(selBJetsMerged.size() < 2)
-                        {
-                                std::cerr << "Error: merged b-jets contains less than two jets\n";
-                                assert(0);
-                        }
-
-                        eventSpecificsOut.run  = run;
-                        eventSpecificsOut.lumi = lumi;
-                        eventSpecificsOut.evt  = event;
-
-                        eventSpecificsOut.met_pt  = met_pt;
-                        eventSpecificsOut.met_phi = met_phi;
-
-                        for(std::size_t i = 0; i < 3; ++i)
-                                leptonsOut[i].setValues(selLeptons[i]);
-                        for(std::size_t i = 0; i < 2; ++i)
-                                jetsOut[i].setValues(selBJetsMerged[i]);
-                        htauOut.setValues(selHadTau_lead);
-                        MVAOut.setValues(mvaInputs, mvaOutput_3l_ttV, mvaOutput_3l_ttbar);
-
-                        selEventsTTree->Fill();
-                }
+                // if(writeSelEventsFile)
+                // {
+                //         // KE: unique merge loose and medium B-jets, and hadronic jets
+                //         std::sort(selBJets_medium.begin(), selBJets_medium.end(), isHigherPt);
+                //         std::sort(selBJets_loose.begin(), selBJets_loose.end(), isHigherPt);
+                //         std::sort(selJets.begin(), selJets.end(), isHigherCSV);   // optional: sort by pT
+                //         std::vector<const RecoJet *> selBJetsMerged(selBJets_medium);
+                //         auto unique_push_back = [&selBJetsMerged](const std::vector<const RecoJet *> &v)->void
+                //         {
+                //                 for(const RecoJet * j : v)
+                //                         if(std::find(selBJetsMerged.begin(), selBJetsMerged.end(), j) == selBJetsMerged.end())
+                //                                 selBJetsMerged.push_back(j);
+                //         };
+                //         unique_push_back(selBJets_loose);
+                //         unique_push_back(selJets);
+                //         if(selBJetsMerged.size() < 2)
+                //         {
+                //                 std::cerr << "Error: merged b-jets contains less than two jets\n";
+                //                 assert(0);
+                //         }
+                //
+                //         eventSpecificsOut.run  = run;
+                //         eventSpecificsOut.lumi = lumi;
+                //         eventSpecificsOut.evt  = event;
+                //
+                //         eventSpecificsOut.met_pt  = met_pt;
+                //         eventSpecificsOut.met_phi = met_phi;
+                //
+                //         for(std::size_t i = 0; i < 3; ++i)
+                //                 leptonsOut[i].setValues(selLeptons[i]);
+                //         for(std::size_t i = 0; i < 2; ++i)
+                //                 jetsOut[i].setValues(selBJetsMerged[i]);
+                //         htauOut.setValues(selHadTau_lead);
+                //         MVAOut.setValues(mvaInputs, mvaOutput_3l_ttV, mvaOutput_3l_ttbar);
+                //
+                //         selEventsTTree->Fill();
+                // }
 
                 (*selEventsFile) << run << ":" << lumi << ":" << event << std::endl;
 
@@ -784,11 +783,11 @@ int main(int argc, char* argv[])
         cutFlowTable.print(std::cout);
         std::cout << std::endl;
 
-        if(writeSelEventsFile)
-        {
-                selEventsTFile->Write();
-                delete selEventsTFile;
-        }
+        // if(writeSelEventsFile)
+        // {
+        //         selEventsTFile->Write();
+        //         delete selEventsTFile;
+        // }
 
         delete run_lumi_eventSelector;
 
