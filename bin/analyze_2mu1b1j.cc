@@ -247,7 +247,6 @@ int main(int argc, char* argv[])
         RecoMuonCollectionSelectorLoose preselMuonSelector;
         RecoMuonCollectionSelectorFakeable fakeableMuonSelector;
         RecoMuonCollectionSelectorTight_2mu1b1j tightMuonSelector(-1, run_lumi_eventSelector != 0);
-        tightMuonSelector.disable_tightCharge_cut();
 
         RecoJetReader* jetReader = new RecoJetReader("nJet", "Jet");
         jetReader->setJetPt_central_or_shift(jetPt_option);
