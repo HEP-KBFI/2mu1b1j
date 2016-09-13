@@ -34,6 +34,8 @@ TH1* histogram_numBJets_medium_;
 
 TH1* histogram_massOfOppositeChargeMuons_;
 
+TH1* histogram_EventCounter_;
+
 std::vector<TH1*> histograms_;
 };
 
