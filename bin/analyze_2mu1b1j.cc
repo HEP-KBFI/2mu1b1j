@@ -113,7 +113,7 @@ int main(int argc, char* argv[])
         std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
 
         std::string process_string = cfg_analyze.getParameter<std::string>("process");
-        bool isSignal = ( process_string == "signal" ) ? true : false;
+        // bool isSignal = ( process_string == "signal" ) ? true : false;
 
         vstring triggerNames_1mu = cfg_analyze.getParameter<vstring>("triggers_1mu");
         std::vector<hltPath*> triggers_1mu = create_hltPaths(triggerNames_1mu);
@@ -130,7 +130,7 @@ int main(int argc, char* argv[])
 
         bool isMC = cfg_analyze.getParameter<bool>("isMC");
         std::string central_or_shift = cfg_analyze.getParameter<std::string>("central_or_shift");
-        double lumiScale = ( process_string != "data_obs" ) ? cfg_analyze.getParameter<double>("lumiScale") : 1.;
+        // double lumiScale = ( process_string != "data_obs" ) ? cfg_analyze.getParameter<double>("lumiScale") : 1.;
 
         std::string jet_btagWeight_branch = ( isMC ) ? "Jet_bTagWeight" : "";
 
