@@ -1,5 +1,5 @@
-#ifndef tthAnalysis_HiggsToTauTau_RecoMuonCollectionSelectorTight_h
-#define tthAnalysis_HiggsToTauTau_RecoMuonCollectionSelectorTight_h
+#ifndef tthAnalysis_HiggsToTauTau_RecoMuonCollectionSelectorTight_2mu1b1j_h
+#define tthAnalysis_HiggsToTauTau_RecoMuonCollectionSelectorTight_2mu1b1j_h
 
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuon.h" // RecoMuon
 #include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionSelector.h" // ParticleCollectionSelector
@@ -9,11 +9,11 @@
 #include <string>
 #include <map>
 
-class RecoMuonSelectorTight
+class RecoMuonSelectorTight_2mu1b1j
 {
  public:
-  RecoMuonSelectorTight(int index = -1, bool debug = false);
-  ~RecoMuonSelectorTight() {}
+  RecoMuonSelectorTight_2mu1b1j(int index = -1, bool debug = false);
+  ~RecoMuonSelectorTight_2mu1b1j() {}
 
   // enable/disable tight charge cut
   void enable_tightCharge_cut() { apply_tightCharge_ = true; }
@@ -34,22 +34,18 @@ class RecoMuonSelectorTight
   Double_t max_dxy_;        ///< upper cut threshold on d_{xy}, distance in the transverse plane w.r.t PV
   Double_t max_dz_;         ///< upper cut threshold on d_{z}, distance on the z axis w.r.t PV
   Double_t max_relIso_;     ///< upper cut threshold on relative isolation
-  Double_t max_sip3d_;      ///< upper cut threshold on significance of IP
   bool apply_looseIdPOG_;   ///< apply (True) or do not apply (False) loose PFMuon id selection
-  Double_t max_jetBtagCSV_; ///< upper cut threshold on CSV b-tagging discriminator value of nearby jet
   bool apply_mediumIdPOG_;  ///< apply (True) or do not apply (False) medium PFMuon id selection
-  bool apply_tightCharge_;  ///< apply (True) or do not apply (False) tight charge cut
-  Double_t min_mvaTTH_;     ///< lower cut threshold on lepton MVA of ttH multilepton analysis
 };
 
-class RecoMuonCollectionSelectorTight
+class RecoMuonCollectionSelectorTight_2mu1b1j
 {
  public:
-  RecoMuonCollectionSelectorTight(int index = -1, bool debug = false)
+  RecoMuonCollectionSelectorTight_2mu1b1j(int index = -1, bool debug = false)
     : selIndex_(index)
     , selector_(index, debug)
   {}
-  ~RecoMuonCollectionSelectorTight() {}
+  ~RecoMuonCollectionSelectorTight_2mu1b1j() {}
 
   // enable/disable tight charge cut
   void enable_tightCharge_cut() { selector_.enable_tightCharge_cut(); }
@@ -73,7 +69,7 @@ class RecoMuonCollectionSelectorTight
 
  protected:
   int selIndex_;
-  RecoMuonSelectorTight selector_;
+  RecoMuonSelectorTight_2mu1b1j selector_;
 };
 
-#endif // tthAnalysis_HiggsToTauTau_RecoMuonCollectionSelectorTight_h
+#endif // tthAnalysis_HiggsToTauTau_RecoMuonCollectionSelectorTight_2mu1b1j_h
