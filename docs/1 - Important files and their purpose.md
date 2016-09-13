@@ -39,13 +39,13 @@ scram b -j8
 
 ```bash
 cd /home/`whoami`/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/tthAnalysis/HiggsToTauTau/test
-python tthAnalyzeRun_3l_1tau.py
+python tthAnalyzeRun_2mu1b1j.py
 ```
 
 Imports files:
 
-* python/tthAnalyzeSamples_3l_1tau.py
-* python/analyzeConfig_3l_1tau.py
+* python/tthAnalyzeSamples_2mu1b1j.py
+* python/analyzeConfig_2mu1b1j.py
 
 
 ## How to I specify the cuts?
