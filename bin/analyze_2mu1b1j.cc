@@ -126,8 +126,6 @@ int main(int argc, char* argv[])
         enum { kLoose, kFakeable, kTight };
         int leptonSelection = kTight;
 
-        std::vector<TFile*> inputFilesToClose;
-
 
         bool isMC = cfg_analyze.getParameter<bool>("isMC");
         std::string central_or_shift = cfg_analyze.getParameter<std::string>("central_or_shift");
@@ -780,10 +778,6 @@ int main(int argc, char* argv[])
         std::cout << " analyzed = " << analyzedEntries << std::endl;
         std::cout << " selected = " << selectedEntries << " (weighted = " << selectedEntries_weighted << ")" << std::endl;
 
-        for ( std::vector<TFile*>::iterator inputFile = inputFilesToClose.begin();
-              inputFile != inputFilesToClose.end(); ++inputFile ) {
-                delete (*inputFile);
-        }
 
         std::cout << "cut-flow table" << std::endl;
         cutFlowTable.print(std::cout);
