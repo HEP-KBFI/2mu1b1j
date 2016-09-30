@@ -735,7 +735,7 @@ int main(int argc, char* argv[])
                 bool hasCategoryACriteria1Passed = hasTwoMuonsWithPtOver25 && hasTwoMuonsWithAbsValueOfEtaSmallerThan21;
 
                 bool bTaggedJetWithPtOver30AndEtaLessThan24Count = 0;
-                for (int i = 0; i < selBJets_medium.size(); i++) {
+                for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
                         const RecoJet* bJet = selBJets_medium.at(i);
                         if (bJet->pt_ > 30 && bJet->eta_ < 2.4) {
                                   bTaggedJetWithPtOver30AndEtaLessThan24Count++;
@@ -744,7 +744,7 @@ int main(int argc, char* argv[])
                 bool hasCategoryACriteria2Passed = bTaggedJetWithPtOver30AndEtaLessThan24Count == 1;
 
                 bool jetCountWithPtOver30AndEtaBigger24Count = 0;
-                for (int i = 0; i < selBJets_medium.size(); i++) {
+                for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
                         const RecoJet* bJet = selBJets_medium.at(i);
                         if (bJet->pt_ > 30 && bJet->eta_ > 2.4) {
                                   bTaggedJetWithPtOver30AndEtaLessThan24Count++;
@@ -772,7 +772,7 @@ int main(int argc, char* argv[])
                 bool hasCategoryBCriteria1Passed = hasCategoryACriteria1Passed;
 
                 int jetsWithPtOver30AndEtaLessThan24Count = 0;
-                for (int i = 0; i < selJets.size(); i++) {
+                for (unsigned int i = 0; i < selJets.size(); i++) {
                         const RecoJet* jet = selJets.at(i);
                         if (jet->pt_ > 30 && jet->eta_ < 2.4) {
                                   jetsWithPtOver30AndEtaLessThan24Count++;
