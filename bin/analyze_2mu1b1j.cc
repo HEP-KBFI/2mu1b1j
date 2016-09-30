@@ -624,7 +624,9 @@ int main(int argc, char* argv[])
                 cutFlowTable.update("muon pt cut", evtWeight);
 
                 // check that muon and antimuon
-                if ( (selMuon_lead->charge_ + selMuon_sublead->charge_) != 0 ) {
+                bool hasTwoOppositeSignMuons = (selMuon_lead->charge_ + selMuon_sublead->charge_) == 0;
+
+                if ( !hasTwoOppositeSignMuons ) {
                         if ( run_lumi_eventSelector ) {
                                 std::cout << "event FAILS muon charge selection." << std::endl;
                                 std::cout << " (leading selMuon charge = " << selMuon_lead->charge_
@@ -646,8 +648,6 @@ int main(int argc, char* argv[])
                         }
                 }
                 cutFlowTable.update("passed tightmuons == 2", evtWeight);
-
-                // other cuts per type will be added here
 
 
 
@@ -717,6 +717,80 @@ int main(int argc, char* argv[])
                                                  selBJets_medium.size(),
                                                  massOfOppositeChargeMuons,
                                                  evtWeight);
+
+
+
+                // other cuts per type will be added here
+
+                // category A criterias
+                // ====================
+                //
+                // 1. two opposite sign muons with pT > 25 GeV, |η| < 2.1 with tight muon identification and loose tracker isolation
+                // 2. one b–tagged jet pT > 30 GeV, |η| < 2.4 and no other jets with pT > 30 GeV, |η| < 2.4. Jet is tagged with CSV MVA algorithm and is required to have the b–tagging discriminator value greater that 0.783;
+                // 3. at least one jet pT > 30 GeV, |η| > 2.4;
+
+
+                bool hasTwoMuonsWithPtOver25 = selMuon_lead->pt_ > 25 && selMuon_sublead->pt_ > 25;
+                bool hasTwoMuonsWithAbsValueOfEtaSmallerThan21 = abs(selMuon_lead->eta_) < 2.1 && abs(selMuon_sublead->eta_) < 2.1;
+                bool hasCategoryACriteria1Passed = hasTwoMuonsWithPtOver25 && hasTwoMuonsWithAbsValueOfEtaSmallerThan21;
+
+                bool bTaggedJetWithPtOver30AndEtaLessThan24Count = 0;
+                for (int i = 0; i < selBJets_medium.count; i++) {
+                        RecoJet* bJet = selBJets_medium.at(i);
+                        if (bJet->pt_ > 30 && bJet->eta_ < 2.4) {
+                                  bTaggedJetWithPtOver30AndEtaLessThan24Count++;
+                        }
+                }
+                bool hasCategoryACriteria2Passed = bTaggedJetWithPtOver30AndEtaLessThan24Count == 1;
+
+                bool jetCountWithPtOver30AndEtaBigger24Count = 0;
+                for (int i = 0; i < selBJets_medium.count; i++) {
+                        RecoJet* bJet = &selBJets_medium.at(i);
+                        if (bJet->pt_ > 30 && bJet->eta_ > 2.4) {
+                                  bTaggedJetWithPtOver30AndEtaLessThan24Count++;
+                        }
+                }
+                bool hasCategoryACriteria3Passed = jetCountWithPtOver30AndEtaBigger24Count > 0;
+
+                bool isCategoryAEvent = hasCategoryACriteria1Passed && hasCategoryACriteria2Passed && jetCountWithPtOver30AndEtaBigger24Count;
+
+
+                if (isCategoryAEvent) {
+                        cutFlowTable.update("isCategoryAEvent", evtWeight);
+                }
+
+
+                // category B criterias
+                // ====================
+                //
+                // 1. two opposite sign muons with pT > 25 GeV, |η| < 2.1 with tight muon identification and loose tracker isolation;
+                // 2. two jets with pT > 30 GeV, |η| < 2.4 with at least one b–tagged jet. Jet tagging criteria are the same as for the first excess observation;
+                // 3. no jets with pT > 30 GeV, |η| > 2.4;
+                // 4. missing ET < 40 GeV (against t ̄t background);
+                // 5. di–muon and di–jet system are required to be back–to–back in the transverse plane of the detector, ∆φ(μμ − jj) > 2.5 (against t ̄t background);
+
+                bool hasCategoryBCriteria1Passed = hasCategoryACriteria1Passed;
+
+                int jetsWithPtOver30AndEtaLessThan24Count = 0;
+                for (int i = 0; i < selJets.count; i++) {
+                        RecoJet* jet = &selJets.at(i);
+                        if (jet->pt_ > 30 && jet->eta_ < 2.4) {
+                                  jetsWithPtOver30AndEtaLessThan24Count++;
+                        }
+                }
+                bool hasCategoryBCriteria2Passed = (jetsWithPtOver30AndEtaLessThan24Count >= 2) && (bTaggedJetWithPtOver30AndEtaLessThan24Count > 1);
+                bool hasCategoryBCriteria3Passed = jetCountWithPtOver30AndEtaBigger24Count == 0;
+                bool hasCategoryBCriteria4Passed = met_pt < 40.0;
+                bool isCategoryBEvent = hasCategoryBCriteria1Passed && hasCategoryBCriteria2Passed && hasCategoryBCriteria3Passed && hasCategoryBCriteria4Passed;
+
+                if (isCategoryBEvent) {
+                        cutFlowTable.update("isCategoryBEvent", evtWeight);
+                }
+
+
+
+
+
                 // if ( isSignal ) {
                 //         for ( const auto & kv : decayMode_idString ) {
                 //                 if ( std::fabs(genHiggsDecayMode - kv.second) < EPS ) {
