@@ -37,6 +37,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/JetHistManager.h" // JetHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/MEtHistManager.h" // MEtHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/EvtHistManager_2mu1b1j.h" // EvtHistManager_2mu1b1j
+#include "tthAnalysis/HiggsToTauTau/interface/EvtHistManager_2mu1b1jCategory.h" // EvtHistManager_2mu1b1j
 #include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h" // getLeptonType, kElectron, kMuon
 #include "tthAnalysis/HiggsToTauTau/interface/backgroundEstimation.h" // prob_chargeMisId
 #include "tthAnalysis/HiggsToTauTau/interface/hltPath.h" // hltPath, create_hltPaths, hltPaths_setBranchAddresses, hltPaths_isTriggered, hltPaths_delete
@@ -346,6 +347,16 @@ int main(int argc, char* argv[])
                                                                      Form("2mu1b1j_%s/sel/evt", leptonSelection_string.data()),
                                                                      central_or_shift));
         selEvtHistManager.bookHistograms(fs);
+
+        EvtHistManager_2mu1b1jCategory categoryAHistManager(makeHistManager_cfg(process_string,
+                                                                     Form("2mu1b1jCategoryA_%s/sel/evt", leptonSelection_string.data()),
+                                                                     central_or_shift));
+        categoryAHistManager.bookHistograms(fs);
+
+        EvtHistManager_2mu1b1jCategory categoryBHistManager(makeHistManager_cfg(process_string,
+                                                                     Form("2mu1b1jCategoryB_%s/sel/evt", leptonSelection_string.data()),
+                                                                     central_or_shift));
+        categoryBHistManager.bookHistograms(fs);
 
         int numEntries = inputTree->GetEntries();
         int analyzedEntries = 0;
@@ -775,6 +786,7 @@ int main(int argc, char* argv[])
                 }
 
                 if (isCategoryAEvent) {
+                        categoryAHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
                         cutFlowTable.update("isCategoryAEvent", evtWeight);
                 }
 
@@ -819,6 +831,7 @@ int main(int argc, char* argv[])
                 }
 
                 if (isCategoryBEvent) {
+                        categoryBHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
                         cutFlowTable.update("isCategoryBEvent", evtWeight);
                 }
 
