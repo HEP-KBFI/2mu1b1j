@@ -822,8 +822,7 @@ int main(int argc, char* argv[])
                         cutFlowTable.update("isCategoryBEvent", evtWeight);
                 }
 
-
-
+                cutFlowTable.update("controlFlowCheck", evtWeight);
 
 
                 // if ( isSignal ) {
