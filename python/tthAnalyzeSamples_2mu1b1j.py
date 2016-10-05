@@ -220,24 +220,24 @@ samples["/SingleElectron/Run2015D-16Dec2015-v1/MINIAOD"] = OD([
   )
 ])
 
-# less data examples
-
-samples = OD()
-
-samples["/DoubleMuon/Run2015C_25ns-16Dec2015-v1/MINIAOD"] = OD([
-  ("type", "data"),
-  ("sample_category", "data_obs"),
-  ("process_name_specific", "DoubleMuon_Run2015C"),
-  ("nof_files", 23),
-  ("nof_events", 900626),
-  ("use_it", True),
-  ("triggers", [ "2mu" ]),
-  ("local_paths",
-    [
-      OD([
-        ("path", "/hdfs/cms/store/user/kaehatah/DoubleMuon/VHBB_HEPPY_H20_DoubleMuon__Run2015C_25ns-16Dec2015-v1/160419_120720"),
-        ("selection", "*"),
-      ])
-    ]
-  )
-])
+# # less data examples
+#
+# samples = OD()
+#
+# samples["/DoubleMuon/Run2015C_25ns-16Dec2015-v1/MINIAOD"] = OD([
+#   ("type", "data"),
+#   ("sample_category", "data_obs"),
+#   ("process_name_specific", "DoubleMuon_Run2015C"),
+#   ("nof_files", 23),
+#   ("nof_events", 900626),
+#   ("use_it", True),
+#   ("triggers", [ "2mu" ]),
+#   ("local_paths",
+#     [
+#       OD([
+#         ("path", "/hdfs/cms/store/user/kaehatah/DoubleMuon/VHBB_HEPPY_H20_DoubleMuon__Run2015C_25ns-16Dec2015-v1/160419_120720"),
+#         ("selection", "*"),
+#       ])
+#     ]
+#   )
+# ])
