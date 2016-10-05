@@ -492,6 +492,9 @@ int main(int argc, char* argv[])
                 const RecoMuon* preselMuon_sublead = preselMuons[1];
 
                 // apply requirement on jets (incl. b-tagged jets)
+
+                std::sort(selJets.begin(), selJets.end(), isHigherPt);
+
                 if ( !(selJets.size() >= 2) ) {
                         if ( run_lumi_eventSelector ) {
                                 std::cout << "event FAILS selJets selection." << std::endl;
@@ -499,7 +502,12 @@ int main(int argc, char* argv[])
                         }
                         continue;
                 }
+
+                const RecoJet* selJet_lead = selJets[0];
+                const RecoJet* selJet_sublead = selJets[1];
+
                 cutFlowTable.update(">= 2 jets (1)");
+
 
                 if ( !(selBJets_medium.size() >= 1) ) {
                         if ( run_lumi_eventSelector ) {
@@ -731,19 +739,17 @@ int main(int argc, char* argv[])
 
 
 
-                // other cuts per type will be added here
-
                 // category A criterias
                 // ====================
                 //
                 // 1. two opposite sign muons with pT > 25 GeV, |η| < 2.1 with tight muon identification and loose tracker isolation
-                // 2. one b–tagged jet pT > 30 GeV, |η| < 2.4 and no other jets with pT > 30 GeV, |η| < 2.4. Jet is tagged with CSV MVA algorithm and is required to have the b–tagging discriminator value greater that 0.783;
-                // 3. at least one jet pT > 30 GeV, |η| > 2.4;
-
 
                 bool hasTwoMuonsWithPtOver25 = selMuon_lead->pt_ > 25 && selMuon_sublead->pt_ > 25;
                 bool hasTwoMuonsWithAbsValueOfEtaSmallerThan21 = abs(selMuon_lead->eta_) < 2.1 && abs(selMuon_sublead->eta_) < 2.1;
                 bool hasCategoryACriteria1Passed = hasTwoMuonsWithPtOver25 && hasTwoMuonsWithAbsValueOfEtaSmallerThan21;
+
+
+                // 2. one b–tagged jet pT > 30 GeV, |η| < 2.4 and no other jets with pT > 30 GeV, |η| < 2.4. Jet is tagged with CSV MVA algorithm and is required to have the b–tagging discriminator value greater that 0.783;
 
                 bool bTaggedJetWithPtOver30AndEtaLessThan24Count = 0;
                 for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
@@ -754,14 +760,20 @@ int main(int argc, char* argv[])
                 }
                 bool hasCategoryACriteria2Passed = bTaggedJetWithPtOver30AndEtaLessThan24Count == 1;
 
+
+                // 3. at least one jet pT > 30 GeV, |η| > 2.4;
+
                 bool jetCountWithPtOver30AndEtaBigger24Count = 0;
-                for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
-                        const RecoJet* bJet = selBJets_medium.at(i);
-                        if (bJet->pt_ > 30 && bJet->eta_ > 2.4) {
-                                  bTaggedJetWithPtOver30AndEtaLessThan24Count++;
+                for (unsigned int i = 0; i < selJets.size(); i++) {
+                        const RecoJet* selJet = selJets.at(i);
+                        if (selJet->pt_ > 30 && selJet->eta_ > 2.4) {
+                                  jetCountWithPtOver30AndEtaBigger24Count++;
                         }
                 }
                 bool hasCategoryACriteria3Passed = jetCountWithPtOver30AndEtaBigger24Count > 0;
+
+
+                // Is it category A event?
 
                 bool isCategoryAEvent = hasCategoryACriteria1Passed && hasCategoryACriteria2Passed && hasCategoryACriteria3Passed;
 
@@ -794,13 +806,13 @@ int main(int argc, char* argv[])
                 // category B criterias
                 // ====================
                 //
+
                 // 1. two opposite sign muons with pT > 25 GeV, |η| < 2.1 with tight muon identification and loose tracker isolation;
-                // 2. two jets with pT > 30 GeV, |η| < 2.4 with at least one b–tagged jet. Jet tagging criteria are the same as for the first excess observation;
-                // 3. no jets with pT > 30 GeV, |η| > 2.4;
-                // 4. missing ET < 40 GeV (against t ̄t background);
-                // 5. di–muon and di–jet system are required to be back–to–back in the transverse plane of the detector, ∆φ(μμ − jj) > 2.5 (against t ̄t background);
 
                 bool hasCategoryBCriteria1Passed = hasCategoryACriteria1Passed;
+
+
+                // 2. two jets with pT > 30 GeV, |η| < 2.4 with at least one b–tagged jet. Jet tagging criteria are the same as for the first excess observation;
 
                 int jetsWithPtOver30AndEtaLessThan24Count = 0;
                 for (unsigned int i = 0; i < selJets.size(); i++) {
@@ -810,9 +822,30 @@ int main(int argc, char* argv[])
                         }
                 }
                 bool hasCategoryBCriteria2Passed = (jetsWithPtOver30AndEtaLessThan24Count >= 2) && (bTaggedJetWithPtOver30AndEtaLessThan24Count > 1);
+
+
+                // 3. no jets with pT > 30 GeV, |η| > 2.4;
+
                 bool hasCategoryBCriteria3Passed = jetCountWithPtOver30AndEtaBigger24Count == 0;
+
+
+                // 4. missing ET < 40 GeV (against t ̄t background);
+
                 bool hasCategoryBCriteria4Passed = met_pt < 40.0;
-                bool isCategoryBEvent = hasCategoryBCriteria1Passed && hasCategoryBCriteria2Passed && hasCategoryBCriteria3Passed && hasCategoryBCriteria4Passed;
+
+
+                // 5. di–muon and di–jet system are required to be back–to–back in the transverse plane of the detector, ∆φ(μμ − jj) > 2.5 (against t ̄t background);
+
+                LV diMuonP4 = selMuon_lead->p4_ + selMuon_sublead->p4_;
+                LV diJetP4 = selJet_lead->p4_ + selJet_sublead->p4_;
+                double dPhi = reco::deltaPhi(diMuonP4.phi(), diJetP4.phi());
+
+                bool hasCategoryBCriteria5Passed = dPhi > 2.5;
+
+
+                // Is it category B event?
+
+                bool isCategoryBEvent = hasCategoryBCriteria1Passed && hasCategoryBCriteria2Passed && hasCategoryBCriteria3Passed && hasCategoryBCriteria4Passed && hasCategoryBCriteria5Passed;
 
                 if (hasCategoryBCriteria1Passed) {
                         cutFlowTable.update("hasCategoryBCriteria1Passed", evtWeight);
@@ -827,6 +860,10 @@ int main(int argc, char* argv[])
                 }
 
                 if (hasCategoryBCriteria4Passed) {
+                        cutFlowTable.update("hasCategoryBCriteria4Passed", evtWeight);
+                }
+
+                if (hasCategoryBCriteria5Passed) {
                         cutFlowTable.update("hasCategoryBCriteria4Passed", evtWeight);
                 }
 
