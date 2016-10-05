@@ -256,6 +256,7 @@ int main(int argc, char* argv[])
         RecoJetCollectionGenMatcher jetGenMatcher;
         RecoJetCollectionCleaner jetCleaner(0.5);
         RecoJetCollectionSelector jetSelector;
+        jetSelector.set_max_absEta(999.0);
         RecoJetCollectionSelectorBtagLoose jetSelectorBtagLoose;
         RecoJetCollectionSelectorBtagMedium jetSelectorBtagMedium;
 
@@ -872,7 +873,7 @@ int main(int argc, char* argv[])
                         cutFlowTable.update("isCategoryBEvent", evtWeight);
                 }
 
-                cutFlowTable.update("control check (id: 001)", evtWeight);
+                cutFlowTable.update("control check (id: 002)", evtWeight);
 
 
                 // if ( isSignal ) {
