@@ -754,6 +754,25 @@ int main(int argc, char* argv[])
 
                 bool isCategoryAEvent = hasCategoryACriteria1Passed && hasCategoryACriteria2Passed && hasCategoryACriteria3Passed;
 
+                if (hasTwoMuonsWithPtOver25) {
+                        cutFlowTable.update('hasTwoMuonsWithPtOver25', evtWeight);
+                }
+
+                if (hasTwoMuonsWithAbsValueOfEtaSmallerThan21) {
+                        cutFlowTable.update('hasTwoMuonsWithAbsValueOfEtaSmallerThan21', evtWeight);
+                }
+
+                if (hasCategoryACriteria1Passed) {
+                        cutFlowTable.update('hasCategoryACriteria1Passed', evtWeight);
+                }
+
+                if (hasCategoryACriteria2Passed) {
+                        cutFlowTable.update('hasCategoryACriteria2Passed', evtWeight);
+                }
+
+                if (hasCategoryACriteria3Passed) {
+                        cutFlowTable.update('hasCategoryACriteria3Passed', evtWeight);
+                }
 
                 if (isCategoryAEvent) {
                         cutFlowTable.update("isCategoryAEvent", evtWeight);
@@ -782,6 +801,22 @@ int main(int argc, char* argv[])
                 bool hasCategoryBCriteria3Passed = jetCountWithPtOver30AndEtaBigger24Count == 0;
                 bool hasCategoryBCriteria4Passed = met_pt < 40.0;
                 bool isCategoryBEvent = hasCategoryBCriteria1Passed && hasCategoryBCriteria2Passed && hasCategoryBCriteria3Passed && hasCategoryBCriteria4Passed;
+
+                if (hasCategoryBCriteria1Passed) {
+                        cutFlowTable.update("hasCategoryBCriteria1Passed", evtWeight);
+                }
+
+                if (hasCategoryBCriteria2Passed) {
+                        cutFlowTable.update("hasCategoryBCriteria2Passed", evtWeight);
+                }
+
+                if (hasCategoryBCriteria3Passed) {
+                        cutFlowTable.update("hasCategoryBCriteria3Passed", evtWeight);
+                }
+
+                if (hasCategoryBCriteria4Passed) {
+                        cutFlowTable.update("hasCategoryBCriteria4Passed", evtWeight);
+                }
 
                 if (isCategoryBEvent) {
                         cutFlowTable.update("isCategoryBEvent", evtWeight);
