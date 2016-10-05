@@ -256,7 +256,7 @@ int main(int argc, char* argv[])
         RecoJetCollectionGenMatcher jetGenMatcher;
         RecoJetCollectionCleaner jetCleaner(0.5);
         RecoJetCollectionSelector jetSelector;
-        jetSelector.set_max_absEta(999.0);
+        jetSelector->set_max_absEta(999.0);
         RecoJetCollectionSelectorBtagLoose jetSelectorBtagLoose;
         RecoJetCollectionSelectorBtagMedium jetSelectorBtagMedium;
 
