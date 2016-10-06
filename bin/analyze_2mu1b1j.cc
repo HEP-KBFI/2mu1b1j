@@ -826,7 +826,7 @@ int main(int argc, char* argv[])
                                   jetsWithPtOver30AndEtaLessThan24Count++;
                         }
                 }
-                bool hasCategoryBCriteria2Passed = (jetsWithPtOver30AndEtaLessThan24Count >= 2) && (bTaggedJetWithPtOver30AndEtaLessThan24Count > 1);
+                bool hasCategoryBCriteria2Passed = (jetsWithPtOver30AndEtaLessThan24Count >= 2) && (bTaggedJetWithPtOver30AndEtaLessThan24Count >= 1);
 
 
                 // 3. no jets with pT > 30 GeV, |η| > 2.4;
