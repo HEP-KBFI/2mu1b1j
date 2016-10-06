@@ -883,7 +883,7 @@ int main(int argc, char* argv[])
                         cutFlowTable.update("isCategoryBEventWithoutCriteria5", evtWeight);
                 }
 
-                cutFlowTable.update("control check (id: 004)", evtWeight);
+                cutFlowTable.update("control check (id: 005)", evtWeight);
 
 
                 // if ( isSignal ) {
