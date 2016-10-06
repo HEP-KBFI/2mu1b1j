@@ -358,10 +358,6 @@ int main(int argc, char* argv[])
                                                                      central_or_shift));
         categoryBHistManager.bookHistograms(fs);
 
-        EvtHistManager_2mu1b1jCategory categoryBHistWithoutCriteria5Manager(makeHistManager_cfg(process_string,
-                                                                     Form("2mu1b1jCategoryBWithoutCriteria5_%s/sel/evt", leptonSelection_string.data()),
-                                                                     central_or_shift));
-        categoryBHistManager.bookHistograms(fs);
 
         int numEntries = inputTree->GetEntries();
         int analyzedEntries = 0;
