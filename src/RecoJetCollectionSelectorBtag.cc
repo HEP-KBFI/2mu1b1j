@@ -4,8 +4,8 @@
 
 RecoJetSelectorBtag::RecoJetSelectorBtag(int index, bool debug)
   : min_pt_(25.)
-  , max_absEta_(2.4)
-  , min_BtagCSV_(-1.e+3)  
+  , max_absEta_(999.9) // 2.4 TODO change this back (Margus)
+  , min_BtagCSV_(-1.e+3)
 {}
 
 bool RecoJetSelectorBtag::operator()(const RecoJet& jet) const
@@ -14,6 +14,6 @@ bool RecoJetSelectorBtag::operator()(const RecoJet& jet) const
        jet.absEta_ <= max_absEta_ &&
        jet.BtagCSV_ >= min_BtagCSV_ ) {
     return true;
-  } 
+  }
   return false;
 }
