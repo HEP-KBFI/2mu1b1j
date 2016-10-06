@@ -358,6 +358,11 @@ int main(int argc, char* argv[])
                                                                      central_or_shift));
         categoryBHistManager.bookHistograms(fs);
 
+        EvtHistManager_2mu1b1jCategory categoryBHistWithoutCriteria5Manager(makeHistManager_cfg(process_string,
+                                                                     Form("2mu1b1jCategoryBWithoutCriteria5_%s/sel/evt", leptonSelection_string.data()),
+                                                                     central_or_shift));
+        categoryBHistManager.bookHistograms(fs);
+
         int numEntries = inputTree->GetEntries();
         int analyzedEntries = 0;
         int selectedEntries = 0;
@@ -846,6 +851,7 @@ int main(int argc, char* argv[])
                 // Is it category B event?
 
                 bool isCategoryBEvent = hasCategoryBCriteria1Passed && hasCategoryBCriteria2Passed && hasCategoryBCriteria3Passed && hasCategoryBCriteria4Passed && hasCategoryBCriteria5Passed;
+                bool isCategoryBEventWithoutCriteria5 = hasCategoryBCriteria1Passed && hasCategoryBCriteria2Passed && hasCategoryBCriteria3Passed && hasCategoryBCriteria4Passed;
 
                 if (hasCategoryBCriteria1Passed) {
                         cutFlowTable.update("hasCategoryBCriteria1Passed", evtWeight);
@@ -864,7 +870,7 @@ int main(int argc, char* argv[])
                 }
 
                 if (hasCategoryBCriteria5Passed) {
-                        cutFlowTable.update("hasCategoryBCriteria4Passed", evtWeight);
+                        cutFlowTable.update("hasCategoryBCriteria5Passed", evtWeight);
                 }
 
                 if (isCategoryBEvent) {
@@ -872,7 +878,12 @@ int main(int argc, char* argv[])
                         cutFlowTable.update("isCategoryBEvent", evtWeight);
                 }
 
-                cutFlowTable.update("control check (id: 003)", evtWeight);
+                if (isCategoryBEventWithoutCriteria5) {
+                        categoryBHistWithoutCriteria5Manager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
+                        cutFlowTable.update("isCategoryBEventWithoutCriteria5", evtWeight);
+                }
+
+                cutFlowTable.update("control check (id: 004)", evtWeight);
 
 
                 // if ( isSignal ) {
