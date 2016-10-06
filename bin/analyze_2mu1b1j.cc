@@ -847,8 +847,7 @@ int main(int argc, char* argv[])
                 // Is it category B event?
 
                 bool isCategoryBEvent = hasCategoryBCriteria1Passed && hasCategoryBCriteria2Passed && hasCategoryBCriteria3Passed && hasCategoryBCriteria4Passed && hasCategoryBCriteria5Passed;
-                bool isCategoryBEventWithoutCriteria5 = hasCategoryBCriteria1Passed && hasCategoryBCriteria2Passed && hasCategoryBCriteria3Passed && hasCategoryBCriteria4Passed;
-
+    
                 if (hasCategoryBCriteria1Passed) {
                         cutFlowTable.update("hasCategoryBCriteria1Passed", evtWeight);
                 }
@@ -872,11 +871,6 @@ int main(int argc, char* argv[])
                 if (isCategoryBEvent) {
                         categoryBHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
                         cutFlowTable.update("isCategoryBEvent", evtWeight);
-                }
-
-                if (isCategoryBEventWithoutCriteria5) {
-                        categoryBHistWithoutCriteria5Manager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
-                        cutFlowTable.update("isCategoryBEventWithoutCriteria5", evtWeight);
                 }
 
                 cutFlowTable.update("control check (id: 005)", evtWeight);
