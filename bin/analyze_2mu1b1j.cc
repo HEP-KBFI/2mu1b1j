@@ -137,7 +137,7 @@ int main(int argc, char* argv[])
         std::string jet_btagWeight_branch = ( isMC ) ? "Jet_bTagWeight" : "";
 
         int jetPt_option = RecoJetReader::kJetPt_central;
-        int era_option == kEra_2015;
+        int era_option = kEra_2015;
 
 
         // currently commented out because using "central" and !isMC
