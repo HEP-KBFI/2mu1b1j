@@ -44,6 +44,7 @@
 #include "tthAnalysis/HiggsToTauTau/interface/data_to_MC_corrections.h"
 #include "tthAnalysis/HiggsToTauTau/interface/lutAuxFunctions.h" // loadTH2, get_sf_from_TH2
 #include "tthAnalysis/HiggsToTauTau/interface/cutFlowTable.h" // cutFlowTableType
+#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // kEra_2015, kEra_2016
 
 #include <boost/range/algorithm/copy.hpp> // boost::copy()
 #include <boost/range/adaptor/map.hpp> // boost::adaptors::map_keys
@@ -136,6 +137,7 @@ int main(int argc, char* argv[])
         std::string jet_btagWeight_branch = ( isMC ) ? "Jet_bTagWeight" : "";
 
         int jetPt_option = RecoJetReader::kJetPt_central;
+        int era_option == kEra_2015;
 
 
         // currently commented out because using "central" and !isMC
@@ -242,14 +244,14 @@ int main(int argc, char* argv[])
 
         // # Declare particle collections
 
-        RecoMuonReader* muonReader = new RecoMuonReader("nselLeptons", "selLeptons");
+        RecoMuonReader* muonReader = new RecoMuonReader(era_option, "nselLeptons", "selLeptons");
         muonReader->setBranchAddresses(inputTree);
         RecoMuonCollectionGenMatcher muonGenMatcher;
         RecoMuonCollectionSelectorLoose preselMuonSelector;
         RecoMuonCollectionSelectorFakeable fakeableMuonSelector;
         RecoMuonCollectionSelectorTight_2mu1b1j tightMuonSelector(-1, run_lumi_eventSelector != 0);
 
-        RecoJetReader* jetReader = new RecoJetReader("nJet", "Jet");
+        RecoJetReader* jetReader = new RecoJetReader(era_option, "nJet", "Jet");
         jetReader->setJetPt_central_or_shift(jetPt_option);
         jetReader->setBranchName_BtagWeight(jet_btagWeight_branch);
         jetReader->setBranchAddresses(inputTree);
