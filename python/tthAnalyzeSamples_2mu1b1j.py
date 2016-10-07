@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-from tthAnalyzeSamples_1l_2tau import samples
+from tthAnalysis.HiggsToTauTau.tthAnalyzeSamples_1l_2tau import samples
 
 for sample_name, sample_info in samples.items():
   sample_info["triggers"] = [ "2mu" ]

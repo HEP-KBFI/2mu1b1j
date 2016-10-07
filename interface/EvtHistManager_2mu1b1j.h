@@ -1,5 +1,5 @@
-#ifndef tthAnalysis_HiggsToTauTau_EvtHistManager_2mu1b1j_h
-#define tthAnalysis_HiggsToTauTau_EvtHistManager_2mu1b1j_h
+#ifndef analysis2mu1b1j_analysis2mu1b1j_EvtHistManager_2mu1b1j_h
+#define analysis2mu1b1j_analysis2mu1b1j_EvtHistManager_2mu1b1j_h
 
 /** \class EvtHistManager_2mu1b1j
  *

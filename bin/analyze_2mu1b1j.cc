@@ -29,15 +29,15 @@
 #include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionGenMatcher.h" // RecoElectronCollectionGenMatcher, RecoMuonCollectionGenMatcher, RecoHadTauCollectionGenMatcher, RecoJetCollectionGenMatcher
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorLoose.h" // RecoMuonCollectionSelectorLoose
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorFakeable.h" // RecoMuonCollectionSelectorFakeable
-#include "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorTight_2mu1b1j.h" // RecoMuonCollectionSelectorTight
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/RecoMuonCollectionSelectorTight_2mu1b1j.h" // RecoMuonCollectionSelectorTight
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelector.h" // RecoJetCollectionSelector
 #include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorBtag.h" // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h" // RunLumiEventSelector
 #include "tthAnalysis/HiggsToTauTau/interface/MuonHistManager.h" // MuonHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/JetHistManager.h" // JetHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/MEtHistManager.h" // MEtHistManager
-#include "tthAnalysis/HiggsToTauTau/interface/EvtHistManager_2mu1b1j.h" // EvtHistManager_2mu1b1j
-#include "tthAnalysis/HiggsToTauTau/interface/EvtHistManager_2mu1b1jCategory.h" // EvtHistManager_2mu1b1j
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1j.h" // EvtHistManager_2mu1b1j
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1jCategory.h" // EvtHistManager_2mu1b1j
 #include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h" // getLeptonType, kElectron, kMuon
 #include "tthAnalysis/HiggsToTauTau/interface/backgroundEstimation.h" // prob_chargeMisId
 #include "tthAnalysis/HiggsToTauTau/interface/hltPath.h" // hltPath, create_hltPaths, hltPaths_setBranchAddresses, hltPaths_isTriggered, hltPaths_delete
@@ -847,7 +847,7 @@ int main(int argc, char* argv[])
                 // Is it category B event?
 
                 bool isCategoryBEvent = hasCategoryBCriteria1Passed && hasCategoryBCriteria2Passed && hasCategoryBCriteria3Passed && hasCategoryBCriteria4Passed && hasCategoryBCriteria5Passed;
-    
+
                 if (hasCategoryBCriteria1Passed) {
                         cutFlowTable.update("hasCategoryBCriteria1Passed", evtWeight);
                 }

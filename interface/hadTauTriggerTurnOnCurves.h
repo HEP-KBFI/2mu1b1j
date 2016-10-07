@@ -1,6 +1,0 @@
-#ifndef tthAnalysis_HiggsToTauTau_hadTauTriggerTurnOnCurves_h
-#define tthAnalysis_HiggsToTauTau_hadTauTriggerTurnOnCurves_h
-
-double effHLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg(double tau1Pt, double tau1Eta, double tau2Pt, double tau2Eta);
-
-#endif // tthAnalysis_HiggsToTauTau_hadTauTriggerTurnOnCurves_h

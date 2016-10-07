@@ -1,5 +1,5 @@
-#ifndef tthAnalysis_HiggsToTauTau_RecoMuonCollectionSelectorTight_2mu1b1j_h
-#define tthAnalysis_HiggsToTauTau_RecoMuonCollectionSelectorTight_2mu1b1j_h
+#ifndef analysis2mu1b1j_analysis2mu1b1j_RecoMuonCollectionSelectorTight_2mu1b1j_h
+#define analysis2mu1b1j_analysis2mu1b1j_RecoMuonCollectionSelectorTight_2mu1b1j_h
 
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuon.h" // RecoMuon
 #include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionSelector.h" // ParticleCollectionSelector
@@ -65,4 +65,4 @@ class RecoMuonCollectionSelectorTight_2mu1b1j
   RecoMuonSelectorTight_2mu1b1j selector_;
 };
 
-#endif // tthAnalysis_HiggsToTauTau_RecoMuonCollectionSelectorTight_2mu1b1j_h
+#endif // analysis2mu1b1j_analysis2mu1b1j_RecoMuonCollectionSelectorTight_2mu1b1j_h
