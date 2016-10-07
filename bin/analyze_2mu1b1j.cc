@@ -248,7 +248,7 @@ int main(int argc, char* argv[])
         muonReader->setBranchAddresses(inputTree);
         RecoMuonCollectionGenMatcher muonGenMatcher;
         RecoMuonCollectionSelectorLoose preselMuonSelector;
-        RecoMuonCollectionSelectorFakeable fakeableMuonSelector;
+        RecoMuonCollectionSelectorFakeable fakeableMuonSelector(era_option);
         RecoMuonCollectionSelectorTight_2mu1b1j tightMuonSelector(-1, run_lumi_eventSelector != 0);
 
         RecoJetReader* jetReader = new RecoJetReader(era_option, "nJet", "Jet");
