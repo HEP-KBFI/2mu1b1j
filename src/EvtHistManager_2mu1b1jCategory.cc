@@ -1,4 +1,4 @@
-#include "tthAnalysis/HiggsToTauTau/interface/EvtHistManager_2mu1b1jCategory.h"
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1jCategory.h"
 
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h"
 
@@ -20,7 +20,7 @@ void EvtHistManager_2mu1b1jCategory::fillHistograms(
                                             double evtWeight)
 {
         double evtWeightErr = 0.;
-        
+
         fillWithOverFlow(histogram_massOfOppositeChargeMuons_, massOfOppositeChargeMuons, evtWeight, evtWeightErr);
         fillWithOverFlow(histogram_EventCounter_, 0., evtWeight, evtWeightErr);
 }

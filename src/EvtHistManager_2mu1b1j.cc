@@ -1,4 +1,4 @@
-#include "tthAnalysis/HiggsToTauTau/interface/EvtHistManager_2mu1b1j.h"
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1j.h"
 
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h"
 
