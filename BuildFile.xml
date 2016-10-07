@@ -4,6 +4,8 @@
 <use   name="DataFormats/Math"/>
 <use   name="root"/>
 <use   name="roottmva"/>
+<use   name="tthAnalysis/HiggsToTauTau"/>
+
 <export>
   <lib   name="1"/>
 </export>
