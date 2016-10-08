@@ -5,6 +5,7 @@
 <use   name="root"/>
 <use   name="roottmva"/>
 <use   name="tthAnalysis/HiggsToTauTau"/>
+<Flags CXXFLAGS="-O3 -fPIC" />
 
 <export>
   <lib   name="1"/>
