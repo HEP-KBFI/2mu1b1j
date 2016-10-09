@@ -52,7 +52,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
         self.select_root_output = select_root_output
 
     def createCfg_analyze(self, inputFiles, outputFile, sample_category, triggers, lepton_selection,
-                          is_mc, central_or_shift, lumi_scale, cfgFile_modified, rle_output_file, root_output_file):
+                          is_mc, central_or_shift, lumi_scale, cfgFile_modified, rle_output_file, root_output_file, era):
         """Create python configuration file for the analyze_2mu1b1j executable (analysis code)
 
         Args:
@@ -75,6 +75,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
         lines.append("process.analyze_2mu1b1j.lumiScale = cms.double(%f)" % lumi_scale)
         lines.append("process.analyze_2mu1b1j.selEventsFileName_output = cms.string('%s')" % rle_output_file)
         lines.append("process.analyze_2mu1b1j.selEventsTFileName = cms.string('%s')" % root_output_file)
+        lines.append("process.analyze_2mu1b1j.era = cms.string('%s')" % era)
         create_cfg(self.cfgFile_analyze_original, cfgFile_modified, lines)
 
     def addToMakefile_hadd_stage1(self, lines_makefile):

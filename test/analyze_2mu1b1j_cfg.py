@@ -32,5 +32,6 @@ process.analyze_2mu1b1j = cms.PSet(
 
     selEventsFileName_input = cms.string(''),
     selEventsFileName_output = cms.string(''),
-    selEventsTFileName = cms.string('')
+    selEventsTFileName = cms.string(''),
+    era = cms.string('2015')
 )

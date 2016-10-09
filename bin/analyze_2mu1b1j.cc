@@ -137,7 +137,14 @@ int main(int argc, char* argv[])
         std::string jet_btagWeight_branch = ( isMC ) ? "Jet_bTagWeight" : "";
 
         int jetPt_option = RecoJetReader::kJetPt_central;
-        int era_option = kEra_2015;
+
+        std::string era_string = cfg_analyze.getParameter<std::string>("era");
+        int era = -1;
+        if      ( era_string == "2015" ) era = kEra_2015;
+        else if ( era_string == "2016" ) era = kEra_2016;
+        else throw cms::Exception("analyze_2mu1b1j")
+          << "Invalid Configuration parameter 'era' = " << era_string << " !!\n";
+
 
 
         // currently commented out because using "central" and !isMC
@@ -244,14 +251,14 @@ int main(int argc, char* argv[])
 
         // # Declare particle collections
 
-        RecoMuonReader* muonReader = new RecoMuonReader(era_option, "nselLeptons", "selLeptons");
+        RecoMuonReader* muonReader = new RecoMuonReader(era, "nselLeptons", "selLeptons");
         muonReader->setBranchAddresses(inputTree);
         RecoMuonCollectionGenMatcher muonGenMatcher;
         RecoMuonCollectionSelectorLoose preselMuonSelector;
-        RecoMuonCollectionSelectorFakeable fakeableMuonSelector(era_option);
+        RecoMuonCollectionSelectorFakeable fakeableMuonSelector(era);
         RecoMuonCollectionSelectorTight_2mu1b1j tightMuonSelector(-1, run_lumi_eventSelector != 0);
 
-        RecoJetReader* jetReader = new RecoJetReader(era_option, "nJet", "Jet");
+        RecoJetReader* jetReader = new RecoJetReader(era, "nJet", "Jet");
         jetReader->setJetPt_central_or_shift(jetPt_option);
         jetReader->setBranchName_BtagWeight(jet_btagWeight_branch);
         jetReader->setBranchAddresses(inputTree);
