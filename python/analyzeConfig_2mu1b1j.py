@@ -18,15 +18,15 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
 
     """
 
-    def __init__(self, outputDir, executable_analyze, lepton_selections, central_or_shifts,
-                 max_files_per_job, use_lumi, lumi, debug, running_method, num_parallel_jobs,
+    def __init__(self, outputDir, executable_analyze, samples, lepton_selections, central_or_shifts,
+                 max_files_per_job, era, use_lumi, lumi, debug, running_method, num_parallel_jobs,
                  histograms_to_fit, select_rle_output=False, executable_prep_dcard="prepareDatacard",
                  select_root_output=False):
         analyzeConfig.__init__(self, outputDir, executable_analyze, "2mu1b1j", central_or_shifts,
                                max_files_per_job, use_lumi, lumi, debug, running_method, num_parallel_jobs,
                                histograms_to_fit)
 
-        self.samples = tthAnalyzeSamples_2mu1b1j.samples
+        self.samples = samples
 
         self.lepton_selections = lepton_selections
 
@@ -50,9 +50,10 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
         self.histogramDir_prep_dcard = "2mu1b1j_Tight"
         self.select_rle_output = select_rle_output
         self.select_root_output = select_root_output
+        self.era = era
 
-    def createCfg_analyze(self, inputFiles, outputFile, sample_category, triggers, lepton_selection,
-                          is_mc, central_or_shift, lumi_scale, cfgFile_modified, rle_output_file, root_output_file, era):
+    def createCfg_analyze(self, inputFiles, outputFile, sample_category, era, triggers, lepton_selection,
+                          is_mc, central_or_shift, lumi_scale, cfgFile_modified, rle_output_file, root_output_file):
         """Create python configuration file for the analyze_2mu1b1j executable (analysis code)
 
         Args:
@@ -186,7 +187,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
                         self.rootOutputFiles[key_file] = os.path.join(self.dirs[key_dir][DKEY_ROOT], "out_%s_%s_%s_%s_%i.root" %
                                                                       (self.channel, process_name, lepton_selection, central_or_shift, jobId)) if self.select_root_output else ""
 
-                        self.createCfg_analyze(inputFiles, self.histogramFiles[key_file], sample_category, triggers,
+                        self.createCfg_analyze(inputFiles, self.histogramFiles[key_file], sample_category, self.era, triggers,
                                                lepton_selection,
                                                is_mc, central_or_shift, lumi_scale, self.cfgFiles_analyze_modified[
                                                    key_file],
