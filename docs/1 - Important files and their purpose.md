@@ -25,6 +25,7 @@ python tthAnalysis/HiggsToTauTau/test/NtupleList.py
 ## Installing latest version
 
 ```bash
+cd $CMSSW_BASE/src
 rm -rf $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau
 git clone https://github.com/HEP-KBFI/tth-htt  $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau
 rm -rf $CMSSW_BASE/src/analysis2mu1b1j/analysis2mu1b1j
@@ -40,6 +41,14 @@ scram b -j8
 cd /home/`whoami`/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/analysis2mu1b1j/analysis2mu1b1j/test
 python tthAnalyzeRun_2mu1b1j.py
 ```
+
+
+## How do I cancel tests
+
+```bash
+scancel -u margusp
+```
+
 
 
 ## How to I specify the cuts?
