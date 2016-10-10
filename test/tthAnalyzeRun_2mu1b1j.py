@@ -32,6 +32,7 @@ if __name__ == '__main__':
   analysis = analyzeConfig_2mu1b1j(
     outputDir = os.path.join("/home", getpass.getuser(), "analysis2mu1b1j", ERA, version),
     executable_analyze = "analyze_2mu1b1j",
+    samples = samples,
     lepton_selections = [ "Tight" ],
     central_or_shifts = [ "central" ],
     max_files_per_job = 30,

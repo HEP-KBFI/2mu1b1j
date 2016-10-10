@@ -38,7 +38,7 @@ scram b -j8
 
 ```bash
 cd /home/`whoami`/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/analysis2mu1b1j/analysis2mu1b1j/test
-python run_2mu1b1j.py
+python tthAnalyzeRun_2mu1b1j.py
 ```
 
 
