@@ -206,10 +206,10 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
                 "Creating script for submitting '%s' jobs to batch system" % self.executable_analyze)
             self.createScript_sbatch()
 
-        logging.info(
-            "Creating configuration files for executing 'prepareDatacards'")
-        for histogramToFit in self.histograms_to_fit:
-            self.createCfg_prep_dcard(histogramToFit)
+        # logging.info(
+        #    "Creating configuration files for executing 'prepareDatacards'")
+        # for histogramToFit in self.histograms_to_fit:
+        #    self.createCfg_prep_dcard(histogramToFit)
 
         lines_makefile = []
         self.addToMakefile_analyze(lines_makefile)
@@ -217,7 +217,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
         self.addToMakefile_backgrounds_from_data(lines_makefile)
         self.addToMakefile_hadd_stage2(lines_makefile)
         self.addToMakefile_outRoot(lines_makefile)
-        self.addToMakefile_prep_dcard(lines_makefile)
+        # self.addToMakefile_prep_dcard(lines_makefile)
         self.addToMakefile_clean(lines_makefile)
         self.createMakefile(lines_makefile)
 
