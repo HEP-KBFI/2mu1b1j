@@ -169,11 +169,12 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
                         if central_or_shift != "central" and not is_mc:
                             continue
 
-                        inputFiles = generate_input_list(self.inputFileIds[sample_name][
-                                                         jobId], secondary_files, primary_store, secondary_store, self.debug)
 
-                        key_file = getKey(
-                            sample_name, lepton_selection, central_or_shift, jobId)
+                        key_dir = getKey(sample_name, lepton_selection, central_or_shift)
+                        key_file = getKey(sample_name, lepton_selection, central_or_shift, jobId)
+
+                        inputFiles = generate_input_list(self.inputFileIds[sample_name][jobId], secondary_files, primary_store, secondary_store, self.debug)
+                        self.ntupleFiles[key_file] = inputFiles
 
                         self.cfgFiles_analyze_modified[key_file] = os.path.join(self.dirs[key_dir][DKEY_CFGS], "analyze_%s_%s_%s_%s_%i_cfg.py" %
                                                                                 (self.channel, process_name, lepton_selection, central_or_shift, jobId))
@@ -186,11 +187,19 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
                         self.rootOutputFiles[key_file] = os.path.join(self.dirs[key_dir][DKEY_ROOT], "out_%s_%s_%s_%s_%i.root" %
                                                                       (self.channel, process_name, lepton_selection, central_or_shift, jobId)) if self.select_root_output else ""
 
-                        self.createCfg_analyze(inputFiles, self.histogramFiles[key_file], sample_category, self.era, triggers,
-                                               lepton_selection,
-                                               is_mc, central_or_shift, lumi_scale, self.cfgFiles_analyze_modified[
-                                                   key_file],
-                                               self.rleOutputFiles[key_file], self.rootOutputFiles[key_file])
+                        self.createCfg_analyze(inputFiles,
+                                                self.histogramFiles[key_file],
+                                                sample_category,
+                                                self.era,
+                                                triggers,
+                                                lepton_selection,
+                                                is_mc,
+                                                central_or_shift,
+                                                lumi_scale,
+                                                self.cfgFiles_analyze_modified[key_file],
+                                                self.rleOutputFiles[key_file],
+                                                self.rootOutputFiles[key_file]
+                                                )
 
         if self.is_sbatch:
             logging.info(
