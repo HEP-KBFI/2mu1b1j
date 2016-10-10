@@ -42,7 +42,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
                     initDict(self.dirs, [key_dir, dir_type])
                     self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
                                                                 "_".join([lepton_selection]), process_name)
-        print "self.dirs = ", self.dirs
+        # print "self.dirs = ", self.dirs
 
         self.cfgFile_analyze_original = os.path.join(
             self.workingDir, "analyze_2mu1b1j_cfg.py")
@@ -170,7 +170,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
                             continue
 
 
-                        key_dir = getKey(sample_name, lepton_selection, central_or_shift)
+                        key_dir = getKey(sample_name, lepton_selection)
                         key_file = getKey(sample_name, lepton_selection, central_or_shift, jobId)
 
                         inputFiles = generate_input_list(self.inputFileIds[sample_name][jobId], secondary_files, primary_store, secondary_store, self.debug)
