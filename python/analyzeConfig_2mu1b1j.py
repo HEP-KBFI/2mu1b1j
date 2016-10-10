@@ -22,7 +22,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
                  histograms_to_fit, select_rle_output=False, executable_prep_dcard="prepareDatacard",
                  select_root_output=False):
         analyzeConfig.__init__(self, outputDir, executable_analyze, "2mu1b1j", central_or_shifts,
-                               max_files_per_job, use_lumi, lumi, debug, running_method, num_parallel_jobs,
+                               max_files_per_job, era, use_lumi, lumi, debug, running_method, num_parallel_jobs,
                                histograms_to_fit)
 
         self.samples = samples
