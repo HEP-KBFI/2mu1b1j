@@ -1,7 +1,6 @@
 import logging
 
 from tthAnalysis.HiggsToTauTau.analyzeConfig import *
-import tthAnalyzeSamples_2mu1b1j
 from tthAnalysis.HiggsToTauTau.jobTools import create_if_not_exists
 
 
