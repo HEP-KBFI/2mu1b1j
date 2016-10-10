@@ -42,7 +42,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
                     initDict(self.dirs, [key_dir, dir_type])
                     self.dirs[key_dir][dir_type] = os.path.join(self.outputDir, dir_type, self.channel,
                                                                 "_".join([lepton_selection]), process_name)
-        # print "self.dirs = ", self.dirs
+        print "self.dirs = ", self.dirs
 
         self.cfgFile_analyze_original = os.path.join(
             self.workingDir, "analyze_2mu1b1j_cfg.py")
