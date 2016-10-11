@@ -85,7 +85,7 @@ public:
 
 protected:
         int selIndex_;
-        RecoMuonSelectorTight selector_;
+        RecoMuonSelectorTight_2mu1b1j selector_;
 };
 
 #endif // tthAnalysis_HiggsToTauTau_RecoMuonCollectionSelectorTight_2mu1b1j_h
