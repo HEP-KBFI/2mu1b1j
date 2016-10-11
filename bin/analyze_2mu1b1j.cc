@@ -30,8 +30,8 @@
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorLoose.h" // RecoMuonCollectionSelectorLoose
 #include "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorFakeable.h" // RecoMuonCollectionSelectorFakeable
 #include "analysis2mu1b1j/analysis2mu1b1j/interface/RecoMuonCollectionSelectorTight_2mu1b1j.h" // RecoMuonCollectionSelectorTight
-#include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelector.h" // RecoJetCollectionSelector
-#include "tthAnalysis/HiggsToTauTau/interface/RecoJetCollectionSelectorBtag.h" // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/RecoJetCollectionSelector_2mu1b1j.h" // RecoJetCollectionSelector
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/RecoJetCollectionSelectorBtag_2mu1b1j.h" // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h" // RunLumiEventSelector
 #include "tthAnalysis/HiggsToTauTau/interface/MuonHistManager.h" // MuonHistManager
 #include "tthAnalysis/HiggsToTauTau/interface/JetHistManager.h" // JetHistManager
@@ -256,7 +256,7 @@ int main(int argc, char* argv[])
         RecoMuonCollectionGenMatcher muonGenMatcher;
         RecoMuonCollectionSelectorLoose preselMuonSelector;
         RecoMuonCollectionSelectorFakeable fakeableMuonSelector(era);
-        RecoMuonCollectionSelectorTight_2mu1b1j tightMuonSelector(-1, run_lumi_eventSelector != 0);
+        RecoMuonCollectionSelectorTight_2mu1b1j tightMuonSelector(era, -1, run_lumi_eventSelector != 0);
 
         RecoJetReader* jetReader = new RecoJetReader(era, "nJet", "Jet");
         jetReader->setJetPt_central_or_shift(jetPt_option);
@@ -264,9 +264,9 @@ int main(int argc, char* argv[])
         jetReader->setBranchAddresses(inputTree);
         RecoJetCollectionGenMatcher jetGenMatcher;
         RecoJetCollectionCleaner jetCleaner(0.5);
-        RecoJetCollectionSelector jetSelector;
-        RecoJetCollectionSelectorBtagLoose jetSelectorBtagLoose;
-        RecoJetCollectionSelectorBtagMedium jetSelectorBtagMedium;
+        RecoJetCollectionSelector_2mu1b1j jetSelector;
+        RecoJetCollectionSelectorBtagLoose_2mu1b1j jetSelectorBtagLoose(era);
+        RecoJetCollectionSelectorBtagMedium_2mu1b1j jetSelectorBtagMedium(era);
 
         // GenLeptonReader* genLeptonReader = 0;
         // GenJetReader* genJetReader = 0;
