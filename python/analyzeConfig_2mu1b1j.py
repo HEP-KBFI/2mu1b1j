@@ -220,5 +220,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
         # self.addToMakefile_prep_dcard(lines_makefile)
         self.addToMakefile_clean(lines_makefile)
         self.createMakefile(lines_makefile)
+        self.datacardFiles['dummy'] = self.histogramFile_hadd_stage1
+
 
         logging.info("Done")
