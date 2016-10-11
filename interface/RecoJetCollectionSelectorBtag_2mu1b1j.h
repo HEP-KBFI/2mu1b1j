@@ -45,8 +45,8 @@ RecoJetSelectorBtagLoose_2mu1b1j(int era, int index = -1, bool debug = false)
 
 typedef ParticleCollectionSelector<RecoJet, RecoJetSelectorBtagLoose_2mu1b1j> RecoJetCollectionSelectorBtagLoose_2mu1b1j;
 
-class RecoJetSelectorBtagMedium
-        : public RecoJetSelectorBtag
+class RecoJetSelectorBtagMedium_2mu1b1j
+        : public RecoJetSelectorBtag_2mu1b1j
 {
 public:
 RecoJetSelectorBtagMedium_2mu1b1j(int era, int index = -1, bool debug = false)
