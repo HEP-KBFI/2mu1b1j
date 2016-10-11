@@ -1,4 +1,5 @@
 #include "analysis2mu1b1j/analysis2mu1b1j/interface/RecoMuonCollectionSelectorTight_2mu1b1j.h" // RecoMuonSelectorTight
+#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h" // kEra_2015, kEra_2016
 
 #include <cmath> // fabs
 
@@ -19,10 +20,10 @@ RecoMuonSelectorTight_2mu1b1j::RecoMuonSelectorTight_2mu1b1j(int era, int index,
 }
 
 
-bool RecoMuonSelectorTight::operator()(const RecoMuon& muon) const
+bool RecoMuonSelectorTight_2mu1b1j::operator()(const RecoMuon& muon) const
 {
         if ( debug_ ) {
-                std::cout << "<RecoMuonSelectorTight::operator()>:" << std::endl;
+                std::cout << "<RecoMuonSelectorTight_2mu1b1j::operator()>:" << std::endl;
                 std::cout << " muon: pT = " << muon.pt_ << ", eta = " << muon.eta_ << ", phi = " << muon.phi_ << ", charge = " << muon.charge_ << std::endl;
         }
         if ( muon.pt_ < min_pt_ ) {

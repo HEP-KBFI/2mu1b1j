@@ -3,7 +3,7 @@
 #include <cmath> // fabs
 
 RecoJetSelectorBtag_2mu1b1j::RecoJetSelectorBtag_2mu1b1j(int era, int index, bool debug)
-  : era_(era),
+  : era_(era)
   , min_pt_(25.)
   , max_absEta_(999.9) // 2.4 TODO change this back (Margus)
   , min_BtagCSV_(-1.e+3)
