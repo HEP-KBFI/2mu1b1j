@@ -19,6 +19,8 @@ RecoMuonSelectorTight_2mu1b1j::RecoMuonSelectorTight_2mu1b1j(int era, int index,
 
 bool RecoMuonSelectorTight_2mu1b1j::operator()(const RecoMuon& muon) const
 {
+        return true;
+        
         if ( debug_ ) {
                 std::cout << "<RecoMuonSelectorTight_2mu1b1j::operator()>:" << std::endl;
                 std::cout << " muon: pT = " << muon.pt_ << ", eta = " << muon.eta_ << ", phi = " << muon.phi_ << ", charge = " << muon.charge_ << std::endl;
