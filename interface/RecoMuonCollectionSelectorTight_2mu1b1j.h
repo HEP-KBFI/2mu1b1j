@@ -16,14 +16,6 @@ public:
         ~RecoMuonSelectorTight_2mu1b1j() {
         }
 
-        // enable/disable tight charge cut
-        void enable_tightCharge_cut() {
-                apply_tightCharge_ = true;
-        }
-        void disable_tightCharge_cut() {
-                apply_tightCharge_ = false;
-        }
-
         /**
          * @brief Check if muon given as function argument passes "tight" muon selection, defined in Table 12 of AN-2015/321
          * @return True if muon passes selection; false otherwise
@@ -42,10 +34,7 @@ protected:
         Double_t max_relIso_; ///< upper cut threshold on relative isolation
         Double_t max_sip3d_; ///< upper cut threshold on significance of IP
         bool apply_looseIdPOG_; ///< apply (True) or do not apply (False) loose PFMuon id selection
-        Double_t max_jetBtagCSV_; ///< upper cut threshold on CSV b-tagging discriminator value of nearby jet
         bool apply_mediumIdPOG_; ///< apply (True) or do not apply (False) medium PFMuon id selection
-        bool apply_tightCharge_; ///< apply (True) or do not apply (False) tight charge cut
-        Double_t min_mvaTTH_; ///< lower cut threshold on lepton MVA of ttH multilepton analysis
 };
 
 class RecoMuonCollectionSelectorTight_2mu1b1j
@@ -59,13 +48,6 @@ public:
         ~RecoMuonCollectionSelectorTight_2mu1b1j() {
         }
 
-        // enable/disable tight charge cut
-        void enable_tightCharge_cut() {
-                selector_.enable_tightCharge_cut();
-        }
-        void disable_tightCharge_cut() {
-                selector_.disable_tightCharge_cut();
-        }
 
         std::vector<const RecoMuon*> operator()(const std::vector<const RecoMuon*>&muons) const
         {

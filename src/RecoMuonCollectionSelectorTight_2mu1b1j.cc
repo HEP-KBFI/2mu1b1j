@@ -11,12 +11,9 @@ RecoMuonSelectorTight_2mu1b1j::RecoMuonSelectorTight_2mu1b1j(int era, int index,
         , max_dxy_(0.2) // distance from helix to vertex
         , max_dz_(0.5) // distance from helix to vertex
         , max_relIso_(0.1) // relative isolation compared with other particles
-        , apply_looseIdPOG_(true)
+        , apply_looseIdPOG_(false) // physics group standard agreement
         , apply_mediumIdPOG_(true)
 {
-        if      ( era_ == kEra_2015 ) max_jetBtagCSV_ = 0.89;
-        else if ( era_ == kEra_2016 ) max_jetBtagCSV_ = 0.80;
-        else assert(0);
 }
 
 
@@ -54,20 +51,8 @@ bool RecoMuonSelectorTight_2mu1b1j::operator()(const RecoMuon& muon) const
                 if ( debug_ ) std::cout << "FAILS looseIdPOG cut." << std::endl;
                 return false;
         }
-        if ( muon.jetBtagCSV_ > max_jetBtagCSV_ ) {
-                if ( debug_ ) std::cout << "FAILS jetBtagCSV cut." << std::endl;
-                return false;
-        }
         if ( apply_mediumIdPOG_ && !muon.passesMediumIdPOG_ ) {
                 if ( debug_ ) std::cout << "FAILS mediumIdPOG cut." << std::endl;
-                return false;
-        }
-        if ( apply_tightCharge_ && muon.tightCharge_ < 2 ) {
-                if ( debug_ ) std::cout << "FAILS tightCharge cut." << std::endl;
-                return false;
-        }
-        if ( muon.mvaRawTTH_ < min_mvaTTH_ ) {
-                if ( debug_ ) std::cout << "FAILS mvaTTH cut." << std::endl;
                 return false;
         }
         // muon passes all cuts
