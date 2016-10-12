@@ -64,8 +64,9 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
           central_or_shift: either 'central' or one of the systematic uncertainties defined in $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau/bin/analyze_2mu1b1j.cc
         """
         lines = []
+        #lines.append("process.fwliteOutput.fileName = cms.string('%s')" % outputFile)
         lines.append("process.fwliteInput.fileNames = cms.vstring(%s)" % inputFiles)
-        lines.append("process.fwliteOutput.fileName = cms.string('%s')" % outputFile)
+        lines.append("process.fwliteOutput.fileName = cms.string('%s')" % os.path.basename(outputFile))
         lines.append("process.analyze_2mu1b1j.process = cms.string('%s')" % sample_category)
         lines.append("process.analyze_2mu1b1j.use_triggers_1mu = cms.bool(%s)" % ("1mu" in triggers))
         lines.append("process.analyze_2mu1b1j.use_triggers_2mu = cms.bool(%s)" % ("2mu" in triggers))
