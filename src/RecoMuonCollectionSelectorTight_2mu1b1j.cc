@@ -11,6 +11,7 @@ RecoMuonSelectorTight_2mu1b1j::RecoMuonSelectorTight_2mu1b1j(int era, int index,
         , max_dxy_(0.2) // distance from helix to vertex
         , max_dz_(0.5) // distance from helix to vertex
         , max_relIso_(0.1) // relative isolation compared with other particles
+        , max_sip3d_(8.)
         , apply_looseIdPOG_(false) // physics group standard agreement
         , apply_mediumIdPOG_(true)
 {
@@ -51,10 +52,10 @@ bool RecoMuonSelectorTight_2mu1b1j::operator()(const RecoMuon& muon) const
                 if ( debug_ ) std::cout << "FAILS looseIdPOG cut." << std::endl;
                 return false;
         }
-        // if ( apply_mediumIdPOG_ && !muon.passesMediumIdPOG_ ) {
-        //         if ( debug_ ) std::cout << "FAILS mediumIdPOG cut." << std::endl;
-        //         return false;
-        // }
+        if ( apply_mediumIdPOG_ && !muon.passesMediumIdPOG_ ) {
+                if ( debug_ ) std::cout << "FAILS mediumIdPOG cut." << std::endl;
+                return false;
+        }
         // muon passes all cuts
         return true;
 }
