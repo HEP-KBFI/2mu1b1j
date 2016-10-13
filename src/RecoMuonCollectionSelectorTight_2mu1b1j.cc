@@ -39,18 +39,18 @@ bool RecoMuonSelectorTight_2mu1b1j::operator()(const RecoMuon& muon) const
                 if ( debug_ ) std::cout << "FAILS dz cut." << std::endl;
                 return false;
         }
-        // if ( muon.relIso_ > max_relIso_ ) {
-        //         if ( debug_ ) std::cout << "FAILS relIso cut." << std::endl;
-        //         return false;
-        // }
-        // if ( muon.sip3d_ > max_sip3d_ ) {
-        //         if ( debug_ ) std::cout << "FAILS sip3d cut." << std::endl;
-        //         return false;
-        // }
-        // if ( apply_looseIdPOG_ && !muon.passesLooseIdPOG_ ) {
-        //         if ( debug_ ) std::cout << "FAILS looseIdPOG cut." << std::endl;
-        //         return false;
-        // }
+        if ( muon.relIso_ > max_relIso_ ) {
+                if ( debug_ ) std::cout << "FAILS relIso cut." << std::endl;
+                return false;
+        }
+        if ( muon.sip3d_ > max_sip3d_ ) {
+                if ( debug_ ) std::cout << "FAILS sip3d cut." << std::endl;
+                return false;
+        }
+        if ( apply_looseIdPOG_ && !muon.passesLooseIdPOG_ ) {
+                if ( debug_ ) std::cout << "FAILS looseIdPOG cut." << std::endl;
+                return false;
+        }
         // if ( apply_mediumIdPOG_ && !muon.passesMediumIdPOG_ ) {
         //         if ( debug_ ) std::cout << "FAILS mediumIdPOG cut." << std::endl;
         //         return false;
