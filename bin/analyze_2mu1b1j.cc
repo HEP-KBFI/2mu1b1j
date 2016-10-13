@@ -761,19 +761,28 @@ int main(int argc, char* argv[])
 
                 // 2. one b–tagged jet pT > 30 GeV, |η| < 2.4 and no other jets with pT > 30 GeV, |η| < 2.4. Jet is tagged with CSV MVA algorithm and is required to have the b–tagging discriminator value greater that 0.783;
 
-                bool bTaggedJetWithPtOver30AndEtaLessThan24Count = 0;
+                int bTaggedJetWithPtOver30AndEtaLessThan24Count = 0;
                 for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
                         const RecoJet* bJet = selBJets_medium.at(i);
                         if (bJet->pt_ > 30 && bJet->eta_ < 2.4) {
                                   bTaggedJetWithPtOver30AndEtaLessThan24Count++;
                         }
                 }
-                bool hasCategoryACriteria2Passed = bTaggedJetWithPtOver30AndEtaLessThan24Count == 1;
+
+                int jetsWithPtOver30AndEtaLessThan24Count = 0;
+                for (unsigned int i = 0; i < selJets.size(); i++) {
+                        const RecoJet* jet = selJets.at(i);
+                        if (jet->pt_ > 30 && jet->eta_ < 2.4) {
+                                  jetsWithPtOver30AndEtaLessThan24Count++;
+                        }
+                }
+
+                bool hasCategoryACriteria2Passed = (bTaggedJetWithPtOver30AndEtaLessThan24Count == 1) && (jetsWithPtOver30AndEtaLessThan24Count == 1); // jetsWithPtOver30AndEtaLessThan24Count contains btagged jets
 
 
                 // 3. at least one jet pT > 30 GeV, |η| > 2.4;
 
-                bool jetCountWithPtOver30AndEtaBigger24Count = 0;
+                int jetCountWithPtOver30AndEtaBigger24Count = 0;
                 for (unsigned int i = 0; i < selJets.size(); i++) {
                         const RecoJet* selJet = selJets.at(i);
                         if (selJet->pt_ > 30 && selJet->eta_ > 2.4) {
@@ -812,6 +821,16 @@ int main(int argc, char* argv[])
                         cutFlowTable.update("isCategoryAEvent", evtWeight);
                 }
 
+                // Category A compare criterias
+                //
+
+                // 0b, 1j barrel, 1j forward
+
+                bool has1JetInBarrel == jetCountWithPtOver30AndEtaBigger24Count == 1;
+                bool has1JetForward ==
+
+
+
 
                 // category B criterias
                 // ====================
@@ -824,13 +843,6 @@ int main(int argc, char* argv[])
 
                 // 2. two jets with pT > 30 GeV, |η| < 2.4 with at least one b–tagged jet. Jet tagging criteria are the same as for the first excess observation;
 
-                int jetsWithPtOver30AndEtaLessThan24Count = 0;
-                for (unsigned int i = 0; i < selJets.size(); i++) {
-                        const RecoJet* jet = selJets.at(i);
-                        if (jet->pt_ > 30 && jet->eta_ < 2.4) {
-                                  jetsWithPtOver30AndEtaLessThan24Count++;
-                        }
-                }
                 bool hasCategoryBCriteria2Passed = (jetsWithPtOver30AndEtaLessThan24Count >= 2) && (bTaggedJetWithPtOver30AndEtaLessThan24Count >= 1);
 
 
@@ -883,6 +895,8 @@ int main(int argc, char* argv[])
                 }
 
                 cutFlowTable.update("control check (id: 005)", evtWeight);
+
+
 
 
                 // if ( isSignal ) {
