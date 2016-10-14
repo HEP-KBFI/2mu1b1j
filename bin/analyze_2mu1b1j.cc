@@ -362,10 +362,20 @@ int main(int argc, char* argv[])
                                                                      central_or_shift));
         categoryAHistManager.bookHistograms(fs);
 
+        EvtHistManager_2mu1b1jCategory categoryACompareHistManager(makeHistManager_cfg(process_string,
+                                                                     Form("2mu1b1jCategoryACompare_%s/sel/evt", leptonSelection_string.data()),
+                                                                     central_or_shift));
+        categoryACompareHistManager.bookHistograms(fs);
+
         EvtHistManager_2mu1b1jCategory categoryBHistManager(makeHistManager_cfg(process_string,
                                                                      Form("2mu1b1jCategoryB_%s/sel/evt", leptonSelection_string.data()),
                                                                      central_or_shift));
         categoryBHistManager.bookHistograms(fs);
+
+        EvtHistManager_2mu1b1jCategory categoryBCompareHistManager(makeHistManager_cfg(process_string,
+                                                                     Form("2mu1b1jCategoryBCompare_%s/sel/evt", leptonSelection_string.data()),
+                                                                     central_or_shift));
+        categoryBCompareHistManager.bookHistograms(fs);
 
 
         int numEntries = inputTree->GetEntries();
@@ -747,20 +757,9 @@ int main(int argc, char* argv[])
                                                  massOfOppositeChargeMuons,
                                                  evtWeight);
 
-                                                 
 
 
-                // category A criterias
-                // ====================
-                //
-                // 1. two opposite sign muons with pT > 25 GeV, |η| < 2.1 with tight muon identification and loose tracker isolation
-
-                bool hasTwoMuonsWithPtOver25 = selMuon_lead->pt_ > 25 && selMuon_sublead->pt_ > 25;
-                bool hasTwoMuonsWithAbsValueOfEtaSmallerThan21 = abs(selMuon_lead->eta_) < 2.1 && abs(selMuon_sublead->eta_) < 2.1;
-                bool hasCategoryACriteria1Passed = hasTwoMuonsWithPtOver25 && hasTwoMuonsWithAbsValueOfEtaSmallerThan21;
-
-
-                // 2. one b–tagged jet pT > 30 GeV, |η| < 2.4 and no other jets with pT > 30 GeV, |η| < 2.4. Jet is tagged with CSV MVA algorithm and is required to have the b–tagging discriminator value greater that 0.783;
+                // populate needed counters
 
                 int bTaggedJetWithPtOver30AndEtaLessThan24Count = 0;
                 for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
@@ -778,11 +777,6 @@ int main(int argc, char* argv[])
                         }
                 }
 
-                bool hasCategoryACriteria2Passed = (bTaggedJetWithPtOver30AndEtaLessThan24Count == 1) && (jetsWithPtOver30AndEtaLessThan24Count == 1); // jetsWithPtOver30AndEtaLessThan24Count contains btagged jets
-
-
-                // 3. at least one jet pT > 30 GeV, |η| > 2.4;
-
                 int jetCountWithPtOver30AndEtaBigger24Count = 0;
                 for (unsigned int i = 0; i < selJets.size(); i++) {
                         const RecoJet* selJet = selJets.at(i);
@@ -790,6 +784,34 @@ int main(int argc, char* argv[])
                                   jetCountWithPtOver30AndEtaBigger24Count++;
                         }
                 }
+
+                int bTaggedJetWithPtOver30AndEtaMoreThan24Count = 0;
+                for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
+                        const RecoJet* bJet = selBJets_medium.at(i);
+                        if (bJet->pt_ > 30 && abs(bJet->eta_) > 2.4) {
+                                  bTaggedJetWithPtOver30AndEtaMoreThan24Count++;
+                        }
+                }
+
+
+
+                // category A criterias
+                // ====================
+                //
+                // 1. two opposite sign muons with pT > 25 GeV, |η| < 2.1 with tight muon identification and loose tracker isolation
+
+                bool hasTwoMuonsWithPtOver25 = selMuon_lead->pt_ > 25 && selMuon_sublead->pt_ > 25;
+                bool hasTwoMuonsWithAbsValueOfEtaSmallerThan21 = abs(selMuon_lead->eta_) < 2.1 && abs(selMuon_sublead->eta_) < 2.1;
+                bool hasCategoryACriteria1Passed = hasTwoMuonsWithPtOver25 && hasTwoMuonsWithAbsValueOfEtaSmallerThan21;
+
+
+                // 2. one b–tagged jet pT > 30 GeV, |η| < 2.4 and no other jets with pT > 30 GeV, |η| < 2.4. Jet is tagged with CSV MVA algorithm and is required to have the b–tagging discriminator value greater that 0.783;
+
+                bool hasCategoryACriteria2Passed = (bTaggedJetWithPtOver30AndEtaLessThan24Count == 1) && (jetsWithPtOver30AndEtaLessThan24Count == 1); // jetsWithPtOver30AndEtaLessThan24Count contains btagged jets
+
+
+                // 3. at least one jet pT > 30 GeV, |η| > 2.4;
+
                 bool hasCategoryACriteria3Passed = jetCountWithPtOver30AndEtaBigger24Count > 0;
 
 
@@ -822,14 +844,22 @@ int main(int argc, char* argv[])
                         cutFlowTable.update("isCategoryAEvent", evtWeight);
                 }
 
-                // Category A compare criterias
+
+
+                // category A compare criterias
                 //
 
                 // 0b, 1j barrel, 1j forward
 
-                bool has1JetInBarrel == jetCountWithPtOver30AndEtaBigger24Count == 1;
-                bool has1JetForward ==
+                bool has1JetInBarrel == jetsWithPtOver30AndEtaLessThan24Count == 1;
+                bool has1JetForward == jetCountWithPtOver30AndEtaBigger24Count == 1;
 
+                bool isCategoryACompareEvent == has1JetInBarrel && has1JetForward;
+
+                if (isCategoryACompareEvent) {
+                        categoryACompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
+                        cutFlowTable.update("isCategoryACompareEvent", evtWeight);
+                }
 
 
 
@@ -897,6 +927,22 @@ int main(int argc, char* argv[])
 
                 cutFlowTable.update("control check (id: 005)", evtWeight);
 
+
+
+                // Category B compare criterias
+                //
+
+                // 0b, 2j barrel, 0j forward
+
+                bool has2JetsInBarrel == jetsWithPtOver30AndEtaLessThan24Count == 2;
+                bool has0JetsInForward == jetCountWithPtOver30AndEtaBigger24Count == 0;
+
+                bool isCategoryBCompareEvent == has2JetsInBarrel && has0JetsInForward;
+
+                if (isCategoryBCompareEvent) {
+                        categoryBCompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
+                        cutFlowTable.update("isCategoryBCompareEvent", evtWeight);
+                }
 
 
 
