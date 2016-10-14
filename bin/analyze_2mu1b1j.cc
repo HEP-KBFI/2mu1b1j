@@ -851,10 +851,10 @@ int main(int argc, char* argv[])
 
                 // 0b, 1j barrel, 1j forward
 
-                bool has1JetInBarrel == jetsWithPtOver30AndEtaLessThan24Count == 1;
-                bool has1JetForward == jetCountWithPtOver30AndEtaBigger24Count == 1;
+                bool has1JetInBarrel = jetsWithPtOver30AndEtaLessThan24Count == 1;
+                bool has1JetForward = jetCountWithPtOver30AndEtaBigger24Count == 1;
 
-                bool isCategoryACompareEvent == has1JetInBarrel && has1JetForward;
+                bool isCategoryACompareEvent = has1JetInBarrel && has1JetForward;
 
                 if (isCategoryACompareEvent) {
                         categoryACompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
@@ -934,10 +934,10 @@ int main(int argc, char* argv[])
 
                 // 0b, 2j barrel, 0j forward
 
-                bool has2JetsInBarrel == jetsWithPtOver30AndEtaLessThan24Count == 2;
-                bool has0JetsInForward == jetCountWithPtOver30AndEtaBigger24Count == 0;
+                bool has2JetsInBarrel = jetsWithPtOver30AndEtaLessThan24Count == 2;
+                bool has0JetsInForward = jetCountWithPtOver30AndEtaBigger24Count == 0;
 
-                bool isCategoryBCompareEvent == has2JetsInBarrel && has0JetsInForward;
+                bool isCategoryBCompareEvent = has2JetsInBarrel && has0JetsInForward;
 
                 if (isCategoryBCompareEvent) {
                         categoryBCompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
