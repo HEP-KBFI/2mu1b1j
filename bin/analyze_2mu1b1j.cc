@@ -747,6 +747,7 @@ int main(int argc, char* argv[])
                                                  massOfOppositeChargeMuons,
                                                  evtWeight);
 
+                                                 
 
 
                 // category A criterias
@@ -764,7 +765,7 @@ int main(int argc, char* argv[])
                 int bTaggedJetWithPtOver30AndEtaLessThan24Count = 0;
                 for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
                         const RecoJet* bJet = selBJets_medium.at(i);
-                        if (bJet->pt_ > 30 && bJet->eta_ < 2.4) {
+                        if (bJet->pt_ > 30 && abs(bJet->eta_) < 2.4) {
                                   bTaggedJetWithPtOver30AndEtaLessThan24Count++;
                         }
                 }
@@ -772,7 +773,7 @@ int main(int argc, char* argv[])
                 int jetsWithPtOver30AndEtaLessThan24Count = 0;
                 for (unsigned int i = 0; i < selJets.size(); i++) {
                         const RecoJet* jet = selJets.at(i);
-                        if (jet->pt_ > 30 && jet->eta_ < 2.4) {
+                        if (jet->pt_ > 30 && abs(jet->eta_) < 2.4) {
                                   jetsWithPtOver30AndEtaLessThan24Count++;
                         }
                 }
@@ -785,7 +786,7 @@ int main(int argc, char* argv[])
                 int jetCountWithPtOver30AndEtaBigger24Count = 0;
                 for (unsigned int i = 0; i < selJets.size(); i++) {
                         const RecoJet* selJet = selJets.at(i);
-                        if (selJet->pt_ > 30 && selJet->eta_ > 2.4) {
+                        if (selJet->pt_ > 30 && abs(selJet->eta_) > 2.4) {
                                   jetCountWithPtOver30AndEtaBigger24Count++;
                         }
                 }
