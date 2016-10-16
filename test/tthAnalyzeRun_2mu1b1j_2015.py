@@ -1,7 +1,7 @@
 import os, logging, sys, getpass
 
 from analysis2mu1b1j.analysis2mu1b1j.tthAnalyzeSamples_2mu1b1j_2015 import samples_2015
-from analysis2mu1b1j.analysis2mu1b1j.analyzeConfig_2mu1b1j_2015 import analyzeConfig_2mu1b1j
+from analysis2mu1b1j.analysis2mu1b1j.analyzeConfig_2mu1b1j import analyzeConfig_2mu1b1j
 from tthAnalysis.HiggsToTauTau.jobTools import query_yes_no
 
 
