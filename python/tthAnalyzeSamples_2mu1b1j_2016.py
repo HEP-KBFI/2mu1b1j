@@ -17,7 +17,7 @@ allowed_datasets = [
     "/SingleMuon/Run2016G-PromptReco-v1/MINIAOD"
 ]
 
-for sample_name, sample_info in samples_2015.items():
+for sample_name, sample_info in samples_2016.items():
     # if sample_info["type"] == "mc":
     #    sample_info["triggers"] = [ "1e", "1mu" ]
 
