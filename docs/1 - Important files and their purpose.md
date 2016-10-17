@@ -44,9 +44,10 @@ python tthAnalyzeRun_2mu1b1j_2016.py
 ```
 
 
-## How do I cancel tests
+## Other important commands
 
 ```bash
+squeue -u margusp
 scancel -u margusp
 ```
 
