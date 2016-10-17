@@ -45,7 +45,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
         # print "self.dirs = ", self.dirs
 
         self.cfgFile_analyze_original = os.path.join(
-            self.workingDir, "analyze_2mu1b1j_cfg.py")
+            self.workingDir, "analyze_2mu1b1j_cfg_"+era+".py")
         self.histogramDir_prep_dcard = "2mu1b1j_Tight"
         self.select_rle_output = select_rle_output
         self.select_root_output = select_root_output
