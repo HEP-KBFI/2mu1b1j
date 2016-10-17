@@ -447,11 +447,11 @@ int main(int argc, char* argv[])
                         }
                         continue;
                 }
+                cutFlowTable.update(">= 2 jets");
 
                 const RecoJet* selJet_lead = selJets[0];
                 const RecoJet* selJet_sublead = selJets[1];
 
-                cutFlowTable.update(">= 2 jets (1)");
 
 
 
@@ -518,20 +518,20 @@ int main(int argc, char* argv[])
                 }
                 cutFlowTable.update(">= 2 jets (2)", evtWeight);
 
-                // at least 1 medium b-jet (if there is 1, there must be a second one that was not registered)
-                if ( !(selBJets_medium.size() >= 1)) {
-                        if ( run_lumi_eventSelector ) {
-                                std::cout << "event FAILS selBJets selection." << std::endl;
-                                std::cout << " (#selBJets_medium = " << selBJets_medium.size() << ")" << std::endl;
-
-                                for ( size_t idxSelBJet_medium = 0; idxSelBJet_medium < selBJets_medium.size(); ++idxSelBJet_medium ) {
-                                        std::cout << "selJet #" << idxSelBJet_medium << ":" << std::endl;
-                                        std::cout << (*selJets[idxSelBJet_medium]);
-                                }
-                        }
-                        continue;
-                }
-                cutFlowTable.update(">= 1 medium b-jet (2)", evtWeight);
+                // // at least 1 medium b-jet (if there is 1, there must be a second one that was not registered)
+                // if ( !(selBJets_medium.size() >= 1)) {
+                //         if ( run_lumi_eventSelector ) {
+                //                 std::cout << "event FAILS selBJets selection." << std::endl;
+                //                 std::cout << " (#selBJets_medium = " << selBJets_medium.size() << ")" << std::endl;
+                //
+                //                 for ( size_t idxSelBJet_medium = 0; idxSelBJet_medium < selBJets_medium.size(); ++idxSelBJet_medium ) {
+                //                         std::cout << "selJet #" << idxSelBJet_medium << ":" << std::endl;
+                //                         std::cout << (*selJets[idxSelBJet_medium]);
+                //                 }
+                //         }
+                //         continue;
+                // }
+                // cutFlowTable.update(">= 1 medium b-jet (2)", evtWeight);
 
                 // muon pt cuts
                 double minPt = 25.;
