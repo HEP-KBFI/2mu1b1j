@@ -146,52 +146,8 @@ int main(int argc, char* argv[])
           << "Invalid Configuration parameter 'era' = " << era_string << " !!\n";
 
 
-
-        // currently commented out because using "central" and !isMC
-
-        // if ( isMC && central_or_shift != "central" ) {
-        //         TString central_or_shift_tstring = central_or_shift.data();
-        //         std::string shiftUp_or_Down = "";
-        //         if      ( central_or_shift_tstring.EndsWith("Up")   ) shiftUp_or_Down = "Up";
-        //         else if ( central_or_shift_tstring.EndsWith("Down") ) shiftUp_or_Down = "Down";
-        //         else throw cms::Exception("analyze_2mu1b1j")
-        //                       << "Invalid Configuration parameter 'central_or_shift' = " << central_or_shift << " !!\n";
-        //         if      ( central_or_shift_tstring.BeginsWith("CMS_ttHl_btag_HF")       ) jet_btagWeight_branch = "Jet_bTagWeightHF" + shiftUp_or_Down;
-        //         else if ( central_or_shift_tstring.BeginsWith("CMS_ttHl_btag_HFStats1") ) jet_btagWeight_branch = "Jet_bTagWeightHFStats1" + shiftUp_or_Down;
-        //         else if ( central_or_shift_tstring.BeginsWith("CMS_ttHl_btag_HFStats2") ) jet_btagWeight_branch = "Jet_bTagWeightHFStats2" + shiftUp_or_Down;
-        //         else if ( central_or_shift_tstring.BeginsWith("CMS_ttHl_btag_LF")       ) jet_btagWeight_branch = "Jet_bTagWeightLF" + shiftUp_or_Down;
-        //         else if ( central_or_shift_tstring.BeginsWith("CMS_ttHl_btag_LFStats1") ) jet_btagWeight_branch = "Jet_bTagWeightLFStats1" + shiftUp_or_Down;
-        //         else if ( central_or_shift_tstring.BeginsWith("CMS_ttHl_btag_LFStats2") ) jet_btagWeight_branch = "Jet_bTagWeightLFStats2" + shiftUp_or_Down;
-        //         else if ( central_or_shift_tstring.BeginsWith("CMS_ttHl_btag_cErr1")    ) jet_btagWeight_branch = "Jet_bTagWeightcErr1" + shiftUp_or_Down;
-        //         else if ( central_or_shift_tstring.BeginsWith("CMS_ttHl_btag_cErr2")    ) jet_btagWeight_branch = "Jet_bTagWeightcErr2" + shiftUp_or_Down;
-        //         else if ( central_or_shift_tstring.BeginsWith("CMS_ttHl_JES") ) {
-        //                 jet_btagWeight_branch = "Jet_bTagWeightJES" + shiftUp_or_Down;
-        //                 if      ( shiftUp_or_Down == "Up"   ) jetPt_option = RecoJetReader::kJetPt_jecUp;
-        //                 else if ( shiftUp_or_Down == "Down" ) jetPt_option = RecoJetReader::kJetPt_jecDown;
-        //                 else assert(0);
-        //         } else throw cms::Exception("analyze_2mu1b1j")
-        //                       << "Invalid Configuration parameter 'central_or_shift' = " << central_or_shift << " !!\n";
-        // }
-
-
-        // currently commented out because selEventsFileName_input == ""
-
-        // std::string selEventsFileName_input = cfg_analyze.getParameter<std::string>("selEventsFileName_input");
-        // std::cout << "selEventsFileName_input = " << selEventsFileName_input << std::endl;
-
         RunLumiEventSelector* run_lumi_eventSelector = 0;
-        // if ( selEventsFileName_input != "" ) {
-        //         edm::ParameterSet cfgRunLumiEventSelector;
-        //         cfgRunLumiEventSelector.addParameter<std::string>("inputFileName", selEventsFileName_input);
-        //         cfgRunLumiEventSelector.addParameter<std::string>("separator", ":");
-        //         run_lumi_eventSelector = new RunLumiEventSelector(cfgRunLumiEventSelector);
-        // }
 
-
-        // # Start reading events
-        //
-        // FWLite (pronounced "framework-light") is just that -- a ROOT session with CMS data format libraries loaded
-        // https://cmssdt.cern.ch/SDT/doxygen/CMSSW_6_2_9/doc/html/d2/d77/classfwlite_1_1InputSource.html#af3867def6afcc5a7b976e0182f3d339f
 
         fwlite::InputSource inputFiles(cfg);
         int maxEvents = inputFiles.maxEvents();
@@ -253,7 +209,7 @@ int main(int argc, char* argv[])
 
         RecoMuonReader* muonReader = new RecoMuonReader(era, "nselLeptons", "selLeptons");
         muonReader->setBranchAddresses(inputTree);
-        RecoMuonCollectionGenMatcher muonGenMatcher;
+        // RecoMuonCollectionGenMatcher muonGenMatcher;
         RecoMuonCollectionSelectorLoose preselMuonSelector;
         RecoMuonCollectionSelectorFakeable fakeableMuonSelector(era);
         RecoMuonCollectionSelectorTight_2mu1b1j tightMuonSelector(era, -1, run_lumi_eventSelector != 0);
@@ -267,15 +223,6 @@ int main(int argc, char* argv[])
         RecoJetCollectionSelector_2mu1b1j jetSelector;
         RecoJetCollectionSelectorBtagLoose_2mu1b1j jetSelectorBtagLoose(era);
         RecoJetCollectionSelectorBtagMedium_2mu1b1j jetSelectorBtagMedium(era);
-
-        // GenLeptonReader* genLeptonReader = 0;
-        // GenJetReader* genJetReader = 0;
-        // if ( isMC ) {
-        //         genLeptonReader = new GenLeptonReader("nGenLep", "GenLep");
-        //         genLeptonReader->setBranchAddresses(inputTree);
-        //         genJetReader = new GenJetReader("nGenJet", "GenJet");
-        //         genJetReader->setBranchAddresses(inputTree);
-        // }
 
 
         //--- open output file containing run:lumi:event numbers of events passing final event selection criteria
@@ -468,28 +415,6 @@ int main(int argc, char* argv[])
                 std::vector<GenLepton> genMuons;
                 std::vector<GenJet> genJets;
 
-                // if ( isMC ) {
-                //         genLeptons = genLeptonReader->read();
-                //         for ( std::vector<GenLepton>::const_iterator genLepton = genLeptons.begin();
-                //               genLepton != genLeptons.end(); ++genLepton ) {
-                //                 int abs_pdgId = std::abs(genLepton->pdgId_);
-                //                 if      ( abs_pdgId == 11 ) genElectrons.push_back(*genLepton);
-                //                 else if ( abs_pdgId == 13 ) genMuons.push_back(*genLepton);
-                //         }
-                //         genHadTaus = genHadTauReader->read();
-                //         genJets = genJetReader->read();
-                // }
-
-                //--- match reconstructed to generator level particles
-                // if ( isMC ) {
-                //         muonGenMatcher.addGenLeptonMatch(preselMuons, genLeptons, 0.3);
-                //         muonGenMatcher.addGenHadTauMatch(preselMuons, genHadTaus, 0.3);
-                //         muonGenMatcher.addGenJetMatch(preselMuons, genJets, 0.5);
-                //
-                //         jetGenMatcher.addGenLeptonMatch(selJets, genLeptons, 0.3);
-                //         jetGenMatcher.addGenHadTauMatch(selJets, genHadTaus, 0.3);
-                //         jetGenMatcher.addGenJetMatch(selJets, genJets, 0.5);
-                // }
 
                 //--- apply preselection
                 std::sort(preselMuons.begin(), preselMuons.end(), isHigherPt);
@@ -515,7 +440,7 @@ int main(int argc, char* argv[])
 
                 std::sort(selJets.begin(), selJets.end(), isHigherPt);
 
-                if ( !(selJets.size() >= 2) ) {
+                if ( selJets.size() < 2 ) {
                         if ( run_lumi_eventSelector ) {
                                 std::cout << "event FAILS selJets selection." << std::endl;
                                 std::cout << " (#selJets = " << selJets.size() << ")" << std::endl;
@@ -529,7 +454,7 @@ int main(int argc, char* argv[])
                 cutFlowTable.update(">= 2 jets (1)");
 
 
-                if ( !(selBJets_medium.size() >= 1) ) {
+                if ( selBJets_medium.size() < 1 ) {
                         if ( run_lumi_eventSelector ) {
                                 std::cout << "event FAILS selBJets selection." << std::endl;
                                 std::cout << "(#selBJets_medium = " << selBJets_medium.size() << ")" << std::endl;
@@ -543,26 +468,6 @@ int main(int argc, char* argv[])
                 //   (using the method "Event reweighting using scale factors calculated with a tag and probe method",
                 //    described on the BTV POG twiki https://twiki.cern.ch/twiki/bin/view/CMS/BTagShapeCalibration )
                 double evtWeight = 1.;
-                // if ( isMC ) {
-                //         evtWeight *= lumiScale;
-                //         evtWeight *= pileupWeight;
-                //         for ( std::vector<const RecoJet*>::const_iterator jet = selJets.begin();
-                //               jet != selJets.end(); ++jet ) {
-                //                 evtWeight *= (*jet)->BtagWeight_;
-                //         }
-                // }
-
-                //--- apply data/MC corrections for trigger efficiency,
-                //    and efficiencies for lepton to pass loose identification and isolation criteria
-                // if ( isMC ) {
-                //         evtWeight *= sf_triggerEff(2,
-                //                                    preselMuon_lead_type, preselMuon_lead->pt_, preselMuon_lead->eta_,
-                //                                    preselMuon_sublead_type, preselMuon_sublead->pt_, preselMuon_sublead->eta_);
-                //
-                //         evtWeight *= sf_leptonID_and_Iso_loose(2,
-                //                                                preselMuon_lead_type, preselMuon_lead->pt_, preselMuon_lead->eta_,
-                //                                                preselMuon_sublead_type, preselMuon_sublead->pt_, preselMuon_sublead->eta_);
-                // }
 
 
                 // check that muons have opposite charge
@@ -607,17 +512,6 @@ int main(int argc, char* argv[])
                 const RecoMuon* selMuon_lead = selMuons[0];
                 const RecoMuon* selMuon_sublead = selMuons[1];
 
-                // require 2 selMuons
-                if ( !(selMuons.size() == 2) ) {
-                        if ( run_lumi_eventSelector ) {
-                                std::cout << "event FAILS trigger selection for given selMuons multiplicity."
-                                          << std::endl;
-                                std::cout << " (#selMuons = " << selMuons.size()
-                                          << ")" << std::endl;
-                        }
-                        continue;
-                }
-                cutFlowTable.update("selMuons == 2");
 
                 // apply requirement on jets (incl. b-tagged jets)
                 if ( !(selJets.size() >= 2) ) {
@@ -676,74 +570,6 @@ int main(int argc, char* argv[])
                 }
                 cutFlowTable.update("sel lepton charge");
 
-                // what does leptonSelection == kFakeable means, what is tightMuons cut here? We require == 2 muons in earlier code
-                if ( leptonSelection == kFakeable ) {
-                        if ( tightMuons.size() != 2 ) {
-                                if ( run_lumi_eventSelector ) {
-                                        std::cout << "event FAILS tightMuons selection." << std::endl;
-                                        std::cout << " (#tightMuons = " << tightMuons.size() << ")" << std::endl;
-                                }
-                                continue;   // CV: avoid overlap with signal region
-                        }
-                }
-                cutFlowTable.update("passed tightmuons == 2", evtWeight);
-
-
-
-                // //--- apply data/MC corrections for efficiencies of leptons passing the loose identification and isolation criteria
-                // //    to also pass the tight identification and isolation criteria
-                // if ( isMC ) {
-                //         double sf_tight_to_loose = 1.;
-                //         if ( leptonSelection == kFakeable ) {
-                //                 sf_tight_to_loose = sf_leptonID_and_Iso_fakeable_to_loose(3,
-                //                                                                           preselLepton_lead_type, preselLepton_lead->pt_, preselLepton_lead->eta_,
-                //                                                                           preselLepton_sublead_type, preselLepton_sublead->pt_, preselLepton_sublead->eta_,
-                //                                                                           preselLepton_third_type, preselLepton_third->pt_, preselLepton_third->eta_);
-                //         } else if ( leptonSelection == kTight ) {
-                //                 sf_tight_to_loose = sf_leptonID_and_Iso_tight_to_loose(3,
-                //                                                                        preselLepton_lead_type, preselLepton_lead->pt_, preselLepton_lead->eta_,
-                //                                                                        preselLepton_sublead_type, preselLepton_sublead->pt_, preselLepton_sublead->eta_,
-                //                                                                        preselLepton_third_type, preselLepton_third->pt_, preselLepton_third->eta_);
-                //         }
-                //         evtWeight *= sf_tight_to_loose;
-                // }
-                //
-                // if ( leptonSelection == kFakeable ) {
-                //         TH2* lutFakeRate_lead = 0;
-                //         if      ( std::abs(selLepton_lead->pdgId_) == 11 ) lutFakeRate_lead = lutFakeRate_e;
-                //         else if ( std::abs(selLepton_lead->pdgId_) == 13 ) lutFakeRate_lead = lutFakeRate_mu;
-                //         assert(lutFakeRate_lead);
-                //         double prob_fake_lead = get_sf_from_TH2(lutFakeRate_lead, selLepton_lead->pt_, selLepton_lead->eta_);
-                //
-                //         TH2* lutFakeRate_sublead = 0;
-                //         if      ( std::abs(selLepton_sublead->pdgId_) == 11 ) lutFakeRate_sublead = lutFakeRate_e;
-                //         else if ( std::abs(selLepton_sublead->pdgId_) == 13 ) lutFakeRate_sublead = lutFakeRate_mu;
-                //         assert(lutFakeRate_sublead);
-                //         double prob_fake_sublead = get_sf_from_TH2(lutFakeRate_sublead, selLepton_sublead->pt_, selLepton_sublead->eta_);
-                //
-                //         TH2* lutFakeRate_third = 0;
-                //         if      ( std::abs(selLepton_third->pdgId_) == 11 ) lutFakeRate_third = lutFakeRate_e;
-                //         else if ( std::abs(selLepton_third->pdgId_) == 13 ) lutFakeRate_third = lutFakeRate_mu;
-                //         assert(lutFakeRate_third);
-                //         double prob_fake_third = get_sf_from_TH2(lutFakeRate_third, selLepton_third->pt_, selLepton_third->eta_);
-                //
-                //         bool passesTight_lead = isMatched(*selLepton_lead, tightElectrons) || isMatched(*selLepton_lead, tightMuons);
-                //         bool passesTight_sublead = isMatched(*selLepton_sublead, tightElectrons) || isMatched(*selLepton_sublead, tightMuons);
-                //         bool passesTight_third = isMatched(*selLepton_third, tightElectrons) || isMatched(*selLepton_third, tightMuons);
-                //
-                //         double p1 = prob_fake_lead/(1. - prob_fake_lead);
-                //         double p2 = prob_fake_sublead/(1. - prob_fake_sublead);
-                //         double p3 = prob_fake_third/(1. - prob_fake_third);
-                //         double evtWeight_tight_to_loose = 0.;
-                //         if      ( !passesTight_lead &&  passesTight_sublead &&  passesTight_third ) evtWeight_tight_to_loose =  p1;
-                //         else if (  passesTight_lead && !passesTight_sublead &&  passesTight_third ) evtWeight_tight_to_loose =  p2;
-                //         else if (  passesTight_lead &&  passesTight_sublead && !passesTight_third ) evtWeight_tight_to_loose =  p3;
-                //         else if ( !passesTight_lead && !passesTight_sublead &&  passesTight_third ) evtWeight_tight_to_loose = -p1*p2;
-                //         else if ( !passesTight_lead &&  passesTight_sublead && !passesTight_third ) evtWeight_tight_to_loose = -p1*p3;
-                //         else if (  passesTight_lead && !passesTight_sublead && !passesTight_third ) evtWeight_tight_to_loose = -p2*p3;
-                //         else if ( !passesTight_lead && !passesTight_sublead && !passesTight_third ) evtWeight_tight_to_loose =  p1*p2*p3;
-                //         evtWeight *= evtWeight_tight_to_loose;
-                // }
 
                 //--- fill histograms with events passing final selection
                 selMuonHistManager.fillHistograms(selMuons, evtWeight);
@@ -944,58 +770,6 @@ int main(int argc, char* argv[])
                         cutFlowTable.update("isCategoryBCompareEvent", evtWeight);
                 }
 
-
-
-                // if ( isSignal ) {
-                //         for ( const auto & kv : decayMode_idString ) {
-                //                 if ( std::fabs(genHiggsDecayMode - kv.second) < EPS ) {
-                //                         selEvtHistManager_decayMode[kv.first]->fillHistograms(selElectrons.size(), selMuons.size(), selHadTaus.size(),
-                //                                                                               selJets.size(), selBJets_loose.size(), selBJets_medium.size(),
-                //                                                                               mvaOutput_3l_ttV, mvaOutput_3l_ttbar, mvaDiscr_3l,
-                //                                                                               mTauTauVis1_presel, mTauTauVis2_presel, evtWeight);
-                //                         break;
-                //                 }
-                //         }
-                // }
-
-                // if(writeSelEventsFile)
-                // {
-                //         // KE: unique merge loose and medium B-jets, and hadronic jets
-                //         std::sort(selBJets_medium.begin(), selBJets_medium.end(), isHigherPt);
-                //         std::sort(selBJets_loose.begin(), selBJets_loose.end(), isHigherPt);
-                //         std::sort(selJets.begin(), selJets.end(), isHigherCSV);   // optional: sort by pT
-                //         std::vector<const RecoJet *> selBJetsMerged(selBJets_medium);
-                //         auto unique_push_back = [&selBJetsMerged](const std::vector<const RecoJet *> &v)->void
-                //         {
-                //                 for(const RecoJet * j : v)
-                //                         if(std::find(selBJetsMerged.begin(), selBJetsMerged.end(), j) == selBJetsMerged.end())
-                //                                 selBJetsMerged.push_back(j);
-                //         };
-                //         unique_push_back(selBJets_loose);
-                //         unique_push_back(selJets);
-                //         if(selBJetsMerged.size() < 2)
-                //         {
-                //                 std::cerr << "Error: merged b-jets contains less than two jets\n";
-                //                 assert(0);
-                //         }
-                //
-                //         eventSpecificsOut.run  = run;
-                //         eventSpecificsOut.lumi = lumi;
-                //         eventSpecificsOut.evt  = event;
-                //
-                //         eventSpecificsOut.met_pt  = met_pt;
-                //         eventSpecificsOut.met_phi = met_phi;
-                //
-                //         for(std::size_t i = 0; i < 3; ++i)
-                //                 leptonsOut[i].setValues(selLeptons[i]);
-                //         for(std::size_t i = 0; i < 2; ++i)
-                //                 jetsOut[i].setValues(selBJetsMerged[i]);
-                //         htauOut.setValues(selHadTau_lead);
-                //         MVAOut.setValues(mvaInputs, mvaOutput_3l_ttV, mvaOutput_3l_ttbar);
-                //
-                //         selEventsTTree->Fill();
-                // }
-
                 (*selEventsFile) << run << ":" << lumi << ":" << event << std::endl;
 
                 ++selectedEntries;
@@ -1011,11 +785,6 @@ int main(int argc, char* argv[])
         cutFlowTable.print(std::cout);
         std::cout << std::endl;
 
-        // if(writeSelEventsFile)
-        // {
-        //         selEventsTFile->Write();
-        //         delete selEventsTFile;
-        // }
 
         delete run_lumi_eventSelector;
 
@@ -1023,8 +792,6 @@ int main(int argc, char* argv[])
 
         delete muonReader;
         delete jetReader;
-        // delete genLeptonReader;
-        // delete genJetReader;
 
         hltPaths_delete(triggers_1mu);
         hltPaths_delete(triggers_2mu);
