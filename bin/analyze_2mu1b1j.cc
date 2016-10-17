@@ -454,15 +454,6 @@ int main(int argc, char* argv[])
                 cutFlowTable.update(">= 2 jets (1)");
 
 
-                if ( selBJets_medium.size() < 1 ) {
-                        if ( run_lumi_eventSelector ) {
-                                std::cout << "event FAILS selBJets selection." << std::endl;
-                                std::cout << "(#selBJets_medium = " << selBJets_medium.size() << ")" << std::endl;
-                        }
-                        continue;
-                }
-                cutFlowTable.update("1 medium b-jet (1)");
-
 
                 //--- compute event-level weight for data/MC correction of b-tagging efficiency and mistag rate
                 //   (using the method "Event reweighting using scale factors calculated with a tag and probe method",
