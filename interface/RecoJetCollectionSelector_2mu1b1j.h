@@ -12,7 +12,7 @@
 class RecoJetSelector_2mu1b1j
 {
 public:
-        RecoJetSelector_2mu1b1j(int index = -1, bool debug = false);
+        RecoJetSelector_2mu1b1j(int era, int index = -1, bool debug = false);
         ~RecoJetSelector_2mu1b1j() {
         }
 

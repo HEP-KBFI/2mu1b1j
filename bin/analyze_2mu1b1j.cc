@@ -210,7 +210,7 @@ int main(int argc, char* argv[])
         RecoMuonReader* muonReader = new RecoMuonReader(era, "nselLeptons", "selLeptons");
         muonReader->setBranchAddresses(inputTree);
         // RecoMuonCollectionGenMatcher muonGenMatcher;
-        RecoMuonCollectionSelectorLoose preselMuonSelector;
+        RecoMuonCollectionSelectorLoose preselMuonSelector(era);
         RecoMuonCollectionSelectorFakeable fakeableMuonSelector(era);
         RecoMuonCollectionSelectorTight_2mu1b1j tightMuonSelector(era, -1, run_lumi_eventSelector != 0);
 
@@ -220,7 +220,7 @@ int main(int argc, char* argv[])
         jetReader->setBranchAddresses(inputTree);
         RecoJetCollectionGenMatcher jetGenMatcher;
         RecoJetCollectionCleaner jetCleaner(0.5);
-        RecoJetCollectionSelector_2mu1b1j jetSelector;
+        RecoJetCollectionSelector_2mu1b1j jetSelector(era);
         RecoJetCollectionSelectorBtagLoose_2mu1b1j jetSelectorBtagLoose(era);
         RecoJetCollectionSelectorBtagMedium_2mu1b1j jetSelectorBtagMedium(era);
 

@@ -2,7 +2,7 @@
 
 #include <cmath> // fabs
 
-RecoJetSelector_2mu1b1j::RecoJetSelector_2mu1b1j(int index, bool debug)
+RecoJetSelector_2mu1b1j::RecoJetSelector_2mu1b1j(int era, int index, bool debug)
   : min_pt_(25.)
   , max_absEta_(999.9) // 2.4 TODO change this back (Margus)
 {}
