@@ -19,6 +19,7 @@ source /cvmfs/cms.cern.ch/cmsset_default.sh
 cd /home/`whoami`/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/
 cmsenv
 python tthAnalysis/HiggsToTauTau/test/NtupleList.py
+SBATCH_PRIORITY="short"
 ```
 
 
