@@ -536,14 +536,14 @@ int main(int argc, char* argv[])
 
 
                 //--- fill histograms with events passing preselection
-                preselMuonHistManager.fillHistograms(preselMuons, evtWeight);
-                preselJetHistManager.fillHistograms(selJets, evtWeight);
-                selBJet_mediumHistManager.fillHistograms(selBJets_medium, evtWeight);
-                preselEvtHistManager.fillHistograms(preselMuons.size(),
-                                                    selJets.size(),
-                                                    selBJets_medium.size(),
-                                                    massOfOppositeChargeMuons,
-                                                    evtWeight);
+                // preselMuonHistManager.fillHistograms(preselMuons, evtWeight);
+                // preselJetHistManager.fillHistograms(selJets, evtWeight);
+                // selBJet_mediumHistManager.fillHistograms(selBJets_medium, evtWeight);
+                // preselEvtHistManager.fillHistograms(preselMuons.size(),
+                //                                     selJets.size(),
+                //                                     selBJets_medium.size(),
+                //                                     massOfOppositeChargeMuons,
+                //                                     evtWeight);
 
                 //--- apply final event selection
 
@@ -844,7 +844,7 @@ int main(int argc, char* argv[])
                 bool isCategoryBRelaxedEventCompareEvent = hasCategoryBCriteria1Passed && has2JetsInBarrel && has0JetsInForward;
 
                 if (isCategoryBRelaxedEventCompareEvent) {
-                        categoryBRelaxedHistManagerCompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
+                        categoryBRelaxedCompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
                         cutFlowTable.update("isCategoryBRelaxedEventCompareEvent", evtWeight);
                 }
 
