@@ -33,10 +33,10 @@
 #include "analysis2mu1b1j/analysis2mu1b1j/interface/RecoJetCollectionSelector_2mu1b1j.h" // RecoJetCollectionSelector
 #include "analysis2mu1b1j/analysis2mu1b1j/interface/RecoJetCollectionSelectorBtag_2mu1b1j.h" // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h" // RunLumiEventSelector
-#include "tthAnalysis/HiggsToTauTau/interface/MuonHistManager.h" // MuonHistManager
-#include "tthAnalysis/HiggsToTauTau/interface/JetHistManager.h" // JetHistManager
-#include "tthAnalysis/HiggsToTauTau/interface/MEtHistManager.h" // MEtHistManager
-#include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1j.h" // EvtHistManager_2mu1b1j
+// #include "tthAnalysis/HiggsToTauTau/interface/MuonHistManager.h" // MuonHistManager
+// #include "tthAnalysis/HiggsToTauTau/interface/JetHistManager.h" // JetHistManager
+// #include "tthAnalysis/HiggsToTauTau/interface/MEtHistManager.h" // MEtHistManager
+// #include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1j.h" // EvtHistManager_2mu1b1j
 #include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1jCategory.h" // EvtHistManager_2mu1b1j
 #include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h" // getLeptonType, kElectron, kMuon
 #include "tthAnalysis/HiggsToTauTau/interface/backgroundEstimation.h" // prob_chargeMisId
@@ -143,7 +143,7 @@ int main(int argc, char* argv[])
         if      ( era_string == "2015" ) era = kEra_2015;
         else if ( era_string == "2016" ) era = kEra_2016;
         else throw cms::Exception("analyze_2mu1b1j")
-          << "Invalid Configuration parameter 'era' = " << era_string << " !!\n";
+                      << "Invalid Configuration parameter 'era' = " << era_string << " !!\n";
 
 
         RunLumiEventSelector* run_lumi_eventSelector = 0;
@@ -230,98 +230,159 @@ int main(int argc, char* argv[])
         std::ostream* selEventsFile = new std::ofstream(selEventsFileName_output.data(), std::ios::out);
 
         //--- declare histograms
-        MuonHistManager preselMuonHistManager(makeHistManager_cfg(process_string,
-                                                                  Form("2mu1b1j_%s/presel/muons", leptonSelection_string.data()),
-                                                                  central_or_shift));
-        preselMuonHistManager.bookHistograms(fs);
-        JetHistManager preselJetHistManager(makeHistManager_cfg(process_string,
-                                                                Form("2mu1b1j_%s/presel/jets", leptonSelection_string.data()),
-                                                                central_or_shift));
-        preselJetHistManager.bookHistograms(fs);
-        JetHistManager preselBJet_looseHistManager(makeHistManager_cfg(process_string,
-                                                                       Form("2mu1b1j_%s/presel/BJets_loose", leptonSelection_string.data()),
-                                                                       central_or_shift));
-        preselBJet_looseHistManager.bookHistograms(fs);
-        JetHistManager preselBJet_mediumHistManager(makeHistManager_cfg(process_string,
-                                                                        Form("2mu1b1j_%s/presel/BJets_medium", leptonSelection_string.data()),
-                                                                        central_or_shift));
-        preselBJet_mediumHistManager.bookHistograms(fs);
-        MEtHistManager preselMEtHistManager(makeHistManager_cfg(process_string,
-                                                                Form("2mu1b1j_%s/presel/met", leptonSelection_string.data()),
-                                                                central_or_shift));
-        preselMEtHistManager.bookHistograms(fs);
-        EvtHistManager_2mu1b1j preselEvtHistManager(makeHistManager_cfg(process_string,
-                                                                        Form("2mu1b1j_%s/presel/evt", leptonSelection_string.data()),
-                                                                        central_or_shift));
-        preselEvtHistManager.bookHistograms(fs);
+        // MuonHistManager preselMuonHistManager(makeHistManager_cfg(process_string,
+        //                                                           Form("2mu1b1j_%s/presel/muons", leptonSelection_string.data()),
+        //                                                           central_or_shift));
+        // preselMuonHistManager.bookHistograms(fs);
+        // JetHistManager preselJetHistManager(makeHistManager_cfg(process_string,
+        //                                                         Form("2mu1b1j_%s/presel/jets", leptonSelection_string.data()),
+        //                                                         central_or_shift));
+        // preselJetHistManager.bookHistograms(fs);
+        // JetHistManager preselBJet_looseHistManager(makeHistManager_cfg(process_string,
+        //                                                                Form("2mu1b1j_%s/presel/BJets_loose", leptonSelection_string.data()),
+        //                                                                central_or_shift));
+        // preselBJet_looseHistManager.bookHistograms(fs);
+        // JetHistManager preselBJet_mediumHistManager(makeHistManager_cfg(process_string,
+        //                                                                 Form("2mu1b1j_%s/presel/BJets_medium", leptonSelection_string.data()),
+        //                                                                 central_or_shift));
+        // preselBJet_mediumHistManager.bookHistograms(fs);
+        // MEtHistManager preselMEtHistManager(makeHistManager_cfg(process_string,
+        //                                                         Form("2mu1b1j_%s/presel/met", leptonSelection_string.data()),
+        //                                                         central_or_shift));
+        // preselMEtHistManager.bookHistograms(fs);
+        // EvtHistManager_2mu1b1j preselEvtHistManager(makeHistManager_cfg(process_string,
+        //                                                                 Form("2mu1b1j_%s/presel/evt", leptonSelection_string.data()),
+        //                                                                 central_or_shift));
+        // preselEvtHistManager.bookHistograms(fs);
+        //
+        // MuonHistManager selMuonHistManager(makeHistManager_cfg(process_string,
+        //                                                        Form("2mu1b1j_%s/sel/muons", leptonSelection_string.data()),
+        //                                                        central_or_shift));
+        // selMuonHistManager.bookHistograms(fs);
+        //
+        // JetHistManager selJetHistManager(makeHistManager_cfg(process_string,
+        //                                                      Form("2mu1b1j_%s/sel/jets", leptonSelection_string.data()),
+        //                                                      central_or_shift));
+        // selJetHistManager.bookHistograms(fs);
+        // JetHistManager selJetHistManager_lead(makeHistManager_cfg(process_string,
+        //                                                           Form("2mu1b1j_%s/sel/leadJet", leptonSelection_string.data()),
+        //                                                           central_or_shift,
+        //                                                           0));
+        // selJetHistManager_lead.bookHistograms(fs);
+        // JetHistManager selJetHistManager_sublead(makeHistManager_cfg(process_string,
+        //                                                              Form("2mu1b1j_%s/sel/subleadJet", leptonSelection_string.data()),
+        //                                                              central_or_shift,
+        //                                                              1));
+        // selJetHistManager_sublead.bookHistograms(fs);
+        //
+        // JetHistManager selBJet_looseHistManager(makeHistManager_cfg(process_string,
+        //                                                             Form("2mu1b1j_%s/sel/BJets_loose", leptonSelection_string.data()),
+        //                                                             central_or_shift));
+        // selBJet_looseHistManager.bookHistograms(fs);
+        // JetHistManager selBJet_looseHistManager_lead(makeHistManager_cfg(process_string,
+        //                                                                  Form("2mu1b1j_%s/sel/leadBJet_loose", leptonSelection_string.data()),
+        //                                                                  central_or_shift,
+        //                                                                  0));
+        // selBJet_looseHistManager_lead.bookHistograms(fs);
+        // JetHistManager selBJet_looseHistManager_sublead(makeHistManager_cfg(process_string,
+        //                                                                     Form("2mu1b1j_%s/sel/subleadBJet_loose", leptonSelection_string.data()),
+        //                                                                     central_or_shift,
+        //                                                                     1));
+        // selBJet_looseHistManager_sublead.bookHistograms(fs);
+        // JetHistManager selBJet_mediumHistManager(makeHistManager_cfg(process_string,
+        //                                                              Form("2mu1b1j_%s/sel/BJets_medium", leptonSelection_string.data()),
+        //                                                              central_or_shift));
+        // selBJet_mediumHistManager.bookHistograms(fs);
+        //
+        // MEtHistManager selMEtHistManager(makeHistManager_cfg(process_string,
+        //                                                      Form("2mu1b1j_%s/sel/met", leptonSelection_string.data()),
+        //                                                      central_or_shift));
+        // selMEtHistManager.bookHistograms(fs);
+        //
+        // EvtHistManager_2mu1b1j selEvtHistManager(makeHistManager_cfg(process_string,
+        //                                                              Form("2mu1b1j_%s/sel/evt", leptonSelection_string.data()),
+        //                                                              central_or_shift));
+        // selEvtHistManager.bookHistograms(fs);
 
-        MuonHistManager selMuonHistManager(makeHistManager_cfg(process_string,
-                                                               Form("2mu1b1j_%s/sel/muons", leptonSelection_string.data()),
-                                                               central_or_shift));
-        selMuonHistManager.bookHistograms(fs);
-
-        JetHistManager selJetHistManager(makeHistManager_cfg(process_string,
-                                                             Form("2mu1b1j_%s/sel/jets", leptonSelection_string.data()),
-                                                             central_or_shift));
-        selJetHistManager.bookHistograms(fs);
-        JetHistManager selJetHistManager_lead(makeHistManager_cfg(process_string,
-                                                                  Form("2mu1b1j_%s/sel/leadJet", leptonSelection_string.data()),
-                                                                  central_or_shift,
-                                                                  0));
-        selJetHistManager_lead.bookHistograms(fs);
-        JetHistManager selJetHistManager_sublead(makeHistManager_cfg(process_string,
-                                                                     Form("2mu1b1j_%s/sel/subleadJet", leptonSelection_string.data()),
-                                                                     central_or_shift,
-                                                                     1));
-        selJetHistManager_sublead.bookHistograms(fs);
-
-        JetHistManager selBJet_looseHistManager(makeHistManager_cfg(process_string,
-                                                                    Form("2mu1b1j_%s/sel/BJets_loose", leptonSelection_string.data()),
-                                                                    central_or_shift));
-        selBJet_looseHistManager.bookHistograms(fs);
-        JetHistManager selBJet_looseHistManager_lead(makeHistManager_cfg(process_string,
-                                                                         Form("2mu1b1j_%s/sel/leadBJet_loose", leptonSelection_string.data()),
-                                                                         central_or_shift,
-                                                                         0));
-        selBJet_looseHistManager_lead.bookHistograms(fs);
-        JetHistManager selBJet_looseHistManager_sublead(makeHistManager_cfg(process_string,
-                                                                            Form("2mu1b1j_%s/sel/subleadBJet_loose", leptonSelection_string.data()),
-                                                                            central_or_shift,
-                                                                            1));
-        selBJet_looseHistManager_sublead.bookHistograms(fs);
-        JetHistManager selBJet_mediumHistManager(makeHistManager_cfg(process_string,
-                                                                     Form("2mu1b1j_%s/sel/BJets_medium", leptonSelection_string.data()),
-                                                                     central_or_shift));
-        selBJet_mediumHistManager.bookHistograms(fs);
-
-        MEtHistManager selMEtHistManager(makeHistManager_cfg(process_string,
-                                                             Form("2mu1b1j_%s/sel/met", leptonSelection_string.data()),
-                                                             central_or_shift));
-        selMEtHistManager.bookHistograms(fs);
-
-        EvtHistManager_2mu1b1j selEvtHistManager(makeHistManager_cfg(process_string,
-                                                                     Form("2mu1b1j_%s/sel/evt", leptonSelection_string.data()),
-                                                                     central_or_shift));
-        selEvtHistManager.bookHistograms(fs);
-
-        EvtHistManager_2mu1b1jCategory categoryAHistManager(makeHistManager_cfg(process_string,
-                                                                     Form("2mu1b1jCategoryA_%s/sel/evt", leptonSelection_string.data()),
-                                                                     central_or_shift));
+        EvtHistManager_2mu1b1jCategory categoryAHistManager(
+                makeHistManager_cfg(
+                        process_string,
+                        Form("2mu1b1jCategoryA_%s/sel/evt",
+                             leptonSelection_string.data()
+                             ),
+                        central_or_shift)
+                );
         categoryAHistManager.bookHistograms(fs);
 
-        EvtHistManager_2mu1b1jCategory categoryACompareHistManager(makeHistManager_cfg(process_string,
-                                                                     Form("2mu1b1jCategoryACompare_%s/sel/evt", leptonSelection_string.data()),
-                                                                     central_or_shift));
+        EvtHistManager_2mu1b1jCategory categoryACompareHistManager(
+                makeHistManager_cfg(
+                        process_string,
+                        Form("2mu1b1jCategoryACompare_%s/sel/evt",
+                             leptonSelection_string.data()
+                             ),
+                        central_or_shift)
+                );
         categoryACompareHistManager.bookHistograms(fs);
 
-        EvtHistManager_2mu1b1jCategory categoryBHistManager(makeHistManager_cfg(process_string,
-                                                                     Form("2mu1b1jCategoryB_%s/sel/evt", leptonSelection_string.data()),
-                                                                     central_or_shift));
+        EvtHistManager_2mu1b1jCategory categoryBHistManager(
+                makeHistManager_cfg(
+                        process_string,
+                        Form("2mu1b1jCategoryB_%s/sel/evt",
+                             leptonSelection_string.data()
+                             ),
+                        central_or_shift)
+                );
         categoryBHistManager.bookHistograms(fs);
 
-        EvtHistManager_2mu1b1jCategory categoryBCompareHistManager(makeHistManager_cfg(process_string,
-                                                                     Form("2mu1b1jCategoryBCompare_%s/sel/evt", leptonSelection_string.data()),
-                                                                     central_or_shift));
+        EvtHistManager_2mu1b1jCategory categoryBCompareHistManager(
+                makeHistManager_cfg(
+                        process_string,
+                        Form("2mu1b1jCategoryBCompare_%s/sel/evt",
+                             leptonSelection_string.data()
+                             ),
+                        central_or_shift)
+                );
+        categoryBCompareHistManager.bookHistograms(fs);
+
+
+        EvtHistManager_2mu1b1jCategory categoryARelaxedHistManager(
+                makeHistManager_cfg(
+                        process_string,
+                        Form("2mu1b1jCategoryARelaxed_%s/sel/evt",
+                             leptonSelection_string.data()
+                             ),
+                        central_or_shift)
+                );
+        categoryAHistManager.bookHistograms(fs);
+
+        EvtHistManager_2mu1b1jCategory categoryARelaxedCompareHistManager(
+                makeHistManager_cfg(
+                        process_string,
+                        Form("2mu1b1jCategoryARelaxedCompare_%s/sel/evt",
+                             leptonSelection_string.data()
+                             ),
+                        central_or_shift)
+                );
+        categoryACompareHistManager.bookHistograms(fs);
+
+        EvtHistManager_2mu1b1jCategory categoryBRelaxedHistManager(
+                makeHistManager_cfg(
+                        process_string,
+                        Form("2mu1b1jCategoryBRelaxed_%s/sel/evt",
+                             leptonSelection_string.data()
+                             ),
+                        central_or_shift)
+                );
+        categoryBHistManager.bookHistograms(fs);
+
+        EvtHistManager_2mu1b1jCategory categoryBRelaxedCompareHistManager(
+                makeHistManager_cfg(
+                        process_string,
+                        Form("2mu1b1jCategoryBRelaxedCompare_%s/sel/evt",
+                             leptonSelection_string.data()
+                             ),
+                        central_or_shift)
+                );
         categoryBCompareHistManager.bookHistograms(fs);
 
 
@@ -518,25 +579,10 @@ int main(int argc, char* argv[])
                 }
                 cutFlowTable.update(">= 2 jets (2)", evtWeight);
 
-                // // at least 1 medium b-jet (if there is 1, there must be a second one that was not registered)
-                // if ( !(selBJets_medium.size() >= 1)) {
-                //         if ( run_lumi_eventSelector ) {
-                //                 std::cout << "event FAILS selBJets selection." << std::endl;
-                //                 std::cout << " (#selBJets_medium = " << selBJets_medium.size() << ")" << std::endl;
-                //
-                //                 for ( size_t idxSelBJet_medium = 0; idxSelBJet_medium < selBJets_medium.size(); ++idxSelBJet_medium ) {
-                //                         std::cout << "selJet #" << idxSelBJet_medium << ":" << std::endl;
-                //                         std::cout << (*selJets[idxSelBJet_medium]);
-                //                 }
-                //         }
-                //         continue;
-                // }
-                // cutFlowTable.update(">= 1 medium b-jet (2)", evtWeight);
 
                 // muon pt cuts
-                double minPt = 25.;
 
-                if ( !(selMuon_lead->pt_ > minPt && selMuon_sublead->pt_ > minPt) ) {
+                if ( !(selMuon_lead->pt_ > 25. && selMuon_sublead->pt_ > 15.) ) {
                         if ( run_lumi_eventSelector ) {
                                 std::cout << "event FAILS muon pT selection." << std::endl;
                                 std::cout << " (leading selMuon pT = " << selMuon_lead->pt_
@@ -545,9 +591,11 @@ int main(int argc, char* argv[])
                         }
                         continue;
                 }
-                cutFlowTable.update("muon pt cut", evtWeight);
+                cutFlowTable.update("has first muon with pt over 25, second over 15", evtWeight);
+
 
                 // check that muon and antimuon
+
                 bool hasTwoOppositeSignMuons = (selMuon_lead->charge_ + selMuon_sublead->charge_) == 0;
 
                 if ( !hasTwoOppositeSignMuons ) {
@@ -562,17 +610,17 @@ int main(int argc, char* argv[])
                 cutFlowTable.update("sel lepton charge");
 
 
-                //--- fill histograms with events passing final selection
-                selMuonHistManager.fillHistograms(selMuons, evtWeight);
-                selJetHistManager.fillHistograms(selJets, evtWeight);
-                selJetHistManager_lead.fillHistograms(selJets, evtWeight);
-                selJetHistManager_sublead.fillHistograms(selJets, evtWeight);
-                selBJet_mediumHistManager.fillHistograms(selBJets_medium, evtWeight);
-                selEvtHistManager.fillHistograms(selMuons.size(),
-                                                 selJets.size(),
-                                                 selBJets_medium.size(),
-                                                 massOfOppositeChargeMuons,
-                                                 evtWeight);
+                // //--- fill histograms with events passing final selection
+                // selMuonHistManager.fillHistograms(selMuons, evtWeight);
+                // selJetHistManager.fillHistograms(selJets, evtWeight);
+                // selJetHistManager_lead.fillHistograms(selJets, evtWeight);
+                // selJetHistManager_sublead.fillHistograms(selJets, evtWeight);
+                // selBJet_mediumHistManager.fillHistograms(selBJets_medium, evtWeight);
+                // selEvtHistManager.fillHistograms(selMuons.size(),
+                //                                  selJets.size(),
+                //                                  selBJets_medium.size(),
+                //                                  massOfOppositeChargeMuons,
+                //                                  evtWeight);
 
 
 
@@ -582,7 +630,7 @@ int main(int argc, char* argv[])
                 for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
                         const RecoJet* bJet = selBJets_medium.at(i);
                         if (bJet->pt_ > 30 && abs(bJet->eta_) < 2.4) {
-                                  bTaggedJetWithPtOver30AndEtaLessThan24Count++;
+                                bTaggedJetWithPtOver30AndEtaLessThan24Count++;
                         }
                 }
 
@@ -590,7 +638,7 @@ int main(int argc, char* argv[])
                 for (unsigned int i = 0; i < selJets.size(); i++) {
                         const RecoJet* jet = selJets.at(i);
                         if (jet->pt_ > 30 && abs(jet->eta_) < 2.4) {
-                                  jetsWithPtOver30AndEtaLessThan24Count++;
+                                jetsWithPtOver30AndEtaLessThan24Count++;
                         }
                 }
 
@@ -598,7 +646,7 @@ int main(int argc, char* argv[])
                 for (unsigned int i = 0; i < selJets.size(); i++) {
                         const RecoJet* selJet = selJets.at(i);
                         if (selJet->pt_ > 30 && abs(selJet->eta_) > 2.4) {
-                                  jetCountWithPtOver30AndEtaBigger24Count++;
+                                jetCountWithPtOver30AndEtaBigger24Count++;
                         }
                 }
 
@@ -606,7 +654,7 @@ int main(int argc, char* argv[])
                 for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
                         const RecoJet* bJet = selBJets_medium.at(i);
                         if (bJet->pt_ > 30 && abs(bJet->eta_) > 2.4) {
-                                  bTaggedJetWithPtOver30AndEtaMoreThan24Count++;
+                                bTaggedJetWithPtOver30AndEtaMoreThan24Count++;
                         }
                 }
 
@@ -618,8 +666,10 @@ int main(int argc, char* argv[])
                 // 1. two opposite sign muons with pT > 25 GeV, |η| < 2.1 with tight muon identification and loose tracker isolation
 
                 bool hasTwoMuonsWithPtOver25 = selMuon_lead->pt_ > 25 && selMuon_sublead->pt_ > 25;
+                bool hasFirstMuonPtOver25SecondMuonPtOver15 = selMuon_lead->pt_ > 25 && selMuon_sublead->pt_ > 15;
                 bool hasTwoMuonsWithAbsValueOfEtaSmallerThan21 = abs(selMuon_lead->eta_) < 2.1 && abs(selMuon_sublead->eta_) < 2.1;
                 bool hasCategoryACriteria1Passed = hasTwoMuonsWithPtOver25 && hasTwoMuonsWithAbsValueOfEtaSmallerThan21;
+                bool hasCategoryARelaxedCriteria1Passed = hasFirstMuonPtOver25SecondMuonPtOver15 && hasTwoMuonsWithAbsValueOfEtaSmallerThan21;
 
 
                 // 2. one b–tagged jet pT > 30 GeV, |η| < 2.4 and no other jets with pT > 30 GeV, |η| < 2.4. Jet is tagged with CSV MVA algorithm and is required to have the b–tagging discriminator value greater that 0.783;
@@ -635,9 +685,14 @@ int main(int argc, char* argv[])
                 // Is it category A event?
 
                 bool isCategoryAEvent = hasCategoryACriteria1Passed && hasCategoryACriteria2Passed && hasCategoryACriteria3Passed;
+                bool isCategoryARelaxedEvent = hasCategoryARelaxedCriteria1Passed && hasCategoryACriteria2Passed && hasCategoryACriteria3Passed;
 
                 if (hasTwoMuonsWithPtOver25) {
                         cutFlowTable.update("hasTwoMuonsWithPtOver25", evtWeight);
+                }
+
+                if (hasFirstMuonPtOver25SecondMuonPtOver15) {
+                        cutFlowTable.update("hasFirstMuonPtOver25SecondMuonPtOver15", evtWeight);
                 }
 
                 if (hasTwoMuonsWithAbsValueOfEtaSmallerThan21) {
@@ -646,6 +701,10 @@ int main(int argc, char* argv[])
 
                 if (hasCategoryACriteria1Passed) {
                         cutFlowTable.update("hasCategoryACriteria1Passed", evtWeight);
+                }
+
+                if (hasCategoryARelaxedCriteria1Passed) {
+                        cutFlowTable.update("hasCategoryARelaxedCriteria1Passed", evtWeight);
                 }
 
                 if (hasCategoryACriteria2Passed) {
@@ -661,6 +720,11 @@ int main(int argc, char* argv[])
                         cutFlowTable.update("isCategoryAEvent", evtWeight);
                 }
 
+                if (isCategoryARelaxedEvent) {
+                        categoryARelaxedHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
+                        cutFlowTable.update("isCategoryARelaxedEvent", evtWeight);
+                }
+
 
 
                 // category A compare criterias
@@ -671,11 +735,18 @@ int main(int argc, char* argv[])
                 bool has1JetInBarrel = jetsWithPtOver30AndEtaLessThan24Count == 1;
                 bool has1JetForward = jetCountWithPtOver30AndEtaBigger24Count == 1;
 
-                bool isCategoryACompareEvent = has1JetInBarrel && has1JetForward;
+                bool isCategoryACompareEvent = hasCategoryACriteria1Passed && has1JetInBarrel && has1JetForward;
 
                 if (isCategoryACompareEvent) {
                         categoryACompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
                         cutFlowTable.update("isCategoryACompareEvent", evtWeight);
+                }
+
+                bool isCategoryARelaxedCompareEvent = hasCategoryARelaxedCriteria1Passed && has1JetInBarrel && has1JetForward;
+
+                if (isCategoryARelaxedCompareEvent) {
+                        categoryARelaxedCompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
+                        cutFlowTable.update("isCategoryARelaxedCompareEvent", evtWeight);
                 }
 
 
@@ -687,6 +758,7 @@ int main(int argc, char* argv[])
                 // 1. two opposite sign muons with pT > 25 GeV, |η| < 2.1 with tight muon identification and loose tracker isolation;
 
                 bool hasCategoryBCriteria1Passed = hasCategoryACriteria1Passed;
+                bool hasCategoryBRelaxedCriteria1Passed = hasCategoryARelaxedCriteria1Passed;
 
 
                 // 2. two jets with pT > 30 GeV, |η| < 2.4 with at least one b–tagged jet. Jet tagging criteria are the same as for the first excess observation;
@@ -716,9 +788,14 @@ int main(int argc, char* argv[])
                 // Is it category B event?
 
                 bool isCategoryBEvent = hasCategoryBCriteria1Passed && hasCategoryBCriteria2Passed && hasCategoryBCriteria3Passed && hasCategoryBCriteria4Passed && hasCategoryBCriteria5Passed;
+                bool isCategoryBRelaxedEvent = hasCategoryBRelaxedCriteria1Passed && hasCategoryBCriteria2Passed && hasCategoryBCriteria3Passed && hasCategoryBCriteria4Passed && hasCategoryBCriteria5Passed;
 
                 if (hasCategoryBCriteria1Passed) {
                         cutFlowTable.update("hasCategoryBCriteria1Passed", evtWeight);
+                }
+
+                if (hasCategoryBRelaxedCriteria1Passed) {
+                        cutFlowTable.update("hasCategoryBRelaxedCriteria1Passed", evtWeight);
                 }
 
                 if (hasCategoryBCriteria2Passed) {
@@ -742,7 +819,10 @@ int main(int argc, char* argv[])
                         cutFlowTable.update("isCategoryBEvent", evtWeight);
                 }
 
-                cutFlowTable.update("control check (id: 005)", evtWeight);
+                if (isCategoryBRelaxedEvent) {
+                        categoryBRelaxedHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
+                        cutFlowTable.update("isCategoryBRelaxedEvent", evtWeight);
+                }
 
 
 
@@ -754,12 +834,20 @@ int main(int argc, char* argv[])
                 bool has2JetsInBarrel = jetsWithPtOver30AndEtaLessThan24Count == 2;
                 bool has0JetsInForward = jetCountWithPtOver30AndEtaBigger24Count == 0;
 
-                bool isCategoryBCompareEvent = has2JetsInBarrel && has0JetsInForward;
+                bool isCategoryBCompareEvent = hasCategoryBCriteria1Passed && has2JetsInBarrel && has0JetsInForward;
 
                 if (isCategoryBCompareEvent) {
                         categoryBCompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
                         cutFlowTable.update("isCategoryBCompareEvent", evtWeight);
                 }
+
+                bool isCategoryBRelaxedEventCompareEvent = hasCategoryBCriteria1Passed && has2JetsInBarrel && has0JetsInForward;
+
+                if (isCategoryBRelaxedEventCompareEvent) {
+                        categoryBRelaxedHistManagerCompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
+                        cutFlowTable.update("isCategoryBRelaxedEventCompareEvent", evtWeight);
+                }
+
 
                 (*selEventsFile) << run << ":" << lumi << ":" << event << std::endl;
 
