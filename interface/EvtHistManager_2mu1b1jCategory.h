@@ -25,7 +25,8 @@ void fillHistograms(double massOfOppositeChargeMuons,
                     double evtWeight);
 
 private:
-TH1* histogram_massOfOppositeChargeMuons_;
+TH1* histogram_massOfOppositeChargeMuons1PinPerGeV_;
+TH1* histogram_massOfOppositeChargeMuons10PinsPerGev_;
 TH1* histogram_EventCounter_;
 std::vector<TH1*> histograms_;
 };
