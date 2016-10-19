@@ -11,7 +11,7 @@ EvtHistManager_2mu1b1jCategory::EvtHistManager_2mu1b1jCategory(const edm::Parame
 
 void EvtHistManager_2mu1b1jCategory::bookHistograms(TFileDirectory& dir)
 {
-        histogram_massOfOppositeChargeMuons_ = book1D(dir, "massOfOppositeChargeMuons", "massOfOppositeChargeMuons", 200, 0., 200.);
+        histogram_massOfOppositeChargeMuons_ = book1D(dir, "massOfOppositeChargeMuons", "massOfOppositeChargeMuons", 2000, 0., 200.);
         histogram_EventCounter_ = book1D(dir, "EventCounter", "EventCounter", 1, -0.5, +0.5);
 }
 
