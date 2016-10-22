@@ -311,8 +311,7 @@ int main(int argc, char* argv[])
                 makeHistManager_cfg(
                         process_string,
                         Form("2mu1b1jCategoryA_%s/sel/evt",
-                             leptonSelection_string.data()
-                             ),
+                             leptonSelection_string.data()),
                         central_or_shift)
                 );
         categoryAHistManager.bookHistograms(fs);
@@ -324,8 +323,7 @@ int main(int argc, char* argv[])
                 makeHistManager_cfg(
                         process_string,
                         Form("2mu1b1jCategoryACompare_%s/sel/evt",
-                             leptonSelection_string.data()
-                             ),
+                             leptonSelection_string.data()),
                         central_or_shift)
                 );
         categoryACompareHistManager.bookHistograms(fs);
@@ -337,8 +335,7 @@ int main(int argc, char* argv[])
                 makeHistManager_cfg(
                         process_string,
                         Form("2mu1b1jCategoryB_%s/sel/evt",
-                             leptonSelection_string.data()
-                             ),
+                             leptonSelection_string.data()),
                         central_or_shift)
                 );
         categoryBHistManager.bookHistograms(fs);
@@ -350,8 +347,7 @@ int main(int argc, char* argv[])
                 makeHistManager_cfg(
                         process_string,
                         Form("2mu1b1jCategoryBCompare_%s/sel/evt",
-                             leptonSelection_string.data()
-                             ),
+                             leptonSelection_string.data()),
                         central_or_shift)
                 );
         categoryBCompareHistManager.bookHistograms(fs);
@@ -363,8 +359,7 @@ int main(int argc, char* argv[])
                 makeHistManager_cfg(
                         process_string,
                         Form("2mu1b1jCategoryARelaxed_%s/sel/evt",
-                             leptonSelection_string.data()
-                             ),
+                             leptonSelection_string.data()),
                         central_or_shift)
                 );
         categoryARelaxedHistManager.bookHistograms(fs);
@@ -376,8 +371,7 @@ int main(int argc, char* argv[])
                 makeHistManager_cfg(
                         process_string,
                         Form("2mu1b1jCategoryARelaxedCompare_%s/sel/evt",
-                             leptonSelection_string.data()
-                             ),
+                             leptonSelection_string.data()),
                         central_or_shift)
                 );
         categoryARelaxedCompareHistManager.bookHistograms(fs);
@@ -389,8 +383,7 @@ int main(int argc, char* argv[])
                 makeHistManager_cfg(
                         process_string,
                         Form("2mu1b1jCategoryBRelaxed_%s/sel/evt",
-                             leptonSelection_string.data()
-                             ),
+                             leptonSelection_string.data()),
                         central_or_shift)
                 );
         categoryBRelaxedHistManager.bookHistograms(fs);
@@ -402,8 +395,7 @@ int main(int argc, char* argv[])
                 makeHistManager_cfg(
                         process_string,
                         Form("2mu1b1jCategoryBRelaxedCompare_%s/sel/evt",
-                             leptonSelection_string.data()
-                             ),
+                             leptonSelection_string.data()),
                         central_or_shift)
                 );
         categoryBRelaxedCompareHistManager.bookHistograms(fs);
