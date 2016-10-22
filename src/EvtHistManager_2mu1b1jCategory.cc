@@ -24,6 +24,6 @@ void EvtHistManager_2mu1b1jCategory::fillHistograms(
         double evtWeightErr = 0.;
 
         fillWithOverFlow(histogram_massOfOppositeChargeMuons1PinPerGeV_, massOfOppositeChargeMuons, evtWeight, evtWeightErr);
-        // fillWithOverFlow(histogram_massOfOppositeChargeMuons10PinsPerGev_, massOfOppositeChargeMuons, evtWeight, evtWeightErr);
+        fillWithOverFlow(histogram_massOfOppositeChargeMuons10PinsPerGev_, massOfOppositeChargeMuons, evtWeight, evtWeightErr);
         fillWithOverFlow(histogram_EventCounter_, 0., evtWeight, evtWeightErr);
 }

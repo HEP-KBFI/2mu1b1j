@@ -304,6 +304,9 @@ int main(int argc, char* argv[])
         //                                                              central_or_shift));
         // selEvtHistManager.bookHistograms(fs);
 
+
+        // categoryAHistManager
+
         EvtHistManager_2mu1b1jCategory categoryAHistManager(
                 makeHistManager_cfg(
                         process_string,
@@ -313,6 +316,9 @@ int main(int argc, char* argv[])
                         central_or_shift)
                 );
         categoryAHistManager.bookHistograms(fs);
+
+
+        // categoryACompareHistManager
 
         EvtHistManager_2mu1b1jCategory categoryACompareHistManager(
                 makeHistManager_cfg(
@@ -324,6 +330,9 @@ int main(int argc, char* argv[])
                 );
         categoryACompareHistManager.bookHistograms(fs);
 
+
+        // categoryBHistManager
+
         EvtHistManager_2mu1b1jCategory categoryBHistManager(
                 makeHistManager_cfg(
                         process_string,
@@ -333,6 +342,9 @@ int main(int argc, char* argv[])
                         central_or_shift)
                 );
         categoryBHistManager.bookHistograms(fs);
+
+
+        // categoryBCompareHistManager
 
         EvtHistManager_2mu1b1jCategory categoryBCompareHistManager(
                 makeHistManager_cfg(
@@ -345,6 +357,8 @@ int main(int argc, char* argv[])
         categoryBCompareHistManager.bookHistograms(fs);
 
 
+        // categoryARelaxedHistManager
+
         EvtHistManager_2mu1b1jCategory categoryARelaxedHistManager(
                 makeHistManager_cfg(
                         process_string,
@@ -353,7 +367,10 @@ int main(int argc, char* argv[])
                              ),
                         central_or_shift)
                 );
-        categoryAHistManager.bookHistograms(fs);
+        categoryARelaxedHistManager.bookHistograms(fs);
+
+
+        // categoryARelaxedCompareHistManager
 
         EvtHistManager_2mu1b1jCategory categoryARelaxedCompareHistManager(
                 makeHistManager_cfg(
@@ -363,7 +380,10 @@ int main(int argc, char* argv[])
                              ),
                         central_or_shift)
                 );
-        categoryACompareHistManager.bookHistograms(fs);
+        categoryARelaxedCompareHistManager.bookHistograms(fs);
+
+
+        // categoryBRelaxedHistManager
 
         EvtHistManager_2mu1b1jCategory categoryBRelaxedHistManager(
                 makeHistManager_cfg(
@@ -373,7 +393,10 @@ int main(int argc, char* argv[])
                              ),
                         central_or_shift)
                 );
-        categoryBHistManager.bookHistograms(fs);
+        categoryBRelaxedHistManager.bookHistograms(fs);
+
+
+        // categoryBRelaxedCompareHistManager
 
         EvtHistManager_2mu1b1jCategory categoryBRelaxedCompareHistManager(
                 makeHistManager_cfg(
@@ -383,7 +406,7 @@ int main(int argc, char* argv[])
                              ),
                         central_or_shift)
                 );
-        categoryBCompareHistManager.bookHistograms(fs);
+        categoryBRelaxedCompareHistManager.bookHistograms(fs);
 
 
         int numEntries = inputTree->GetEntries();
