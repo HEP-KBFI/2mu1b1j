@@ -33,10 +33,10 @@
 #include "analysis2mu1b1j/analysis2mu1b1j/interface/RecoJetCollectionSelector_2mu1b1j.h" // RecoJetCollectionSelector
 #include "analysis2mu1b1j/analysis2mu1b1j/interface/RecoJetCollectionSelectorBtag_2mu1b1j.h" // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
 #include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h" // RunLumiEventSelector
-// #include "tthAnalysis/HiggsToTauTau/interface/MuonHistManager.h" // MuonHistManager
-// #include "tthAnalysis/HiggsToTauTau/interface/JetHistManager.h" // JetHistManager
-// #include "tthAnalysis/HiggsToTauTau/interface/MEtHistManager.h" // MEtHistManager
-// #include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1j.h" // EvtHistManager_2mu1b1j
+#include "tthAnalysis/HiggsToTauTau/interface/MuonHistManager.h" // MuonHistManager
+#include "tthAnalysis/HiggsToTauTau/interface/JetHistManager.h" // JetHistManager
+#include "tthAnalysis/HiggsToTauTau/interface/MEtHistManager.h" // MEtHistManager
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1j.h" // EvtHistManager_2mu1b1j
 #include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1jCategory.h" // EvtHistManager_2mu1b1j
 #include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h" // getLeptonType, kElectron, kMuon
 #include "tthAnalysis/HiggsToTauTau/interface/backgroundEstimation.h" // prob_chargeMisId
