@@ -33,6 +33,7 @@ protected:
         Double_t max_dz_;   ///< upper cut threshold on d_{z}, distance on the z axis w.r.t PV
         Double_t max_relIso_; ///< upper cut threshold on relative isolation
         Double_t max_sip3d_; ///< upper cut threshold on significance of IP
+        Double_t max_chargedHadRelIso03_;
         bool apply_looseIdPOG_; ///< apply (True) or do not apply (False) loose PFMuon id selection
         bool apply_mediumIdPOG_; ///< apply (True) or do not apply (False) medium PFMuon id selection
 };
