@@ -68,9 +68,8 @@ bool RecoMuonSelectorTight_2mu1b1j::operator()(const RecoMuon& muon) const
     return false;
   }
 
-  if (muon.chargedHadRelIso03_ >= max_chargedHadRelIso03_) {
-    if (debug_) std::cout << "FAILS max_chargedHadRelIso03_ cut." <<
-        std::endl;
+  if (muon.chargedHadRelIso03_ > max_chargedHadRelIso03_) {
+    if (debug_) std::cout << "FAILS max_chargedHadRelIso03_ cut." << std::endl;
     return false;
   }
 

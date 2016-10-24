@@ -28,7 +28,7 @@ export SBATCH_PRIORITY="short"
 ```bash
 cd $CMSSW_BASE/src
 rm -rf $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau
-git clone https://github.com/HEP-KBFI/tth-htt  $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau
+git clone https://github.com/mxrguspxrt/tth-htt  $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau
 rm -rf $CMSSW_BASE/src/analysis2mu1b1j/analysis2mu1b1j
 git clone -b cleanup https://github.com/HEP-KBFI/2mu1b1j $CMSSW_BASE/src/analysis2mu1b1j/analysis2mu1b1j
 scram b -j8
