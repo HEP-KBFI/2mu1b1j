@@ -1,43 +1,47 @@
 #ifndef tthAnalysis_HiggsToTauTau_RecoJetCollectionSelector_2mu1b1j_h
 #define tthAnalysis_HiggsToTauTau_RecoJetCollectionSelector_2mu1b1j_h
 
-#include "tthAnalysis/HiggsToTauTau/interface/RecoJet.h" // RecoJet
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJet.h"                    // RecoJet
 #include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionSelector.h" // ParticleCollectionSelector
 
-#include <Rtypes.h> // Int_t, Double_t
+#include <Rtypes.h>                                                         // Int_t, Double_t
 
 #include <string>
 #include <map>
 
-class RecoJetSelector_2mu1b1j
-{
+class RecoJetSelector_2mu1b1j {
 public:
-        RecoJetSelector_2mu1b1j(int era, int index = -1, bool debug = false);
-        ~RecoJetSelector_2mu1b1j() {
-        }
 
-        /**
-         * @brief Set cut thresholds
-         */
+  RecoJetSelector_2mu1b1j(int  era,
+                          int  index = -1,
+                          bool debug = false);
+  ~RecoJetSelector_2mu1b1j() {}
 
-        void set_min_pt(double min_pt) {
-                min_pt_ = min_pt;
-        }
-        void set_max_absEta(double max_absEta) {
-                max_absEta_ = max_absEta;
-        }
+  /**
+   * @brief Set cut thresholds
+   */
+  void set_min_pt(double min_pt) {
+    min_pt_ = min_pt;
+  }
 
-        /**
-         * @brief Check if jet given as function argument passes pT and eta cuts (pT > 25 GeV and |eta| < 2.4, cf. Section 3.1 of AN-2015/321)
-         * @return True if jet passes selection; false otherwise
-         */
-        bool operator()(const RecoJet &jet) const;
+  void set_max_absEta(double max_absEta) {
+    max_absEta_ = max_absEta;
+  }
+
+  /**
+   * @brief Check if jet given as function argument passes pT and eta cuts (pT > 25 GeV and |eta| < 2.4, cf. Section 3.1 of AN-2015/321)
+   * @return True if jet passes selection; false otherwise
+   */
+  bool operator()(const RecoJet& jet) const;
 
 protected:
-        Double_t min_pt_; ///< lower cut threshold on pT
-        Double_t max_absEta_; ///< upper cut threshold on absolute value of eta
+
+  Double_t min_pt_;     ///< lower cut threshold on pT
+  Double_t max_absEta_; ///< upper cut threshold on absolute value of eta
 };
 
-typedef ParticleCollectionSelector<RecoJet, RecoJetSelector_2mu1b1j> RecoJetCollectionSelector_2mu1b1j;
+typedef ParticleCollectionSelector<RecoJet,
+                                   RecoJetSelector_2mu1b1j>
+  RecoJetCollectionSelector_2mu1b1j;
 
 #endif // tthAnalysis_HiggsToTauTau_RecoJetCollectionSelector_2mu1b1j_h

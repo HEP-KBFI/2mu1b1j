@@ -12,31 +12,31 @@
 
 #include "tthAnalysis/HiggsToTauTau/interface/HistManagerBase.h" // HistManagerBase
 
-class EvtHistManager_2mu1b1j : public HistManagerBase
-{
+class EvtHistManager_2mu1b1j : public HistManagerBase {
 public:
-EvtHistManager_2mu1b1j(edm::ParameterSet const& cfg);
-~EvtHistManager_2mu1b1j() {
-}
 
-/// book and fill histograms
-void bookHistograms(TFileDirectory& dir);
-void fillHistograms(int numMuons,
-                    int numJets,
-                    int numBJets_medium,
-                    double massOfOppositeChargeMuons,
-                    double evtWeight);
+  EvtHistManager_2mu1b1j(edm::ParameterSet const& cfg);
+  ~EvtHistManager_2mu1b1j() {}
+
+  /// book and fill histograms
+  void bookHistograms(TFileDirectory& dir);
+  void fillHistograms(int    numMuons,
+                      int    numJets,
+                      int    numBJets_medium,
+                      double massOfOppositeChargeMuons,
+                      double evtWeight);
 
 private:
-TH1* histogram_numMuons_;
-TH1* histogram_numJets_;
-TH1* histogram_numBJets_medium_;
 
-TH1* histogram_massOfOppositeChargeMuons_;
+  TH1 *histogram_numMuons_;
+  TH1 *histogram_numJets_;
+  TH1 *histogram_numBJets_medium_;
 
-TH1* histogram_EventCounter_;
+  TH1 *histogram_massOfOppositeChargeMuons_;
 
-std::vector<TH1*> histograms_;
+  TH1 *histogram_EventCounter_;
+
+  std::vector<TH1 *> histograms_;
 };
 
-#endif
+#endif // ifndef analysis2mu1b1j_analysis2mu1b1j_EvtHistManager_2mu1b1j_h
