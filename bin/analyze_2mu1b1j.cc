@@ -935,7 +935,7 @@ int main(int argc, char *argv[])
                                    hasCategoryCCriteria3Passed;
 
     if (isCategoryCRelaxedEvent) {
-      categoryBRelaxedHistManager.fillHistograms(massOfOppositeChargeMuons,
+      categoryCRelaxedHistManager.fillHistograms(massOfOppositeChargeMuons,
                                                  deltaROfOppositeChargeMuons,
                                                  ptOfOppositeChargeMuons,
                                                  evtWeight);
