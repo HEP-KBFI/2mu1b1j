@@ -962,8 +962,7 @@ int main(int argc, char *argv[])
 
     // 3. has no other jets
 
-    bool hasCategoryCCompareCriteria3Passed =
-      (jetsWithPtOver30AndEtaLessThan24Count + jetsWithPtOver30AndEtaBigger24Count) == 1;
+    bool hasCategoryCCompareCriteria3Passed = jetsWithPtOver30AndEtaBigger24Count == 0;
 
 
     // Is it category C compare event?
