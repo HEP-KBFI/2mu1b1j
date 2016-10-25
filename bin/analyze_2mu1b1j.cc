@@ -1,68 +1,63 @@
 
-#include "FWCore/ParameterSet/interface/ParameterSet.h"                                 // edm::ParameterSet
-#include "FWCore/PythonParameterSet/interface/MakeParameterSets.h"                      // edm::readPSetsFrom()
-#include "FWCore/ParameterSet/interface/FileInPath.h"                                   // edm::FileInPath
-#include "FWCore/Utilities/interface/Exception.h"                                       // cms::Exception
-#include "PhysicsTools/FWLite/interface/TFileService.h"                                 // fwlite::TFileService
-#include "DataFormats/FWLite/interface/InputSource.h"                                   // fwlite::InputSource
-#include "DataFormats/FWLite/interface/OutputFiles.h"                                   // fwlite::OutputFiles
-#include "DataFormats/Math/interface/LorentzVector.h"                                   // math::PtEtaPhiMLorentzVector
-#include "DataFormats/Math/interface/deltaR.h"                                          // deltaR
+#include "FWCore/ParameterSet/interface/ParameterSet.h"                                        // edm::ParameterSet
+#include "FWCore/PythonParameterSet/interface/MakeParameterSets.h"                             // edm::readPSetsFrom()
+#include "FWCore/ParameterSet/interface/FileInPath.h"                                          // edm::FileInPath
+#include "FWCore/Utilities/interface/Exception.h"                                              // cms::Exception
+#include "PhysicsTools/FWLite/interface/TFileService.h"                                        // fwlite::TFileService
+#include "DataFormats/FWLite/interface/InputSource.h"                                          // fwlite::InputSource
+#include "DataFormats/FWLite/interface/OutputFiles.h"                                          // fwlite::OutputFiles
+#include "DataFormats/Math/interface/LorentzVector.h"                                          // math::PtEtaPhiMLorentzVector
+#include "DataFormats/Math/interface/deltaR.h"                                                 // deltaR
 
-#include <Rtypes.h>                                                                     // Int_t, Long64_t, Double_t
-#include <TChain.h>                                                                     // TChain
-#include <TTree.h>                                                                      // TTree
-#include <TBenchmark.h>                                                                 // TBenchmark
-#include <TString.h>                                                                    // TString, Form
+#include <Rtypes.h>                                                                            // Int_t, Long64_t, Double_t
+#include <TChain.h>                                                                            // TChain
+#include <TTree.h>                                                                             // TTree
+#include <TBenchmark.h>                                                                        // TBenchmark
+#include <TString.h>                                                                           // TString, Form
 
-#include "tthAnalysis/HiggsToTauTau/interface/RecoLepton.h"                             // RecoLepton
-#include "tthAnalysis/HiggsToTauTau/interface/RecoJet.h"                                // RecoJet
-#include "tthAnalysis/HiggsToTauTau/interface/GenLepton.h"                              // GenLepton
-#include "tthAnalysis/HiggsToTauTau/interface/GenJet.h"                                 // GenJet
+#include "tthAnalysis/HiggsToTauTau/interface/RecoLepton.h"                                    // RecoLepton
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJet.h"                                       // RecoJet
+#include "tthAnalysis/HiggsToTauTau/interface/GenLepton.h"                                     // GenLepton
+#include "tthAnalysis/HiggsToTauTau/interface/GenJet.h"                                        // GenJet
 #include "tthAnalysis/HiggsToTauTau/interface/KeyTypes.h"
-#include "tthAnalysis/HiggsToTauTau/interface/RecoMuonReader.h"                         // RecoMuonReader
-#include "tthAnalysis/HiggsToTauTau/interface/RecoJetReader.h"                          // RecoJetReader
-#include "tthAnalysis/HiggsToTauTau/interface/GenLeptonReader.h"                        // GenLeptonReader
-#include "tthAnalysis/HiggsToTauTau/interface/GenJetReader.h"                           // GenJetReader
-#include "tthAnalysis/HiggsToTauTau/interface/convert_to_ptrs.h"                        // convert_to_ptrs
-#include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionCleaner.h"              // RecoElectronCollectionCleaner, RecoMuonCollectionCleaner, RecoHadTauCollectionCleaner, RecoJetCollectionCleaner
-#include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionGenMatcher.h"           // RecoElectronCollectionGenMatcher, RecoMuonCollectionGenMatcher, RecoHadTauCollectionGenMatcher, RecoJetCollectionGenMatcher
-#include "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorLoose.h"        // RecoMuonCollectionSelectorLoose
-#include \
-  "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorFakeable.h"            // RecoMuonCollectionSelectorFakeable
-#include \
-  "analysis2mu1b1j/analysis2mu1b1j/interface/RecoMuonCollectionSelectorTight_2mu1b1j.h" // RecoMuonCollectionSelectorTight
-#include \
-  "analysis2mu1b1j/analysis2mu1b1j/interface/RecoJetCollectionSelector_2mu1b1j.h"       // RecoJetCollectionSelector
-#include \
-  "analysis2mu1b1j/analysis2mu1b1j/interface/RecoJetCollectionSelectorBtag_2mu1b1j.h"   // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
-#include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h"                   // RunLumiEventSelector
-#include "tthAnalysis/HiggsToTauTau/interface/MuonHistManager.h"                        // MuonHistManager
-#include "tthAnalysis/HiggsToTauTau/interface/JetHistManager.h"                         // JetHistManager
-#include "tthAnalysis/HiggsToTauTau/interface/MEtHistManager.h"                         // MEtHistManager
-#include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1j.h"           // EvtHistManager_2mu1b1j
-#include \
-  "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1jCategory.h"          // EvtHistManager_2mu1b1j
-#include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h"                            // getLeptonType, kElectron, kMuon
-#include "tthAnalysis/HiggsToTauTau/interface/backgroundEstimation.h"                   // prob_chargeMisId
-#include "tthAnalysis/HiggsToTauTau/interface/hltPath.h"                                // hltPath, create_hltPaths, hltPaths_setBranchAddresses, hltPaths_isTriggered, hltPaths_delete
+#include "tthAnalysis/HiggsToTauTau/interface/RecoMuonReader.h"                                // RecoMuonReader
+#include "tthAnalysis/HiggsToTauTau/interface/RecoJetReader.h"                                 // RecoJetReader
+#include "tthAnalysis/HiggsToTauTau/interface/GenLeptonReader.h"                               // GenLeptonReader
+#include "tthAnalysis/HiggsToTauTau/interface/GenJetReader.h"                                  // GenJetReader
+#include "tthAnalysis/HiggsToTauTau/interface/convert_to_ptrs.h"                               // convert_to_ptrs
+#include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionCleaner.h"                     // RecoElectronCollectionCleaner, RecoMuonCollectionCleaner, RecoHadTauCollectionCleaner, RecoJetCollectionCleaner
+#include "tthAnalysis/HiggsToTauTau/interface/ParticleCollectionGenMatcher.h"                  // RecoElectronCollectionGenMatcher, RecoMuonCollectionGenMatcher, RecoHadTauCollectionGenMatcher, RecoJetCollectionGenMatcher
+#include "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorLoose.h"               // RecoMuonCollectionSelectorLoose
+#include "tthAnalysis/HiggsToTauTau/interface/RecoMuonCollectionSelectorFakeable.h"            // RecoMuonCollectionSelectorFakeable
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/RecoMuonCollectionSelectorTight_2mu1b1j.h" // RecoMuonCollectionSelectorTight
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/RecoJetCollectionSelector_2mu1b1j.h"       // RecoJetCollectionSelector
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/RecoJetCollectionSelectorBtag_2mu1b1j.h"   // RecoJetCollectionSelectorBtagLoose, RecoJetCollectionSelectorBtagMedium
+#include "tthAnalysis/HiggsToTauTau/interface/RunLumiEventSelector.h"                          // RunLumiEventSelector
+#include "tthAnalysis/HiggsToTauTau/interface/MuonHistManager.h"                               // MuonHistManager
+#include "tthAnalysis/HiggsToTauTau/interface/JetHistManager.h"                                // JetHistManager
+#include "tthAnalysis/HiggsToTauTau/interface/MEtHistManager.h"                                // MEtHistManager
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1j.h"                  // EvtHistManager_2mu1b1j
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1jCategory.h"          // EvtHistManager_2mu1b1j
+#include "tthAnalysis/HiggsToTauTau/interface/leptonTypes.h"                                   // getLeptonType, kElectron, kMuon
+#include "tthAnalysis/HiggsToTauTau/interface/backgroundEstimation.h"                          // prob_chargeMisId
+#include "tthAnalysis/HiggsToTauTau/interface/hltPath.h"                                       // hltPath, create_hltPaths, hltPaths_setBranchAddresses, hltPaths_isTriggered, hltPaths_delete
 #include "tthAnalysis/HiggsToTauTau/interface/data_to_MC_corrections.h"
-#include "tthAnalysis/HiggsToTauTau/interface/lutAuxFunctions.h"                        // loadTH2, get_sf_from_TH2
-#include "tthAnalysis/HiggsToTauTau/interface/cutFlowTable.h"                           // cutFlowTableType
-#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h"                   // kEra_2015, kEra_2016
+#include "tthAnalysis/HiggsToTauTau/interface/lutAuxFunctions.h"                               // loadTH2, get_sf_from_TH2
+#include "tthAnalysis/HiggsToTauTau/interface/cutFlowTable.h"                                  // cutFlowTableType
+#include "tthAnalysis/HiggsToTauTau/interface/analysisAuxFunctions.h"                          // kEra_2015, kEra_2016
 
-#include <boost/range/algorithm/copy.hpp>                                               // boost::copy()
-#include <boost/range/adaptor/map.hpp>                                                  // boost::adaptors::map_keys
+#include <boost/range/algorithm/copy.hpp>                                                      // boost::copy()
+#include <boost/range/adaptor/map.hpp>                                                         // boost::adaptors::map_keys
 
-#include <iostream>                                                                     // std::cerr, std::fixed
-#include <iomanip>                                                                      // std::setprecision(), std::setw()
-#include <string>                                                                       // std::string
-#include <vector>                                                                       // std::vector<>
-#include <cstdlib>                                                                      // EXIT_SUCCESS, EXIT_FAILURE
-#include <algorithm>                                                                    // std::sort(), std::find()
-#include <fstream>                                                                      // std::ofstream
-#include <assert.h>                                                                     // assert
-#include <array>                                                                        // std::array<>
+#include <iostream>                                                                            // std::cerr, std::fixed
+#include <iomanip>                                                                             // std::setprecision(), std::setw()
+#include <string>                                                                              // std::string
+#include <vector>                                                                              // std::vector<>
+#include <cstdlib>                                                                             // EXIT_SUCCESS, EXIT_FAILURE
+#include <algorithm>                                                                           // std::sort(), std::find()
+#include <fstream>                                                                             // std::ofstream
+#include <assert.h>                                                                            // assert
+#include <array>                                                                               // std::array<>
 
 #define EPS 1E-2
 
@@ -110,14 +105,13 @@ int main(int argc, char *argv[])
   // --- read python configuration parameters
   if (!edm::readPSetsFrom(argv[1])->existsAs<edm::ParameterSet>("process")) throw
       cms::Exception("analyze_2mu1b1j")
-          << "No ParameterSet 'process' found in configuration file = " <<
+      << "No ParameterSet 'process' found in configuration file = " <<
       argv[1] << " !!\n";
 
   edm::ParameterSet cfg =
     edm::readPSetsFrom(argv[1])->getParameter<edm::ParameterSet>("process");
 
-  edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>(
-    "analyze_2mu1b1j");
+  edm::ParameterSet cfg_analyze = cfg.getParameter<edm::ParameterSet>("analyze_2mu1b1j");
 
   std::string treeName = cfg_analyze.getParameter<std::string>("treeName");
 
@@ -125,17 +119,13 @@ int main(int argc, char *argv[])
 
   // bool isSignal = ( process_string == "signal" ) ? true : false;
 
-  vstring triggerNames_1mu            = cfg_analyze.getParameter<vstring>(
-    "triggers_1mu");
+  vstring triggerNames_1mu            = cfg_analyze.getParameter<vstring>("triggers_1mu");
   std::vector<hltPath *> triggers_1mu = create_hltPaths(triggerNames_1mu);
-  bool use_triggers_1mu               = cfg_analyze.getParameter<bool>(
-    "use_triggers_1mu");
+  bool use_triggers_1mu               = cfg_analyze.getParameter<bool>("use_triggers_1mu");
 
-  vstring triggerNames_2mu            = cfg_analyze.getParameter<vstring>(
-    "triggers_2mu");
+  vstring triggerNames_2mu            = cfg_analyze.getParameter<vstring>("triggers_2mu");
   std::vector<hltPath *> triggers_2mu = create_hltPaths(triggerNames_2mu);
-  bool use_triggers_2mu               = cfg_analyze.getParameter<bool>(
-    "use_triggers_2mu");
+  bool use_triggers_2mu               = cfg_analyze.getParameter<bool>("use_triggers_2mu");
 
   enum { kLoose, kFakeable, kTight };
   std::string leptonSelection_string = "Tight";
@@ -143,8 +133,7 @@ int main(int argc, char *argv[])
 
 
   bool isMC                    = cfg_analyze.getParameter<bool>("isMC");
-  std::string central_or_shift = cfg_analyze.getParameter<std::string>(
-    "central_or_shift");
+  std::string central_or_shift = cfg_analyze.getParameter<std::string>("central_or_shift");
 
   // double lumiScale = ( process_string != "data_obs" ) ? cfg_analyze.getParameter<double>("lumiScale") : 1.;
 
@@ -177,8 +166,7 @@ int main(int argc, char *argv[])
 
   TChain *inputTree = new TChain(treeName.data());
 
-  for (std::vector<std::string>::const_iterator inputFileName =
-         inputFiles.files().begin();
+  for (std::vector<std::string>::const_iterator inputFileName = inputFiles.files().begin();
        inputFileName != inputFiles.files().end(); ++inputFileName) {
     std::cout << "input Tree: adding file = " << (*inputFileName) << std::endl;
     inputTree->AddFile(inputFileName->data());
@@ -250,7 +238,7 @@ int main(int argc, char *argv[])
   // --- open output file containing run:lumi:event numbers of events passing final event selection criteria
   std::string selEventsFileName_output = cfg_analyze.getParameter<std::string>(
     "selEventsFileName_output");
-  std::ostream *selEventsFile          = new std::ofstream(
+  std::ostream *selEventsFile = new std::ofstream(
     selEventsFileName_output.data(),
     std::ios::out);
 
@@ -515,10 +503,8 @@ int main(int argc, char *argv[])
     std::vector<const RecoJet *> jet_ptrs        = convert_to_ptrs(jets);
     std::vector<const RecoJet *> cleanedJets     = jetCleaner(jet_ptrs, selMuons);
     std::vector<const RecoJet *> selJets         = jetSelector(cleanedJets);
-    std::vector<const RecoJet *> selBJets_loose  = jetSelectorBtagLoose(
-      cleanedJets);
-    std::vector<const RecoJet *> selBJets_medium = jetSelectorBtagMedium(
-      cleanedJets);
+    std::vector<const RecoJet *> selBJets_loose  = jetSelectorBtagLoose(cleanedJets);
+    std::vector<const RecoJet *> selBJets_medium = jetSelectorBtagMedium(cleanedJets);
 
     // --- build collections of generator level particles
     std::vector<GenLepton> genMuons;
@@ -535,8 +521,7 @@ int main(int argc, char *argv[])
         std::cout << " (#preselMuons = " << preselMuons.size() << ")" <<
           std::endl;
 
-        for (size_t idxPreselMuon = 0; idxPreselMuon < preselMuons.size();
-             ++idxPreselMuon) {
+        for (size_t idxPreselMuon = 0; idxPreselMuon < preselMuons.size(); ++idxPreselMuon) {
           std::cout << "preselMuons #" << idxPreselMuon << ":" << std::endl;
           std::cout << (*preselMuons[idxPreselMuon]);
         }
@@ -581,8 +566,7 @@ int main(int argc, char *argv[])
     cutFlowTable.update("muons opposite charge criteria");
 
 
-    double massOfOppositeChargeMuons =
-      (preselMuon_lead->p4_ + preselMuon_sublead->p4_).mass();
+    double massOfOppositeChargeMuons = (preselMuon_lead->p4_ + preselMuon_sublead->p4_).mass();
 
 
     // --- fill histograms with events passing preselection
@@ -729,21 +713,18 @@ int main(int argc, char *argv[])
                                    selMuon_sublead->pt_ > 25;
     bool hasFirstMuonPtOver25SecondMuonPtOver15 = selMuon_lead->pt_ > 25 &&
                                                   selMuon_sublead->pt_ > 15;
-    bool hasTwoMuonsWithAbsValueOfEtaSmallerThan21 = abs(selMuon_lead->eta_) <
-                                                     2.1 && abs(
-      selMuon_sublead->eta_) < 2.1;
-    bool hasCategoryACriteria1Passed = hasTwoMuonsWithPtOver25 &&
-                                       hasTwoMuonsWithAbsValueOfEtaSmallerThan21;
-    bool hasCategoryARelaxedCriteria1Passed =
-      hasFirstMuonPtOver25SecondMuonPtOver15 &&
-      hasTwoMuonsWithAbsValueOfEtaSmallerThan21;
+    bool hasTwoMuonsWithAbsValueOfEtaSmallerThan21 = abs(selMuon_lead->eta_) < 2.1 && abs(selMuon_sublead->eta_) < 2.1;
+    bool hasCategoryACriteria1Passed               = hasTwoMuonsWithPtOver25 &&
+                                                     hasTwoMuonsWithAbsValueOfEtaSmallerThan21;
+
+    bool hasCategoryARelaxedCriteria1Passed = hasFirstMuonPtOver25SecondMuonPtOver15 &&
+                                              hasTwoMuonsWithAbsValueOfEtaSmallerThan21;
 
 
     // 2. one b–tagged jet pT > 30 GeV, |η| < 2.4 and no other jets with pT > 30 GeV, |η| < 2.4. Jet is tagged with CSV MVA algorithm and is required to have the b–tagging discriminator value greater that 0.783;
 
-    bool hasCategoryACriteria2Passed =
-      (bTaggedJetWithPtOver30AndEtaLessThan24Count == 1) &&
-      (jetsWithPtOver30AndEtaLessThan24Count == 1); // jetsWithPtOver30AndEtaLessThan24Count contains btagged jets
+    bool hasCategoryACriteria2Passed = (bTaggedJetWithPtOver30AndEtaLessThan24Count == 1) &&
+                                       (jetsWithPtOver30AndEtaLessThan24Count == 1); // jetsWithPtOver30AndEtaLessThan24Count contains btagged jets
 
 
     // 3. at least one jet pT > 30 GeV, |η| > 2.4;
@@ -908,8 +889,7 @@ int main(int argc, char *argv[])
     }
 
     if (isCategoryBRelaxedEvent) {
-      categoryBRelaxedHistManager.fillHistograms(massOfOppositeChargeMuons,
-                                                 evtWeight);
+      categoryBRelaxedHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
       cutFlowTable.update("isCategoryBRelaxedEvent", evtWeight);
     }
 
@@ -926,8 +906,7 @@ int main(int argc, char *argv[])
                                    has2JetsInBarrel && has0JetsInForward;
 
     if (isCategoryBCompareEvent) {
-      categoryBCompareHistManager.fillHistograms(massOfOppositeChargeMuons,
-                                                 evtWeight);
+      categoryBCompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
       cutFlowTable.update("isCategoryBCompareEvent", evtWeight);
     }
 
@@ -936,8 +915,7 @@ int main(int argc, char *argv[])
                                                has0JetsInForward;
 
     if (isCategoryBRelaxedEventCompareEvent) {
-      categoryBRelaxedCompareHistManager.fillHistograms(massOfOppositeChargeMuons,
-                                                        evtWeight);
+      categoryBRelaxedCompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
       cutFlowTable.update("isCategoryBRelaxedEventCompareEvent", evtWeight);
     }
 
