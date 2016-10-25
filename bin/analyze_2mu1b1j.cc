@@ -566,8 +566,9 @@ int main(int argc, char *argv[])
     cutFlowTable.update("muons opposite charge criteria");
 
 
-    double massOfOppositeChargeMuons = (preselMuon_lead->p4_ + preselMuon_sublead->p4_).mass();
-
+    double massOfOppositeChargeMuons   = (preselMuon_lead->p4_ + preselMuon_sublead->p4_).mass();
+    double deltaROfOppositeChargeMuons = deltaR(preselMuon_lead->p4_ + preselMuon_sublead->p4_);
+    double ptOfOppositeChargeMuons     = (preselMuon_lead->p4_ + preselMuon_sublead->p4_).pt();
 
     // --- fill histograms with events passing preselection
     // preselMuonHistManager.fillHistograms(preselMuons, evtWeight);
@@ -633,8 +634,7 @@ int main(int argc, char *argv[])
 
     // check that muon and antimuon
 
-    bool hasTwoOppositeSignMuons =
-      (selMuon_lead->charge_ + selMuon_sublead->charge_) == 0;
+    bool hasTwoOppositeSignMuons = (selMuon_lead->charge_ + selMuon_sublead->charge_) == 0;
 
     if (!hasTwoOppositeSignMuons) {
       if (run_lumi_eventSelector) {
@@ -771,12 +771,17 @@ int main(int argc, char *argv[])
     }
 
     if (isCategoryAEvent) {
-      categoryAHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
+      categoryAHistManager.fillHistograms(massOfOppositeChargeMuons,
+                                          deltaROfOppositeChargeMuons,
+                                          ptOfOppositeChargeMuons,
+                                          evtWeight);
       cutFlowTable.update("isCategoryAEvent", evtWeight);
     }
 
     if (isCategoryARelaxedEvent) {
       categoryARelaxedHistManager.fillHistograms(massOfOppositeChargeMuons,
+                                                 deltaROfOppositeChargeMuons,
+                                                 ptOfOppositeChargeMuons,
                                                  evtWeight);
       cutFlowTable.update("isCategoryARelaxedEvent", evtWeight);
     }
@@ -795,6 +800,8 @@ int main(int argc, char *argv[])
 
     if (isCategoryACompareEvent) {
       categoryACompareHistManager.fillHistograms(massOfOppositeChargeMuons,
+                                                 deltaROfOppositeChargeMuons,
+                                                 ptOfOppositeChargeMuons,
                                                  evtWeight);
       cutFlowTable.update("isCategoryACompareEvent", evtWeight);
     }
@@ -804,6 +811,8 @@ int main(int argc, char *argv[])
 
     if (isCategoryARelaxedCompareEvent) {
       categoryARelaxedCompareHistManager.fillHistograms(massOfOppositeChargeMuons,
+                                                        deltaROfOppositeChargeMuons,
+                                                        ptOfOppositeChargeMuons,
                                                         evtWeight);
       cutFlowTable.update("isCategoryARelaxedCompareEvent", evtWeight);
     }
@@ -884,12 +893,18 @@ int main(int argc, char *argv[])
     }
 
     if (isCategoryBEvent) {
-      categoryBHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
+      categoryBHistManager.fillHistograms(massOfOppositeChargeMuons,
+                                          deltaROfOppositeChargeMuons,
+                                          ptOfOppositeChargeMuons,
+                                          evtWeight);
       cutFlowTable.update("isCategoryBEvent", evtWeight);
     }
 
     if (isCategoryBRelaxedEvent) {
-      categoryBRelaxedHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
+      categoryBRelaxedHistManager.fillHistograms(massOfOppositeChargeMuons,
+                                                 deltaROfOppositeChargeMuons,
+                                                 ptOfOppositeChargeMuons,
+                                                 evtWeight);
       cutFlowTable.update("isCategoryBRelaxedEvent", evtWeight);
     }
 
@@ -906,7 +921,10 @@ int main(int argc, char *argv[])
                                    has2JetsInBarrel && has0JetsInForward;
 
     if (isCategoryBCompareEvent) {
-      categoryBCompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
+      categoryBCompareHistManager.fillHistograms(massOfOppositeChargeMuons,
+                                                 deltaROfOppositeChargeMuons,
+                                                 ptOfOppositeChargeMuons,
+                                                 evtWeight);
       cutFlowTable.update("isCategoryBCompareEvent", evtWeight);
     }
 
@@ -915,10 +933,15 @@ int main(int argc, char *argv[])
                                                has0JetsInForward;
 
     if (isCategoryBRelaxedEventCompareEvent) {
-      categoryBRelaxedCompareHistManager.fillHistograms(massOfOppositeChargeMuons, evtWeight);
+      categoryBRelaxedCompareHistManager.fillHistograms(massOfOppositeChargeMuons,
+                                                        deltaROfOppositeChargeMuons,
+                                                        ptOfOppositeChargeMuons,
+                                                        evtWeight);
       cutFlowTable.update("isCategoryBRelaxedEventCompareEvent", evtWeight);
     }
 
+
+    // DONE
 
     (*selEventsFile) << run << ":" << lumi << ":" << event << std::endl;
 

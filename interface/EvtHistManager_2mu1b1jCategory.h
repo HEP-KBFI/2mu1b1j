@@ -20,8 +20,11 @@ public:
 
   /// book and fill histograms
   void bookHistograms(TFileDirectory& dir);
-  void fillHistograms(double massOfOppositeChargeMuons,
-                      double evtWeight);
+  void fillHistograms(
+    double massOfOppositeChargeMuons,
+    double deltaROfOppositeChargeMuons,
+    double ptOfOppositeChargeMuons,
+    double evtWeight);
 
 private:
 

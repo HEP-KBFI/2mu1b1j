@@ -12,12 +12,12 @@ EvtHistManager_2mu1b1jCategory::EvtHistManager_2mu1b1jCategory(
 
 void EvtHistManager_2mu1b1jCategory::bookHistograms(TFileDirectory& dir)
 {
-  histogram_massOfOppositeChargeMuons1PinPerGeV_   = book1D(dir,
-                                                            "massOfOppositeChargeMuons1PinPerGeV",
-                                                            "massOfOppositeChargeMuons1PinPerGeV",
-                                                            200,
-                                                            0.,
-                                                            200.);
+  histogram_massOfOppositeChargeMuons1PinPerGeV_ = book1D(dir,
+                                                          "massOfOppositeChargeMuons1PinPerGeV",
+                                                          "massOfOppositeChargeMuons1PinPerGeV",
+                                                          200,
+                                                          0.,
+                                                          200.);
   histogram_massOfOppositeChargeMuons10PinsPerGev_ = book1D(dir,
                                                             "massOfOppositeChargeMuons10PinsPerGev",
                                                             "massOfOppositeChargeMuons10PinsPerGev",
@@ -35,6 +35,8 @@ void EvtHistManager_2mu1b1jCategory::bookHistograms(TFileDirectory& dir)
 
 void EvtHistManager_2mu1b1jCategory::fillHistograms(
   double massOfOppositeChargeMuons,
+  double deltaROfOppositeChargeMuons,
+  double ptOfOppositeChargeMuons,
   double evtWeight)
 {
   double evtWeightErr = 0.;
