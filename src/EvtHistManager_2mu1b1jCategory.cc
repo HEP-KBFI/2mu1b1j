@@ -1,5 +1,4 @@
-#include \
-  "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1jCategory.h"
+#include "analysis2mu1b1j/analysis2mu1b1j/interface/EvtHistManager_2mu1b1jCategory.h"
 
 #include "tthAnalysis/HiggsToTauTau/interface/histogramAuxFunctions.h"
 
@@ -25,6 +24,29 @@ void EvtHistManager_2mu1b1jCategory::bookHistograms(TFileDirectory& dir)
                                                             0.,
                                                             200.);
 
+
+  histogram_deltaROfOppositeChargeMuons_ = book1D(dir,
+                                                  "deltaROfOppositeChargeMuons",
+                                                  "deltaROfOppositeChargeMuons",
+                                                  70,
+                                                  0.,
+                                                  7.);
+
+
+  histogram_ptOfOppositeChargeMuons1PinPerGeV_ = book1D(dir,
+                                                        "ptOfOppositeChargeMuons1PinPerGeV",
+                                                        "ptOfOppositeChargeMuons1PinPerGeV",
+                                                        200,
+                                                        0.,
+                                                        200.);
+  histogram_ptOfOppositeChargeMuons10PinsPerGev_ = book1D(dir,
+                                                          "ptOfOppositeChargeMuons10PinsPerGev",
+                                                          "ptOfOppositeChargeMuons10PinsPerGev",
+                                                          2000,
+                                                          0.,
+                                                          200.);
+
+
   histogram_EventCounter_ = book1D(dir,
                                    "EventCounter",
                                    "EventCounter",
@@ -45,10 +67,27 @@ void EvtHistManager_2mu1b1jCategory::fillHistograms(
                    massOfOppositeChargeMuons,
                    evtWeight,
                    evtWeightErr);
+
   fillWithOverFlow(histogram_massOfOppositeChargeMuons10PinsPerGev_,
                    massOfOppositeChargeMuons,
                    evtWeight,
                    evtWeightErr);
+
+  fillWithOverFlow(histogram_deltaROfOppositeChargeMuons_,
+                   deltaROfOppositeChargeMuons,
+                   evtWeight,
+                   evtWeightErr);
+
+  fillWithOverFlow(histogram_ptOfOppositeChargeMuons1PinPerGeV_,
+                   ptOfOppositeChargeMuons,
+                   evtWeight,
+                   evtWeightErr);
+
+  fillWithOverFlow(histogram_ptOfOppositeChargeMuons10PinsPerGev_,
+                   ptOfOppositeChargeMuons,
+                   evtWeight,
+                   evtWeightErr);
+
   fillWithOverFlow(histogram_EventCounter_,
                    0.,
                    evtWeight,

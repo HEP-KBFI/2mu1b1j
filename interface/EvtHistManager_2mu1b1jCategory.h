@@ -30,6 +30,9 @@ private:
 
   TH1 *histogram_massOfOppositeChargeMuons1PinPerGeV_;
   TH1 *histogram_massOfOppositeChargeMuons10PinsPerGev_;
+  TH1 *histogram_deltaROfOppositeChargeMuons_;
+  TH1 *histogram_ptOfOppositeChargeMuons1PinPerGeV_;
+  TH1 *histogram_ptOfOppositeChargeMuons10PinsPerGev_;
   TH1 *histogram_EventCounter_;
   std::vector<TH1 *> histograms_;
 };
