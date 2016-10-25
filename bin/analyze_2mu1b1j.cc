@@ -536,7 +536,7 @@ int main(int argc, char *argv[])
 
 
     double massOfOppositeChargeMuons   = (preselMuon_lead->p4_ + preselMuon_sublead->p4_).mass();
-    double deltaROfOppositeChargeMuons = deltaR(preselMuon_lead->p4_ + preselMuon_sublead->p4_);
+    double deltaROfOppositeChargeMuons = deltaR(preselMuon_lead->p4_, preselMuon_sublead->p4_);
     double ptOfOppositeChargeMuons     = (preselMuon_lead->p4_ + preselMuon_sublead->p4_).pt();
 
 
