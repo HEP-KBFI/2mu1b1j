@@ -399,8 +399,7 @@ int main(int argc, char *argv[])
        idxEntry < numEntries && (maxEvents == -1 || idxEntry < maxEvents);
        ++idxEntry) {
     if ((idxEntry > 0) && ((idxEntry % reportEvery) == 0)) {
-      std::cout << "processing Entry " << idxEntry << " (" << selectedEntries <<
-        " Entries selected)" << std::endl;
+      std::cout << "processing Entry " << idxEntry << " (" << selectedEntries << " Entries selected)" << std::endl;
     }
     ++analyzedEntries;
 
@@ -487,8 +486,7 @@ int main(int argc, char *argv[])
     if (preselMuons.size() != 2) {
       if (run_lumi_eventSelector) {
         std::cout << "event FAILS preselMuons selection." << std::endl;
-        std::cout << " (#preselMuons = " << preselMuons.size() << ")" <<
-          std::endl;
+        std::cout << " (#preselMuons = " << preselMuons.size() << ")" << std::endl;
 
         for (size_t idxPreselMuon = 0; idxPreselMuon < preselMuons.size(); ++idxPreselMuon) {
           std::cout << "preselMuons #" << idxPreselMuon << ":" << std::endl;
@@ -579,7 +577,7 @@ int main(int argc, char *argv[])
 
     // muon pt cuts
 
-    if (!((selMuon_lead->pt_ > 25.) && (selMuon_sublead->pt_ > 15.))) {
+    if (!((selMuon_lead->pt_ > 20.) && (selMuon_sublead->pt_ > 10.))) {
       if (run_lumi_eventSelector) {
         std::cout << "event FAILS muon pT selection." << std::endl;
         std::cout << " (leading selMuon pT = " << selMuon_lead->pt_
@@ -620,6 +618,18 @@ int main(int argc, char *argv[])
       }
     }
 
+
+    int bTaggedJetWithPtOver30AndEtaMoreThan24Count = 0;
+
+    for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
+      const RecoJet *bJet = selBJets_medium.at(i);
+
+      if ((bJet->pt_ > 30) && (abs(bJet->eta_) > 2.4)) {
+        bTaggedJetWithPtOver30AndEtaMoreThan24Count++;
+      }
+    }
+
+
     int jetsWithPtOver30AndEtaLessThan24Count = 0;
 
     for (unsigned int i = 0; i < selJets.size(); i++) {
@@ -630,6 +640,7 @@ int main(int argc, char *argv[])
       }
     }
 
+
     int jetsWithPtOver30AndEtaBigger24Count = 0;
 
     for (unsigned int i = 0; i < selJets.size(); i++) {
@@ -637,16 +648,6 @@ int main(int argc, char *argv[])
 
       if ((selJet->pt_ > 30) && (abs(selJet->eta_) > 2.4)) {
         jetsWithPtOver30AndEtaBigger24Count++;
-      }
-    }
-
-    int bTaggedJetWithPtOver30AndEtaMoreThan24Count = 0;
-
-    for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
-      const RecoJet *bJet = selBJets_medium.at(i);
-
-      if ((bJet->pt_ > 30) && (abs(bJet->eta_) > 2.4)) {
-        bTaggedJetWithPtOver30AndEtaMoreThan24Count++;
       }
     }
 
@@ -1005,8 +1006,7 @@ int main(int argc, char *argv[])
 
   std::cout << "num. Entries = " << numEntries << std::endl;
   std::cout << " analyzed = " << analyzedEntries << std::endl;
-  std::cout << " selected = " << selectedEntries << " (weighted = " <<
-    selectedEntries_weighted << ")" << std::endl;
+  std::cout << " selected = " << selectedEntries << " (weighted = " << selectedEntries_weighted << ")" << std::endl;
 
 
   std::cout << "cut-flow table" << std::endl;
