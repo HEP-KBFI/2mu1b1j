@@ -616,17 +616,6 @@ int main(int argc, char *argv[])
     }
 
 
-    int bTaggedJetWithPtOver30AndEtaMoreThan24Count = 0;
-
-    for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
-      const RecoJet *bJet = selBJets_medium.at(i);
-
-      if ((bJet->pt_ > 30) && (abs(bJet->eta_) > 2.4)) {
-        bTaggedJetWithPtOver30AndEtaMoreThan24Count++;
-      }
-    }
-
-
     int jetsWithPtOver30AndEtaLessThan24Count = 0;
 
     for (unsigned int i = 0; i < selJets.size(); i++) {
