@@ -728,11 +728,11 @@ int main(int argc, char *argv[])
 
     // 0b, 1j barrel, 1j forward
 
-    bool has1JetInBarrel = jetsWithPtOver30AndEtaLessThan24Count == 1;
-    bool has1JetForward  = jetsWithPtOver30AndEtaBigger24Count == 1;
+    bool has1JetInBarrel        = jetsWithPtOver30AndEtaLessThan24Count == 1;
+    bool hasMoreThan1JetForward = jetsWithPtOver30AndEtaBigger24Count > 1;
 
     bool isCategoryACompareEvent = hasCategoryACriteria1Passed &&
-                                   has1JetInBarrel && has1JetForward;
+                                   has1JetInBarrel && hasMoreThan1JetForward;
 
     if (isCategoryACompareEvent) {
       categoryACompareHistManager.fillHistograms(massOfOppositeChargeMuons,
@@ -743,7 +743,7 @@ int main(int argc, char *argv[])
     }
 
     bool isCategoryACompareRelaxedEvent = hasCategoryARelaxedCriteria1Passed &&
-                                          has1JetInBarrel && has1JetForward;
+                                          has1JetInBarrel && hasMoreThan1JetForward;
 
     if (isCategoryACompareRelaxedEvent) {
       categoryACompareRelaxedHistManager.fillHistograms(massOfOppositeChargeMuons,
