@@ -447,14 +447,12 @@ int main(int argc, char *argv[])
 
     // # Build collections of muons and jets
 
-    std::vector<RecoMuon> muons                = muonReader->read();
-    std::vector<const RecoMuon *> muon_ptrs    = convert_to_ptrs(muons);
-    std::vector<const RecoMuon *> cleanedMuons = muon_ptrs; // CV: no cleaning needed for muons, as they have the highest priority in the overlap removal
-    std::vector<const RecoMuon *> preselMuons  =
-      preselMuonSelector(cleanedMuons);
-    std::vector<const RecoMuon *> fakeableMuons =
-      fakeableMuonSelector(preselMuons);
-    std::vector<const RecoMuon *> tightMuons = tightMuonSelector(preselMuons);
+    std::vector<RecoMuon> muons                 = muonReader->read();
+    std::vector<const RecoMuon *> muon_ptrs     = convert_to_ptrs(muons);
+    std::vector<const RecoMuon *> cleanedMuons  = muon_ptrs; // CV: no cleaning needed for muons, as they have the highest priority in the overlap removal
+    std::vector<const RecoMuon *> preselMuons   = preselMuonSelector(cleanedMuons);
+    std::vector<const RecoMuon *> fakeableMuons = fakeableMuonSelector(preselMuons);
+    std::vector<const RecoMuon *> tightMuons    = tightMuonSelector(preselMuons);
 
     // setting selMuons tightMuons, because leptonSelection == 'tight'
 
@@ -586,8 +584,7 @@ int main(int argc, char *argv[])
       }
       continue;
     }
-    cutFlowTable.update("has first muon with pt over 25, second over 15",
-                        evtWeight);
+    cutFlowTable.update("has first muon with pt over 20, second over 10", evtWeight);
 
 
     // check that muon and antimuon
@@ -603,7 +600,7 @@ int main(int argc, char *argv[])
       }
       continue;
     }
-    cutFlowTable.update("sel lepton charge");
+    cutFlowTable.update("has muon and antimuon");
 
 
     // populate needed counters
