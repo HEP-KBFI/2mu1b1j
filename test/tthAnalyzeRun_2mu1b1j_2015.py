@@ -11,7 +11,7 @@ samples = samples_2015
 LUMI =  2.3e+3 # 1/pb
 
 
-version = "2016Oct20_v1"
+version = "2016Oct28_v1"
 
 if __name__ == '__main__':
   logging.basicConfig(
