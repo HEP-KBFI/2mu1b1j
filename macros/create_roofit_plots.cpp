@@ -36,7 +36,7 @@ void create_roofit_plots()
   TH1F *h1 = (TH1F *)f->Get(histName);
 
   if (!h1) {
-    std::count << "Histogram not found" << "\n";
+    std::cout << "Histogram not found" << "\n";
   }
 
   std::cout << "Draw histogram " << histName << "\n";
