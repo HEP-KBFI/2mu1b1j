@@ -32,8 +32,10 @@ void create_roofit_plots()
     std::cout << "CD FAILED \n";
   }
 
-  std::cout << "Draw histogram " << histName << "\n";
+  std::cout << "Load histogram " << histName << "\n";
   TH1F *h1 = (TH1F *)f->Get(histName);
+
+  std::cout << "Draw histogram " << histName << "\n";
   h1->Draw();
 
 
