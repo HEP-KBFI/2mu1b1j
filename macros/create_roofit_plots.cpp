@@ -54,5 +54,9 @@ void create_roofit_plots()
 
   // Draw frame on canvas
   new TCanvas("rf208_convolution", "rf208_convolution", 600, 600);
-  gPad->SetLeftMargin(0.15); frame->GetYaxis()->SetTitleOffset(1.4); frame->Draw();
+  gPad->SetLeftMargin(0.15);
+  frame->GetYaxis()->SetTitleOffset(1.4);
+  frame->Draw();
+
+  frame->Print('/home/margusp/pdfs/roofit.pdf');
 }
