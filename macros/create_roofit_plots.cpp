@@ -23,7 +23,7 @@ void create_roofit_plots()
   f->ls();
 
   char  histName[] = "2mu1b1jCategoryA_Tight/sel/evt/massOfOppositeChargeMuons1PinPerGev";
-  TH1F *h1         = (TH1F *)f.Get(histName);
+  TH1F *h1         = (TH1F *)f->Get(histName);
   h1->Draw();
 
 
