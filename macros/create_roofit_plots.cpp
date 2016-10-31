@@ -20,7 +20,7 @@ void create_roofit_plots()
     "/home/margusp/analysis2mu1b1j/2015/2016Oct28_v1/histograms/histograms_harvested_stage1_2mu1b1j.root";
   TFile *f = new TFile(rootFile);
 
-  char histDir[]  = "2mu1b1jCategoryA_Tight/sel/evt/";
+  char histDir[]  = "2mu1b1jCategoryA_Tight/sel/evt/data_obs";
   char histName[] = "massOfOppositeChargeMuons1PinPerGev";
 
   f->ls();
