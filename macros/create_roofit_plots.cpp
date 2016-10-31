@@ -21,7 +21,7 @@ void create_roofit_plots()
   TFile *f = new TFile(rootFile);
 
   char histDir[]  = "2mu1b1jCategoryA_Tight/sel/evt/data_obs";
-  char histName[] = "massOfOppositeChargeMuons1PinPerGev";
+  char histName[] = "massOfOppositeChargeMuons1PinPerGeV";
 
   f->ls();
 
@@ -35,7 +35,7 @@ void create_roofit_plots()
   f->ls();
 
   std::cout << "Load histogram " << histName << "\n";
-  TH1F *h1 = (TH1F *)f->Get(histName);
+  TH1F *h1 = (TH1F *)gDirectory->Get(histName);
 
   if (!h1) {
     std::cout << "Histogram not found" << "\n";
