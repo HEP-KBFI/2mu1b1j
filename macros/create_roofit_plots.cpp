@@ -26,7 +26,11 @@ void create_roofit_plots()
   f->ls();
 
   std::cout << "CD to " << histDir << "\n";
-  f->Cd(histDir);
+  bool cdSuccessful = f->Cd(histDir);
+
+  if (!cdSuccessful) {
+    std::cout << "CD FAILED \n";
+  }
 
   std::cout << "Draw histogram " << histName << "\n";
   TH1F *h1 = (TH1F *)f->Get(histName);
