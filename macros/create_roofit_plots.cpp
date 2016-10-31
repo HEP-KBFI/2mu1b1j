@@ -24,9 +24,9 @@ void create_roofit_plots()
   char histName[] = "massOfOppositeChargeMuons1PinPerGev";
 
   f->ls();
-  f->Cd(histDir)
+  f->Cd(histDir);
 
-  TH1F * h1 = (TH1F *)f->Get(histName);
+  TH1F *h1 = (TH1F *)f->Get(histName);
   h1->Draw();
 
 
