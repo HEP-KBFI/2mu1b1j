@@ -57,6 +57,4 @@ void create_roofit_plots()
   gPad->SetLeftMargin(0.15);
   frame->GetYaxis()->SetTitleOffset(1.4);
   frame->Draw();
-
-  frame->Print('/home/margusp/pdfs/roofit.pdf');
 }
