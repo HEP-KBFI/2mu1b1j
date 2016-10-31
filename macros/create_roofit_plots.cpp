@@ -16,13 +16,14 @@ using namespace RooFit;
 
 void create_roofit_plots()
 {
-  std::string rootFile =
+  char *rootFile =
     "/home/margusp/analysis2mu1b1j/2015/2016Oct28_v1/histograms/histograms_harvested_stage1_2mu1b1j.root";
   TFile *f = new TFile(rootFile);
+
   f->ls();
 
-  std::string histName = "2mu1b1jCategoryA_Tight/sel/evt/massOfOppositeChargeMuons1PinPerGev";
-  TH1F *h1             = (TH1F *)f.Get(histName);
+  char *histName = "2mu1b1jCategoryA_Tight/sel/evt/massOfOppositeChargeMuons1PinPerGev";
+  TH1F *h1       = (TH1F *)f.Get(histName);
   h1->Draw();
 
 
