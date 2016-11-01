@@ -48,17 +48,18 @@ void create_roofit_plots()
   // S e t u p   c o m p o n e n t   p d f s
   // ---------------------------------------
   // Construct observable
-  RooRealVar t("t", "t", -10, 30);
+  RooRealVar   range("range", "range", 25, 35);
+  RootDataHist data("data", "data", range, h1);
 
   // Construct landau(t,ml,sl) ;
-  RooRealVar ml("ml", "mean landau", 5., -20, 20);
-  RooRealVar sl("sl", "sigma landau", 1, 0.1, 10);
-  RooLandau  landau("lx", "lx", t, ml, sl);
+  RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 0);
+  RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
+  RooBreitWigner breitWigner("breitWigner", "breitWigner", range, breitWignerMean, breitWignerSigma);
 
   // Construct gauss(t,mg,sg)
-  RooRealVar  mg("mg", "mg", 0);
-  RooRealVar  sg("sg", "sg", 2, 0.1, 10);
-  RooGaussian gauss("gauss", "gauss", t, mg, sg);
+  RooRealVar  gaussMean("gaussMean", "gaussMean", 0);
+  RooRealVar  gaussSigma("gaussSigma", "gaussSigma", 3, 0.1, 5.0);
+  RooGaussian gauss("gauss", "gauss", range, gaussMean, gaussSigma);
 
   // C o n s t r u c t   c o n v o l u t i o n   p d f
   // ---------------------------------------
@@ -66,21 +67,16 @@ void create_roofit_plots()
   t.setBins(10000, "cache");
 
   // Construct landau (x) gauss
-  RooFFTConvPdf lxg("lxg", "landau (X) gauss", t, landau, gauss);
+  RooFFTConvPdf lxg("lxg", "landau (X) gauss", range, breitWigner, gauss);
 
   // S a m p l e ,   f i t   a n d   p l o t   c o n v o l u t e d   p d f
   // ----------------------------------------------------------------------
-  // Sample 1000 events in x from gxlx
-  RooDataSet *data = lxg.generate(t, 10000);
 
-  // Fit gxlx to data
-  lxg.fitTo(*data);
-
-  // Plot data, landau pdf, landau (X) gauss pdf
-  RooPlot *frame = t.frame(Title("landau (x) gauss convolution"));
-  data->plotOn(frame);
-  lxg.plotOn(frame);
-  landau.plotOn(frame, LineStyle(kDashed));
+  // Plot data, breitWignerMean pdf, breitWigner (X) gauss pdf
+  RooPlot *frame = t.frame(Title("breitWigner (x) gauss convolution"));
+  data.plotOn(frame);
+  breitWigner.plotOn(frame);
+  gauss.plotOn(frame, LineStyle(kDashed));
 
   // Draw frame on canvas
   new TCanvas("rf208_convolution", "rf208_convolution", 600, 600);
