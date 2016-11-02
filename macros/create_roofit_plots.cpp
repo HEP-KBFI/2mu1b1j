@@ -50,15 +50,15 @@ void create_roofit_plots()
 
   RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 0);
   RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
-  RooBreitWigner breitWigner("breitWigner", "breitWigner", data, breitWignerMean, breitWignerSigma);
+  RooBreitWigner breitWigner("breitWigner", "breitWigner", range, breitWignerMean, breitWignerSigma);
 
   RooRealVar  gaussMean("gaussMean", "gaussMean", 0);
   RooRealVar  gaussSigma("gaussSigma", "gaussSigma", 3, 0.1, 5.0);
-  RooGaussian gauss("gauss", "gauss", data, gaussMean, gaussSigma);
+  RooGaussian gauss("gauss", "gauss", range, gaussMean, gaussSigma);
 
   range.setBins(10000, "cache");
 
-  RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", data, breitWigner, gauss);
+  RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", range, breitWigner, gauss);
 
   RooPlot *frame = t.frame(Title("Breit-Wigner (x) Gauss convolution"));
   data.plotOn(frame);
