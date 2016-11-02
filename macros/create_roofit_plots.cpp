@@ -25,7 +25,7 @@ bool  create_roofit_plots()
 
   // create roofit
 
-  RooRealVar  range("range", "range", 25, 35);
+  RooRealVar  range("range", "range", 60, 120);
   RooDataHist dataHist("dataHist", "dataHist", range, h1);
 
   RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 0);
