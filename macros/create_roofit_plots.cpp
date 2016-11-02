@@ -45,40 +45,26 @@ void create_roofit_plots()
   h1->Draw();
 
 
-  // S e t u p   c o m p o n e n t   p d f s
-  // ---------------------------------------
-  // Construct observable
   RooRealVar   range("range", "range", 25, 35);
   RootDataHist data("data", "data", range, h1);
 
-  // Construct landau(t,ml,sl) ;
   RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 0);
   RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
-  RooBreitWigner breitWigner("breitWigner", "breitWigner", range, breitWignerMean, breitWignerSigma);
+  RooBreitWigner breitWigner("breitWigner", "breitWigner", data, breitWignerMean, breitWignerSigma);
 
-  // Construct gauss(t,mg,sg)
   RooRealVar  gaussMean("gaussMean", "gaussMean", 0);
   RooRealVar  gaussSigma("gaussSigma", "gaussSigma", 3, 0.1, 5.0);
-  RooGaussian gauss("gauss", "gauss", range, gaussMean, gaussSigma);
+  RooGaussian gauss("gauss", "gauss", data, gaussMean, gaussSigma);
 
-  // C o n s t r u c t   c o n v o l u t i o n   p d f
-  // ---------------------------------------
-  // Set #bins to be used for FFT sampling to 10000
-  t.setBins(10000, "cache");
+  range.setBins(10000, "cache");
 
-  // Construct landau (x) gauss
-  RooFFTConvPdf lxg("lxg", "landau (X) gauss", range, breitWigner, gauss);
+  RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", data, breitWigner, gauss);
 
-  // S a m p l e ,   f i t   a n d   p l o t   c o n v o l u t e d   p d f
-  // ----------------------------------------------------------------------
-
-  // Plot data, breitWignerMean pdf, breitWigner (X) gauss pdf
-  RooPlot *frame = t.frame(Title("breitWigner (x) gauss convolution"));
+  RooPlot *frame = t.frame(Title("Breit-Wigner (x) Gauss convolution"));
   data.plotOn(frame);
   breitWigner.plotOn(frame);
   gauss.plotOn(frame, LineStyle(kDashed));
 
-  // Draw frame on canvas
   new TCanvas("rf208_convolution", "rf208_convolution", 600, 600);
   gPad->SetLeftMargin(0.15);
   frame->GetYaxis()->SetTitleOffset(1.4);
