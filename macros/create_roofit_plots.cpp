@@ -60,7 +60,7 @@ void create_roofit_plots()
 
   RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", range, breitWigner, gauss);
 
-  RooPlot *frame = t.frame(Title("Breit-Wigner (x) Gauss convolution"));
+  RooPlot *frame = range.frame(Title("Breit-Wigner (x) Gauss convolution"));
   data.plotOn(frame);
   breitWigner.plotOn(frame);
   gauss.plotOn(frame, LineStyle(kDashed));
