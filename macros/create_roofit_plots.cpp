@@ -28,8 +28,6 @@ bool  create_roofit_plots()
   }
   h1->Draw();
 
-  return true;
-
 
   // create roofit
 
