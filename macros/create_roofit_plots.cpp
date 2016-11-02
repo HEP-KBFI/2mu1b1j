@@ -38,7 +38,7 @@ bool createRooFit(TH1F *h1) {
   // RooBreitWigner breitWigner("breitWigner", "breitWigner", x, breitWignerMean, breitWignerSigma);
 
   RooRealVar  mean("mean", "mean", 0);
-  RooRealVar  sigma("sigma", "sigma", 5.27);
+  RooRealVar  sigma("sigma", "sigma", 2);
   RooGaussian model("gauss", "gauss", x, mean, sigma);
 
   RooPlot *xframe = x.frame();
