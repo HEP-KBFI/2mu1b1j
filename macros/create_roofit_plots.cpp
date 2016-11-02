@@ -16,21 +16,8 @@ using namespace RooFit;
 TH1F* loadTH1F();
 
 
-bool  create_roofit_plots()
+void  create_roofit_plots()
 {
-  TH1F *h1 = loadTH1F();
-
-  if (h1) {
-    std::cout << "Histogram found. \n";
-  } else {
-    std::cout << "Histogram not found. \n";
-    return false;
-  }
-  h1->Draw();
-
-
-  // create roofit
-
   // S e t u p   c o m p o n e n t   p d f s
   // ---------------------------------------
   // Construct observable
@@ -71,8 +58,6 @@ bool  create_roofit_plots()
   // Draw frame on canvas
   new TCanvas("rf208_convolution", "rf208_convolution", 600, 600);
   gPad->SetLeftMargin(0.15); frame->GetYaxis()->SetTitleOffset(1.4); frame->Draw();
-
-  return true;
 }
 
 TH1F* loadTH1F() {
