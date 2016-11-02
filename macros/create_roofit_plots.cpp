@@ -58,7 +58,7 @@ bool create_roofit_plots()
   // create roofit
 
   RooRealVar  range("range", "range", 25, 35);
-  RooDataHist data("data", "data", range, h1);
+  RooDataHist dataHist("data", "data", range, h1);
 
   RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 0);
   RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
@@ -77,8 +77,10 @@ bool create_roofit_plots()
   breitWigner.plotOn(frame);
   gauss.plotOn(frame, LineStyle(kDashed));
 
-  new TCanvas("rf208_convolution", "rf208_convolution", 600, 600);
-  gPad->SetLeftMargin(0.15);
+  TCanvas *c = new TCanvas("Breit-Wigner (x) Gauss convolution", "Breit-Wigner (x) Gauss convolution", 600, 600);
+  c->SetLeftMargin(0.15);
+  c->Divide(2);
+
   frame->GetYaxis()->SetTitleOffset(1.4);
   frame->Draw();
 }
