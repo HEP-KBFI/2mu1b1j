@@ -14,8 +14,10 @@
 using namespace RooFit;
 
 
-void create_roofit_plots()
+bool create_roofit_plots()
 {
+  // set configuration params
+
   char rootFile[] =
     "/home/margusp/analysis2mu1b1j/2015/2016Oct28_v1/histograms/histograms_harvested_stage1_2mu1b1j.root";
   TFile *f = new TFile(rootFile);
@@ -23,27 +25,37 @@ void create_roofit_plots()
   char histDir[]  = "2mu1b1jCategoryA_Tight/sel/evt/data_obs";
   char histName[] = "massOfOppositeChargeMuons1PinPerGeV";
 
+
+  // show TH1F histogram
+
+  std::count << "Contents of current directory: \n";
   f->ls();
 
-  std::cout << "CD to " << histDir << "\n";
   bool cdSuccessful = f->Cd(histDir);
 
-  if (!cdSuccessful) {
-    std::cout << "CD FAILED \n";
+  if (cdSuccessful) {
+    std::cout << "Success: CD to " << histDir << "\n";
+  } else {
+    std::cout << "Failed: CD to " << histDir << "\n";
+    return false;
   }
 
+  std::count << "Contents of current directory: \n";
   f->ls();
 
-  std::cout << "Load histogram " << histName << "\n";
   TH1F *h1 = (TH1F *)gDirectory->Get(histName);
 
-  if (!h1) {
-    std::cout << "Histogram not found" << "\n";
+  if (h1) {
+    std::cout << "Success: Histogram loaded. " + histName + "\n";
+  } else {
+    std::cout << "Failed: Histogram not found. " + histName + "\n";
+    return false;
   }
 
-  std::cout << "Draw histogram " << histName << "\n";
   h1->Draw();
 
+
+  // create roofit
 
   RooRealVar  range("range", "range", 25, 35);
   RooDataHist data("data", "data", range, h1);
