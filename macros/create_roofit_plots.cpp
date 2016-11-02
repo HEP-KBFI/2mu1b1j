@@ -25,8 +25,7 @@ bool  create_roofit_plots()
 
   // create roofit
 
-  RooRealVar range("range", "range", 60, 120);
-
+  RooRealVar  range("range", "range", 60, 120);
   RooDataHist dataHist("dataHist", "dataHist", range, h1);
 
   RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 0);
@@ -37,6 +36,7 @@ bool  create_roofit_plots()
   RooRealVar  gaussSigma("gaussSigma", "gaussSigma", 3, 0.1, 5.0);
   RooGaussian gauss("gauss", "gauss", range, gaussMean, gaussSigma);
 
+  range.setBins(10, "cache");
 
   RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", range, breitWigner, gauss);
 
