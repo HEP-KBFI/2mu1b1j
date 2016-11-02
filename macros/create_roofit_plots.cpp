@@ -111,5 +111,5 @@ TH1F* loadTH1F() {
     std::cout << "Failed: Histogram not found. " << histName << "\n";
   }
 
-  return &h1;
+  return h1;
 }
