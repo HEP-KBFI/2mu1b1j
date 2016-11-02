@@ -45,8 +45,8 @@ void create_roofit_plots()
   h1->Draw();
 
 
-  RooRealVar   range("range", "range", 25, 35);
-  RootDataHist data("data", "data", range, h1);
+  RooRealVar  range("range", "range", 25, 35);
+  RooDataHist data("data", "data", range, h1);
 
   RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 0);
   RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
