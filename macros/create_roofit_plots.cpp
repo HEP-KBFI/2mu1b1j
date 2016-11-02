@@ -41,10 +41,17 @@ bool createRooFit(TH1F *h1) {
   RooRealVar  sigma("sigma", "sigma", 0.1);
   RooGaussian model("gauss", "gauss", x, mean, sigma);
 
+  // unbinned
+  RooDataSet *data = model.generate(x, 10000);
+
   RooPlot *xframe = x.frame();
 
   model.plotOn(xframe);
   xframe->Draw();
+
+
+  // pinned
+  // RooDataSet *data = model.generateBinned(x, 10000);
 
   return true;
 
