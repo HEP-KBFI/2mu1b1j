@@ -20,6 +20,10 @@ bool  create_roofit_plots()
 {
   TH1F *h1 = loadTH1F();
 
+  if (!h1) {
+    std::cout << "Histogram not found. \n";
+    return false;
+  }
   h1->Draw();
 
 
