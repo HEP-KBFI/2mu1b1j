@@ -55,6 +55,8 @@ bool  create_roofit_plots()
 
   frame->GetYaxis()->SetTitleOffset(1.4);
   frame->Draw();
+
+  return true;
 }
 
 TH1F* loadTH1F() {
