@@ -29,7 +29,7 @@ bool  create_roofit_plots()
 bool createRooFit(TH1F *h1) {
   // create roofit
 
-  RooRealVar x("x", "x", 60, 120);
+  RooRealVar x("x", "x", -10, 10);
 
   // RooDataHist dataHist("dataHist", "dataHist", x, h1);
 
@@ -38,7 +38,7 @@ bool createRooFit(TH1F *h1) {
   // RooBreitWigner breitWigner("breitWigner", "breitWigner", x, breitWignerMean, breitWignerSigma);
 
   RooRealVar  mean("mean", "mean", 0);
-  RooRealVar  sigma("sigma", "sigma", 3, 0.1, 5.0);
+  RooRealVar  sigma("sigma", "sigma", 5.27);
   RooGaussian model("gauss", "gauss", x, mean, sigma);
 
   RooPlot *xframe = x.frame();
