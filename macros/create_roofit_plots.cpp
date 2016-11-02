@@ -28,7 +28,7 @@ bool create_roofit_plots()
 
   // show TH1F histogram
 
-  std::count << "Contents of current directory: \n";
+  std::cout << "Contents of current directory: \n";
   f->ls();
 
   bool cdSuccessful = f->Cd(histDir);
@@ -40,7 +40,7 @@ bool create_roofit_plots()
     return false;
   }
 
-  std::count << "Contents of current directory: \n";
+  std::cout << "Contents of current directory: \n";
   f->ls();
 
   TH1F *h1 = (TH1F *)gDirectory->Get(histName);
