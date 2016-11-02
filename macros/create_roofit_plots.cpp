@@ -45,16 +45,15 @@ bool  create_roofit_plots()
   RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", range, breitWigner, gauss);
 
   RooPlot *frame = range.frame(Title("Breit-Wigner (x) Gauss convolution"));
+  frame->GetYaxis()->SetTitleOffset(1.4);
+  frame->Draw();
+
   dataHist.plotOn(frame);
   breitWigner.plotOn(frame);
   gauss.plotOn(frame, LineStyle(kDashed));
 
-  TCanvas *c = new TCanvas("Breit-Wigner (x) Gauss convolution", "Breit-Wigner (x) Gauss convolution", 600, 600);
-  c->SetLeftMargin(0.15);
-  c->Divide(2);
-
-  frame->GetYaxis()->SetTitleOffset(1.4);
-  frame->Draw();
+  TCanvas *c = new TCanvas("Breit-Wigner (x) Gauss convolution", "Breit-Wigner (x) Gauss convolution", 60, 120);
+  gPad->SetLeftMargin(0.15);
 
   return true;
 }
