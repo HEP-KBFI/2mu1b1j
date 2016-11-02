@@ -13,9 +13,49 @@
 
 using namespace RooFit;
 
+TH1F* loadTH1F();
 
-void create_roofit_plots()
+
+bool  create_roofit_plots()
 {
+  TH1F *h1 = loadTH1F();
+
+  h1->Draw();
+
+
+  // create roofit
+
+  RooRealVar  range("range", "range", 25, 35);
+  RooDataHist dataHist("dataHist", "dataHist", range, h1);
+
+  RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 0);
+  RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
+  RooBreitWigner breitWigner("breitWigner", "breitWigner", range, breitWignerMean, breitWignerSigma);
+
+  RooRealVar  gaussMean("gaussMean", "gaussMean", 0);
+  RooRealVar  gaussSigma("gaussSigma", "gaussSigma", 3, 0.1, 5.0);
+  RooGaussian gauss("gauss", "gauss", range, gaussMean, gaussSigma);
+
+  range.setBins(10000, "cache");
+
+  RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", range, breitWigner, gauss);
+
+  RooPlot *frame = range.frame(Title("Breit-Wigner (x) Gauss convolution"));
+  dataHist.plotOn(frame);
+  breitWigner.plotOn(frame);
+  gauss.plotOn(frame, LineStyle(kDashed));
+
+  TCanvas *c = new TCanvas("Breit-Wigner (x) Gauss convolution", "Breit-Wigner (x) Gauss convolution", 600, 600);
+  c->SetLeftMargin(0.15);
+  c->Divide(2);
+
+  frame->GetYaxis()->SetTitleOffset(1.4);
+  frame->Draw();
+}
+
+TH1F* loadTH1F() {
+  // set configuration params
+
   char rootFile[] =
     "/home/margusp/analysis2mu1b1j/2015/2016Oct28_v1/histograms/histograms_harvested_stage1_2mu1b1j.root";
   TFile *f = new TFile(rootFile);
@@ -23,50 +63,31 @@ void create_roofit_plots()
   char histDir[]  = "2mu1b1jCategoryA_Tight/sel/evt/data_obs";
   char histName[] = "massOfOppositeChargeMuons1PinPerGeV";
 
+
+  // show TH1F histogram
+
+  std::cout << "Contents of current directory: \n";
   f->ls();
 
-  std::cout << "CD to " << histDir << "\n";
   bool cdSuccessful = f->Cd(histDir);
 
-  if (!cdSuccessful) {
-    std::cout << "CD FAILED \n";
+  if (cdSuccessful) {
+    std::cout << "Success: CD to " << histDir << "\n";
+  } else {
+    std::cout << "Failed: CD to " << histDir << "\n";
+    return NULL;
   }
 
+  std::cout << "Contents of current directory: \n";
   f->ls();
 
-  std::cout << "Load histogram " << histName << "\n";
   TH1F *h1 = (TH1F *)gDirectory->Get(histName);
 
-  if (!h1) {
-    std::cout << "Histogram not found" << "\n";
+  if (h1) {
+    std::cout << "Success: Histogram loaded. " << histName << "\n";
+  } else {
+    std::cout << "Failed: Histogram not found. " << histName << "\n";
   }
 
-  std::cout << "Draw histogram " << histName << "\n";
-  h1->Draw();
-
-
-  RooRealVar  range("range", "range", 25, 35);
-  RooDataHist data("data", "data", range, h1);
-
-  RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 0);
-  RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
-  RooBreitWigner breitWigner("breitWigner", "breitWigner", data, breitWignerMean, breitWignerSigma);
-
-  RooRealVar  gaussMean("gaussMean", "gaussMean", 0);
-  RooRealVar  gaussSigma("gaussSigma", "gaussSigma", 3, 0.1, 5.0);
-  RooGaussian gauss("gauss", "gauss", data, gaussMean, gaussSigma);
-
-  range.setBins(10000, "cache");
-
-  RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", data, breitWigner, gauss);
-
-  RooPlot *frame = t.frame(Title("Breit-Wigner (x) Gauss convolution"));
-  data.plotOn(frame);
-  breitWigner.plotOn(frame);
-  gauss.plotOn(frame, LineStyle(kDashed));
-
-  new TCanvas("rf208_convolution", "rf208_convolution", 600, 600);
-  gPad->SetLeftMargin(0.15);
-  frame->GetYaxis()->SetTitleOffset(1.4);
-  frame->Draw();
+  return h1;
 }
