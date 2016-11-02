@@ -29,7 +29,7 @@ void create_roofit_plots()
   RooRealVar  x("x", "x", 60, 120);
   RooDataHist dataHist("dataHist", "dataHist", x, h1);
 
-  RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 0);
+  RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 90.0);
   RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
   RooBreitWigner breitWigner("breitWigner", "breitWigner", x, breitWignerMean, breitWignerSigma);
 
