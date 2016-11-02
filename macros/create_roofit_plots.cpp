@@ -75,7 +75,7 @@ TH1F* loadTH1F() {
     std::cout << "Success: CD to " << histDir << "\n";
   } else {
     std::cout << "Failed: CD to " << histDir << "\n";
-    return false;
+    return NULL;
   }
 
   std::cout << "Contents of current directory: \n";
