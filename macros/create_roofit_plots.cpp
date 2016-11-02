@@ -18,46 +18,33 @@ TH1F* loadTH1F();
 
 void  create_roofit_plots()
 {
-  // S e t u p   c o m p o n e n t   p d f s
-  // ---------------------------------------
-  // Construct observable
-  RooRealVar t("t", "t", -10, 30);
+  TH1F *h1 = loadTH1F();
 
-  // Construct landau(t,ml,sl) ;
-  RooRealVar ml("ml", "mean landau", 5., -20, 20);
-  RooRealVar sl("sl", "sigma landau", 1, 0.1, 10);
-  RooLandau  landau("lx", "lx", t, ml, sl);
+  RooRealVar  range("range", "range", 60, 120);
+  RooDataHist dataHist("dataHist", "dataHist", range, h1);
 
-  // Construct gauss(t,mg,sg)
-  RooRealVar  mg("mg", "mg", 0);
-  RooRealVar  sg("sg", "sg", 2, 0.1, 10);
-  RooGaussian gauss("gauss", "gauss", t, mg, sg);
+  RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 0);
+  RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
+  RooBreitWigner breitWigner("breitWigner", "breitWigner", range, breitWignerMean, breitWignerSigma);
 
-  // C o n s t r u c t   c o n v o l u t i o n   p d f
-  // ---------------------------------------
-  // Set #bins to be used for FFT sampling to 10000
-  t.setBins(10000, "cache");
+  RooRealVar  gaussMean("gaussMean", "gaussMean", 0);
+  RooRealVar  gaussSigma("gaussSigma", "gaussSigma", 3, 0.1, 5.0);
+  RooGaussian gauss("gauss", "gauss", range, gaussMean, gaussSigma);
 
-  // Construct landau (x) gauss
-  RooFFTConvPdf lxg("lxg", "landau (X) gauss", t, landau, gauss);
+  range.setBins(10000, "cache");
 
-  // S a m p l e ,   f i t   a n d   p l o t   c o n v o l u t e d   p d f
-  // ----------------------------------------------------------------------
-  // Sample 1000 events in x from gxlx
-  RooDataSet *data = lxg.generate(t, 10000);
+  RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", range, breitWigner, gauss);
 
-  // Fit gxlx to data
-  lxg.fitTo(*data);
+  RooPlot *frame = range.frame(Title("Breit-Wigner (x) Gauss convolution"));
+  frame->GetYaxis()->SetTitleOffset(1.4);
+  frame->Draw();
 
-  // Plot data, landau pdf, landau (X) gauss pdf
-  RooPlot *frame = t.frame(Title("landau (x) gauss convolution"));
-  data->plotOn(frame);
-  lxg.plotOn(frame);
-  landau.plotOn(frame, LineStyle(kDashed));
+  dataHist.plotOn(frame);
+  breitWigner.plotOn(frame);
+  gauss.plotOn(frame, LineStyle(kDashed));
 
-  // Draw frame on canvas
-  new TCanvas("rf208_convolution", "rf208_convolution", 600, 600);
-  gPad->SetLeftMargin(0.15); frame->GetYaxis()->SetTitleOffset(1.4); frame->Draw();
+  TCanvas *c = new TCanvas("Breit-Wigner (x) Gauss convolution", "Breit-Wigner (x) Gauss convolution", 60, 120);
+  gPad->SetLeftMargin(0.15);
 }
 
 TH1F* loadTH1F() {
