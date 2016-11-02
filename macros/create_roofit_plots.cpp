@@ -20,7 +20,9 @@ bool  create_roofit_plots()
 {
   TH1F *h1 = loadTH1F();
 
-  if (!h1) {
+  if (h1) {
+    std::cout << "Histogram found. \n";
+  } else {
     std::cout << "Histogram not found. \n";
     return false;
   }
@@ -109,5 +111,5 @@ TH1F* loadTH1F() {
     std::cout << "Failed: Histogram not found. " << histName << "\n";
   }
 
-  return h1;
+  return &h1;
 }
