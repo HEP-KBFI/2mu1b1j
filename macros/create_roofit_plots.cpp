@@ -37,11 +37,11 @@ void create_roofit_plots()
   RooRealVar  gaussSigma("gaussSigma", "gaussSigma", 3, 0.1, 5.0);
   RooGaussian gauss("gauss", "gauss", x, gaussMean, gaussSigma);
 
-  range.setBins(10000, "cache");
+  x.setBins(10000, "cache");
 
   RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", x, breitWigner, gauss);
 
-  RooPlot *frame = range.frame(Title("Breit-Wigner (x) Gauss convolution"));
+  RooPlot *frame = x.frame(Title("Breit-Wigner (x) Gauss convolution"));
   frame->GetYaxis()->SetTitleOffset(1.4);
   frame->Draw();
 
