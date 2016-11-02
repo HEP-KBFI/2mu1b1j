@@ -42,7 +42,7 @@ bool createRooFit(TH1F *h1) {
   RooGaussian model("gauss", "gauss", x, mean, sigma);
 
   // unbinned
-  RooDataSet *data = Import(*h1);
+  RooDataSet *data = Import(&h1);
 
   RooPlot *xframe = x.frame();
 
