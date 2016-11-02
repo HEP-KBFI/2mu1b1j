@@ -25,10 +25,10 @@ bool  create_roofit_plots()
 
   // create roofit
 
-  RooRealVar  range("range", "range", 25, 35);
+  RooRealVar  range("range", "range", 60, 120);
   RooDataHist dataHist("dataHist", "dataHist", range, h1);
 
-  RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 0);
+  RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 90);
   RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
   RooBreitWigner breitWigner("breitWigner", "breitWigner", range, breitWignerMean, breitWignerSigma);
 
