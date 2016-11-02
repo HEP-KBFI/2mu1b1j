@@ -29,8 +29,9 @@ bool  create_roofit_plots()
 bool createRooFit(TH1F *h1) {
   // create roofit
 
-  RooRealVar  x("x", "x", 60, 120);
-  RooDataHist dataHist("dataHist", "dataHist", x, h1);
+  RooRealVar x("x", "x", 60, 120);
+
+  // RooDataHist dataHist("dataHist", "dataHist", x, h1);
 
   // RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 90);
   // RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
@@ -44,6 +45,8 @@ bool createRooFit(TH1F *h1) {
 
   model.plotOn(xframe);
   xframe->Draw();
+
+  return true;
 
   //
   // RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", x, breitWigner, gauss);
