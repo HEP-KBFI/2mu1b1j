@@ -46,9 +46,9 @@ bool create_roofit_plots()
   TH1F *h1 = (TH1F *)gDirectory->Get(histName);
 
   if (h1) {
-    std::cout << "Success: Histogram loaded. " + histName + "\n";
+    std::cout << "Success: Histogram loaded. " << histName << "\n";
   } else {
-    std::cout << "Failed: Histogram not found. " + histName + "\n";
+    std::cout << "Failed: Histogram not found. " << histName << "\n";
     return false;
   }
 
