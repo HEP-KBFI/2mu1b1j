@@ -26,7 +26,7 @@ bool  create_roofit_plots()
   // create roofit
 
   RooRealVar range("range", "range", 60, 120);
-  range.setBins(60, "cache");
+  range.setBins(62, "cache");
 
   RooDataHist dataHist("dataHist", "dataHist", range, h1);
 
