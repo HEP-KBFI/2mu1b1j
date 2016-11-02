@@ -26,6 +26,8 @@ void create_roofit_plots()
 {
   TH1F *h1 = loadTH1F();
 
+  h1->Draw();
+
   RooRealVar  x("x", "x", 60, 120);
   RooDataHist dataHist("dataHist", "dataHist", x, h1);
 
