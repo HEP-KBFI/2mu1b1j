@@ -32,29 +32,33 @@ bool createRooFit(TH1F *h1) {
   RooRealVar  x("x", "x", 60, 120);
   RooDataHist dataHist("dataHist", "dataHist", x, h1);
 
-  RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 90);
-  RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
-  RooBreitWigner breitWigner("breitWigner", "breitWigner", x, breitWignerMean, breitWignerSigma);
+  // RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 90);
+  // RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
+  // RooBreitWigner breitWigner("breitWigner", "breitWigner", x, breitWignerMean, breitWignerSigma);
 
-  RooRealVar  gaussMean("gaussMean", "gaussMean", 0);
-  RooRealVar  gaussSigma("gaussSigma", "gaussSigma", 3, 0.1, 5.0);
-  RooGaussian gauss("gauss", "gauss", x, gaussMean, gaussSigma);
+  RooRealVar  mean("mean", "mean", 0);
+  RooRealVar  sigma("sigma", "sigma", 3, 0.1, 5.0);
+  RooGaussian model("gauss", "gauss", x, mean, sigma);
 
-  x.setBins(10000, "cache");
+  RooPlot *xframe = x.frame();
 
-  RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", x, breitWigner, gauss);
+  model.plotOn(xframe);
+  xframe->Draw();
 
-  RooPlot *frame = x.frame(Title("Breit-Wigner (x) Gauss convolution"));
-  dataHist.plotOn(frame);
-  breitWigner.plotOn(frame);
-  gauss.plotOn(frame, LineStyle(kDashed));
-
-  TCanvas *c = new TCanvas("Breit-Wigner (x) Gauss convolution", "Breit-Wigner (x) Gauss convolution", 600, 600);
-  c->SetLeftMargin(0.15);
-  c->Divide(2);
-
-  frame->GetYaxis()->SetTitleOffset(1.4);
-  frame->Draw();
+  //
+  // RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", x, breitWigner, gauss);
+  //
+  // RooPlot *frame = x.frame(Title("Breit-Wigner (x) Gauss convolution"));
+  // dataHist.plotOn(frame);
+  // breitWigner.plotOn(frame);
+  // gauss.plotOn(frame, LineStyle(kDashed));
+  //
+  // TCanvas *c = new TCanvas("Breit-Wigner (x) Gauss convolution", "Breit-Wigner (x) Gauss convolution", 600, 600);
+  // c->SetLeftMargin(0.15);
+  // c->Divide(2);
+  //
+  // frame->GetYaxis()->SetTitleOffset(1.4);
+  // frame->Draw();
 }
 
 TH1F* loadTH1F() {
