@@ -36,7 +36,7 @@ bool  create_roofit_plots()
   RooRealVar  gaussSigma("gaussSigma", "gaussSigma", 3, 0.1, 5.0);
   RooGaussian gauss("gauss", "gauss", range, gaussMean, gaussSigma);
 
-  range.setBins(10, "cache");
+  range.setBins(10000, "cache");
 
   RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", range, breitWigner, gauss);
 
