@@ -30,7 +30,7 @@ bool createRooFit(
 
 bool create_roofit_plots()
 {
-  string categoryNames[] =  {
+  string categoryNames[2] =  {
     "CategoryA",
     "CategoryB"
   };
