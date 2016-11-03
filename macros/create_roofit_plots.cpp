@@ -134,11 +134,11 @@ bool createRooFit(
   RooRealVar  sigma2("gauss sigma", "gauss sigma", 1, 0.01, 10);
   RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
 
-  x.setBins(10000, "cache");
   RooFFTConvPdf convolution("convolution", "FFT convolution", x, model1, model2);
 
-  RooDataSet *data = convolution.generate(t, 10000);
-  convolution.fitTo(*data);
+  x.setBins(10000, "cache");
+  RooDataSet *generatedData = convolution.generate(x, 10000);
+  convolution.fitTo(*generatedData);
 
 
   RooPlot *xframe = x.frame();
@@ -146,7 +146,6 @@ bool createRooFit(
   convolution.plotOn(xframe);
   data->plotOn(xframe);
 
-  // convolution.plotOn(xframe);
   xframe->Draw();
 
   string pdfPath = string("/home/margusp/roofits/") +
@@ -165,25 +164,8 @@ bool createRooFit(
 
   canvas->Print(pdfPath.data(), "pdf");
 
-  // pinned
-  // RooDataSet *data = model.generateBinned(x, 10000);
 
   return true;
-
-  //
-  // RooFFTConvPdf pdf("Breit-Wigner (X) Gauss", "Breit-Wigner (X) Gauss", x, breitWigner, gauss);
-  //
-  // RooPlot *frame = x.frame(Title("Breit-Wigner (x) Gauss convolution"));
-  // dataHist.plotOn(frame);
-  // breitWigner.plotOn(frame);
-  // gauss.plotOn(frame, LineStyle(kDashed));
-  //
-  // TCanvas *c = new TCanvas("Breit-Wigner (x) Gauss convolution", "Breit-Wigner (x) Gauss convolution", 600, 600);
-  // c->SetLeftMargin(0.15);
-  // c->Divide(2);
-  //
-  // frame->GetYaxis()->SetTitleOffset(1.4);
-  // frame->Draw();
 }
 
 TH1F* loadTH1F(
