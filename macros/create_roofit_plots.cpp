@@ -80,6 +80,7 @@ bool createRooFit(
   RooPlot *xframe = x.frame();
 
   dataHist.plotOn(xframe);
+  model1.plotOn(xframe);
   model2.plotOn(xframe);
   xframe->Draw();
 
