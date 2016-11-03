@@ -63,7 +63,7 @@ bool createRooFit(
   std::cout << "x (initial).\n";
   x.Print();
 
-  RooDataHist dataHist("dataHist", "dataHist", x, Import(*h1));
+  RooDataHist dataHist("dataHist", "dataHist", x, Import(*histogram));
 
   std::cout << "x (after data load from TH1F).\n";
   x.Print();
@@ -153,13 +153,13 @@ TH1F* loadTH1F() {
   std::cout << "Contents of current directory: \n";
   f->ls();
 
-  TH1F *h1 = (TH1F *)gDirectory->Get(histName);
+  TH1F *histogram = (TH1F *)gDirectory->Get(histName);
 
-  if (h1) {
+  if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
   } else {
     std::cout << "Failed: Histogram not found. " << histName << "\n";
   }
 
-  return h1;
+  return histogram;
 }
