@@ -39,6 +39,8 @@ bool create_roofit_plots()
     TH1F *histogram = loadTH1F(categoryName);
     return createRooFit(histogram, categoryName);
   }
+
+  return true;
 }
 
 // methods
