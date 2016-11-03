@@ -36,8 +36,8 @@ bool create_roofit_plots()
   };
 
   for (string categoryName : categoryNames) {
-    TH1F *histogram = loadTH1F(categoryName);
-    return createRooFit(histogram, categoryName);
+    TH1F *histogram = loadTH1F(categoryName.data());
+    return createRooFit(histogram, categoryName.data());
   }
 }
 
