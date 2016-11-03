@@ -17,7 +17,7 @@ using namespace RooFit;
 // interface
 
 TH1F* loadTH1F(
-  std::string categoryName
+  string categoryName
   );
 
 bool createRooFit(
@@ -30,7 +30,7 @@ bool createRooFit(
 
 bool create_roofit_plots()
 {
-  std::string categoryNames[] =  {
+  string categoryNames[] =  {
     "CategoryA",
     "CategoryB"
   };
@@ -46,8 +46,8 @@ bool create_roofit_plots()
 // methods
 
 bool createRooFit(
-  TH1F *histogram,
-  char  categoryName[]
+  TH1F  *histogram,
+  string categoryName
   )
 {
   // create roofit
@@ -121,7 +121,7 @@ bool createRooFit(
   // frame->Draw();
 }
 
-TH1F* loadTH1F() {
+TH1F* loadTH1F(string categoryName) {
   // set configuration params
 
   char rootFile[] =
