@@ -42,14 +42,29 @@ bool create_roofit_plots()
 
   string categoryNames[] = {
     "CategoryA",
-    "CategoryB"
+    "CategoryARelaxed",
+    "CategoryACompare",
+    "CategoryACompareRelaxed",
+    "CategoryB",
+    "CategoryBRelaxed",
+    "CategoryBCompare",
+    "CategoryBCompareRelaxed",
+    "CategoryC",
+    "CategoryCRelaxed",
+    "CategoryCCompare",
+    "CategoryCCompareRelaxed",
+    "CategoryD",
+    "CategoryDRelaxed",
+    "CategoryDCompare",
+    "CategoryDCompareRelaxed"
   };
 
   // value, range
   float ranges[][3] = {
     {  3.0,  1.0,   5.0 },
     { 10.0, 8.00, 12.00 },
-    { 28.5, 24.5,  32.5 }
+    { 28.5, 24.5,  32.5 },
+    {    0,  0.0, 120.0 }
   };
 
   for (string year : years) {
@@ -124,7 +139,18 @@ bool createRooFit(
   // convolution.plotOn(xframe);
   xframe->Draw();
 
-  string pdfPath = string("/home/margusp/roofits/") + year + "_" + categoryName + "_" + to_string(range[0]) + ".pdf";
+  string pdfPath = string("/home/margusp/roofits/") +
+                   year +
+                   "_" +
+                   categoryName +
+                   "_" +
+                   to_string(range[1]) +
+                   "-" +
+                   to_string(range[2]) +
+                   "(" +
+                   to_string(range[0]) +
+                   ")" +
+                   ".pdf";
 
   cout << "pdfPath is: " << pdfPath << "\n";
 
