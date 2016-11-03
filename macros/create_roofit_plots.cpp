@@ -60,7 +60,7 @@ bool createRooFit(TH1F *h1, std::string name) {
 
   RooPlot *xframe = x.frame();
 
-  data->plotOn(xframe);
+  dataHist.plotOn(xframe);
   model.plotOn(xframe);
   xframe->Draw();
 
