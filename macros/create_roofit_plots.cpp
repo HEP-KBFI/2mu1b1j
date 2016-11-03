@@ -66,13 +66,13 @@ bool createRooFit(
   x.Print();
 
 
-  // RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 90);
-  // RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
-  // RooBreitWigner breitWigner("breitWigner", "breitWigner", x, breitWignerMean, breitWignerSigma);
+  RooRealVar mean1("gauss mean", "gauss mean", 91, 80, 100);
+  RooRealVar sigma1("gauss sigma", "gauss sigma", 1, 0.01, 10);
+  RooBreitWigner model1("breitWigner", "breitWigner", x, mean1, sigma1);
 
-  RooRealVar  mean("mean", "mean", 91, 80, 100);
-  RooRealVar  sigma("sigma", "sigma", 1, 0.01, 10);
-  RooGaussian model("gauss", "gauss", x, mean, sigma);
+  RooRealVar  mean2("gauss mean", "gauss mean", 91, 80, 100);
+  RooRealVar  sigma2("gauss sigma", "gauss sigma", 1, 0.01, 10);
+  RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
 
 
   std::cout << "Before fit. \n";
@@ -80,7 +80,7 @@ bool createRooFit(
   sigma.Print();
   model.Print();
 
-  model.fitTo(dataHist);
+  model2.fitTo(dataHist);
 
   std::cout << "After fit. \n";
   mean.Print();
