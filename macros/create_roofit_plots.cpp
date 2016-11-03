@@ -40,7 +40,7 @@ bool createRooFit(TH1F *h1, std::string name) {
   // RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
   // RooBreitWigner breitWigner("breitWigner", "breitWigner", x, breitWignerMean, breitWignerSigma);
 
-  RooRealVar  mean("mean", "mean", 0);
+  RooRealVar  mean("mean", "mean", 0.0001);
   RooRealVar  sigma("sigma", "sigma", 3, 0.01, 100);
   RooGaussian model("gauss", "gauss", x, mean, sigma);
 
