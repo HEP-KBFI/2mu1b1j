@@ -38,11 +38,13 @@ bool createRooFit(TH1F *h1) {
   // RooBreitWigner breitWigner("breitWigner", "breitWigner", x, breitWignerMean, breitWignerSigma);
 
   RooRealVar  mean("mean", "mean", 0);
-  RooRealVar  sigma("sigma", "sigma", 0.1);
+  RooRealVar  sigma("sigma", "sigma", 3, -10, 10);
   RooGaussian model("gauss", "gauss", x, mean, sigma);
 
   // unbinned
-  RooDataSet *data = Import(h1);
+  RooDataSet *data = model.generate(x, 10000);
+
+  model.fitTo(*data);
 
   RooPlot *xframe = x.frame();
 
