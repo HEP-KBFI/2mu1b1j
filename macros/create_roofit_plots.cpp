@@ -82,25 +82,25 @@ bool createRooFit(
   x.Print();
 
 
-  RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
-  RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", 1, 0.01, 10);
-  RooBreitWigner model1("breitWigner", "breitWigner", x, mean1, sigma1);
-
-  RooRealVar  mean2("gauss mean", "gauss mean", 0);
-  RooRealVar  sigma2("gauss sigma", "gauss sigma", 1, 0.01, 10);
-  RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
+  // RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
+  // RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", 0.01, 0.01, 10);
+  // RooBreitWigner model1("breitWigner", "breitWigner", x, mean1, sigma1);
+  //
+  // RooRealVar  mean2("gauss mean", "gauss mean", 0.001);
+  // RooRealVar  sigma2("gauss sigma", "gauss sigma", 1, 0.01, 10);
+  // RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
 
 
   // RooNumConvPdf convolution("convolution", "convolution", x, model1, model2);
   // convolution.fitTo(dataHist);
-
-  model2.fitTo(dataHist);
+  // model1.fitTo(dataHist);
+  // model2.fitTo(dataHist);
 
   RooPlot *xframe = x.frame();
 
   // convolution.plotOn(xframe);
-  model1.plotOn(xframe);
-  model2.plotOn(xframe);
+  // model1.plotOn(xframe);
+  // model2.plotOn(xframe);
 
   dataHist.plotOn(xframe);
 
