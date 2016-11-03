@@ -75,6 +75,13 @@ bool createRooFit(
   float  range[] // 0 - value, 1 - begin, 2 - end
   )
 {
+  if (histogram) {
+    cout << "Histogram loaded. \n";
+  } else {
+    cout << "Histogram not loaded. \n";
+    return false;
+  }
+
   // create roofit
 
   TCanvas *canvas = new TCanvas();
