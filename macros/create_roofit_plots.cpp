@@ -68,8 +68,8 @@ bool createRooFit(
   x.Print();
 
 
-  RooRealVar mean1("gauss mean", "gauss mean", 91, 80, 100);
-  RooRealVar sigma1("gauss sigma", "gauss sigma", 1, 0.01, 10);
+  RooRealVar mean1("breitWigner mean", "breitWigner mean", 91, 80, 100);
+  RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", 1, 0.01, 10);
   RooBreitWigner model1("breitWigner", "breitWigner", x, mean1, sigma1);
 
   RooRealVar  mean2("gauss mean", "gauss mean", 91, 80, 100);
