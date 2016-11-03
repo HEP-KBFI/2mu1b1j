@@ -69,6 +69,8 @@ bool createRooFit(
 
   TCanvas *canvas = new TCanvas();
 
+  canvas->Divide(2);
+
   RooRealVar x("x", "x", 80, 100);
 
   std::cout << "x (initial).\n";
