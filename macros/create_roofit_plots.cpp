@@ -128,7 +128,7 @@ bool createRooFit(
   // x.Print();
 
 
-  RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
+  RooRealVar mean1("breitWigner mean", "breitWigner mean", 20.0, 19.0, 21.0);
   RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", range[0], range[1], range[2]);
   RooBreitWigner model1("breitWigner", "breitWigner", x, mean1, sigma1);
 
