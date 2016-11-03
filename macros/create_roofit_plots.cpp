@@ -136,18 +136,18 @@ bool createRooFit(
   RooRealVar  sigma2("gauss sigma", "gauss sigma", 1, 0.01, 10);
   RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
 
-  RooFFTConvPdf convolution("convolution", "FFT convolution", x, model1, model2);
+  RooFFTConvPdf convolution("convolution", "breitWigner (X) gauss", x, model1, model2);
 
   x.setBins(100, "cache");
   RooDataSet *generatedData = convolution.generate(x, 1000);
   convolution.fitTo(*generatedData);
 
 
-  RooPlot *xframe = x.frame();
+  RooPlot *xframe = x.frame(Title("breitWigner (x) gauss convolution"));
 
-  convolution.plotOn(xframe);
-  model2.plotOn(xframe);
-  model1.plotOn(xframe);
+  convolution.plotOn(xframe, LineColor(kRed));
+  model2.plotOn(xframe, LineColor(kBlue));
+  model1.plotOn(xframe, LineColor(kGreen));
 
   // generatedData->plotOn(xframe);
 
