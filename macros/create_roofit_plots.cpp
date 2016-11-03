@@ -86,6 +86,7 @@ bool createRooFit(
   dataHist.plotOn(xframe);
   model1.plotOn(xframe);
   model2.plotOn(xframe);
+  convolution.plotOn(xframe);
   xframe->Draw();
 
   string pdfPath = string("/home/margusp/roofits/") + categoryName + string(".pdf");
