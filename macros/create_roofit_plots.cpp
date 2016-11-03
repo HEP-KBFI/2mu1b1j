@@ -187,8 +187,11 @@ TH1F* loadTH1F(
 
   TFile *f = new TFile(rootFile.data());
 
-  string histDir  = string("2mu1b1j") + categoryName + string("_Tight/sel/evt/data_obs");
-  string histName = "massOfOppositeChargeMuons10PinsPerGev";
+  string histDir = string("2mu1b1j") + categoryName + string("_Tight/sel/evt/data_obs");
+
+  string histName = "massOfOppositeChargeMuons1PinPerGeV";
+
+  // string histName = "massOfOppositeChargeMuons10PinsPerGev";
 
 
   // show TH1F histogram
