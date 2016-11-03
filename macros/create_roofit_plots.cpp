@@ -13,21 +13,47 @@
 
 using namespace RooFit;
 
-TH1F* loadTH1F();
-bool createRooFit(TH1F       * h1,
-                  char categoryName[]);
 
+// interface
+
+TH1F *loadTH1F(
+  char  categoryName[]
+  );
+
+bool createRooFit(
+  TH1F * histogram,
+  char  categoryName[]
+  );
+
+
+// entry-point
 
 bool create_roofit_plots()
 {
-  TH1F *h1 = loadTH1F();
+  char categoryNames[][] = loadCategoryNames();
 
-  h1->Draw();
-
-  return createRooFit(h1, "CategoryA");
+  for (char categoryName[] : categoryNames) {
+    TH1F *histogram = loadTH1F(categoryName);
+    return createRooFit(histogram, categoryName);
+  }
 }
 
-bool createRooFit(TH1F *h1, char categoryName[]) {
+// methods
+
+char[][] loadCategoryNames() {
+  char categoryNames[][] =  {
+    "CategoryA",
+    "CategoryB"
+  };
+
+  return categoryNames;
+}
+
+bool createRooFit(
+  TH1F *histogram,
+  char  categoryName[]
+  )
+{
   // create roofit
 
   TCanvas *canvas = new TCanvas();
