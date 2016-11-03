@@ -30,7 +30,7 @@ bool createRooFit(
 
 bool create_roofit_plots()
 {
-  char categoryNames[][] =  {
+  char categoryNames[][2] =  {
     "CategoryA",
     "CategoryB"
   };
