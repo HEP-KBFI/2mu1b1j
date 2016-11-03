@@ -16,37 +16,6 @@
 using namespace RooFit;
 
 
-// conf params
-
-string years[] = {
-"2015",
-"2016"
-};
-
-string categoryNames[] = {
-  "CategoryA",
-  "CategoryARelaxed",
-  "CategoryACompare",
-  "CategoryACompareRelaxed",
-  "CategoryB",
-  "CategoryBRelaxed",
-  "CategoryBCompare",
-  "CategoryBCompareRelaxed",
-  "CategoryC",
-  "CategoryCRelaxed",
-  "CategoryCCompare",
-  "CategoryCCompareRelaxed"
-};
-
-float ranges[][3] = {
-  {  3.0,  1.0,   5.0 },
-  { 10.0, 8.00, 12.00 },
-  { 28.5, 24.5,  32.5 },
-  { 91.0, 60.0, 120.0 },
-  {    0,  0.0, 120.0 }
-};
-
-
 // interface
 
 TH1F* loadTH1F(
@@ -66,6 +35,35 @@ bool createRooFit(
 
 bool create_roofit_plots()
 {
+  string years[] = {
+    "2015",
+    "2016"
+  };
+
+  string categoryNames[] = {
+    "CategoryA",
+    "CategoryARelaxed",
+    "CategoryACompare",
+    "CategoryACompareRelaxed",
+    "CategoryB",
+    "CategoryBRelaxed",
+    "CategoryBCompare",
+    "CategoryBCompareRelaxed",
+    "CategoryC",
+    "CategoryCRelaxed",
+    "CategoryCCompare",
+    "CategoryCCompareRelaxed"
+  };
+
+  // value, range
+  float ranges[][3] = {
+    {  3.0,  1.0,   5.0 },
+    { 10.0, 8.00, 12.00 },
+    { 28.5, 24.5,  32.5 },
+    { 91.0, 60.0, 120.0 },
+    {    0,  0.0, 120.0 }
+  };
+
   for (string year : years) {
     for (string categoryName : categoryNames) {
       cout << "Current category: " << categoryName << "\n";
