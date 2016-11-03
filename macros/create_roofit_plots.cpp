@@ -146,6 +146,8 @@ bool createRooFit(
   RooPlot *xframe = x.frame();
 
   convolution.plotOn(xframe);
+  model2.plotOn(xframe);
+  model1.plotOn(xframe);
 
   // generatedData->plotOn(xframe);
 
