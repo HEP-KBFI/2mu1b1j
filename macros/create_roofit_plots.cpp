@@ -91,13 +91,14 @@ bool createRooFit(
   RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
 
 
-  RooNumConvPdf convolution("convolution", "convolution", x, model1, model2);
+  // RooNumConvPdf convolution("convolution", "convolution", x, model1, model2);
+  // convolution.fitTo(dataHist);
+
+  model2.fitTo(dataHist);
 
   RooPlot *xframe = x.frame();
 
-  convolution.fitTo(dataHist);
   convolution.plotOn(xframe);
-
   model1.plotOn(xframe);
   model2.plotOn(xframe);
 
