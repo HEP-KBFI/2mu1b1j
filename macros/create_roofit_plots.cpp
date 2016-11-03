@@ -75,18 +75,7 @@ bool createRooFit(
   RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
 
 
-  std::cout << "Before fit. \n";
-  mean.Print();
-  sigma.Print();
-  model.Print();
-
   model2.fitTo(dataHist);
-
-  std::cout << "After fit. \n";
-  mean.Print();
-  sigma.Print();
-  model.Print();
-
 
   RooPlot *xframe = x.frame();
 
