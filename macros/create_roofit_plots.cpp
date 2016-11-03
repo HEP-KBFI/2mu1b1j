@@ -72,7 +72,7 @@ bool createRooFit(
   RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", 1, 0.01, 10);
   RooBreitWigner model1("breitWigner", "breitWigner", x, mean1, sigma1);
 
-  RooRealVar  mean2("gauss mean", "gauss mean", 91, 80, 100);
+  RooRealVar  mean2("gauss mean", "gauss mean", 0);
   RooRealVar  sigma2("gauss sigma", "gauss sigma", 1, 0.01, 10);
   RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
 
