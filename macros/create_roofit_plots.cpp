@@ -76,7 +76,7 @@ bool create_roofit_plots()
 bool createRooFits(
   string years[],
   string categoryNames[],
-  float  ranges[][]
+  float  ranges[][3]
   )
 {
   for (string year : years) {
