@@ -84,8 +84,8 @@ bool createRooFit(
   model1.fitTo(dataHist);
   model1.plotOn(xframe);
 
-  model2.plotOn(xframe);
-  model2.plotOn(xframe);
+  // model2.plotOn(xframe);
+  // model2.plotOn(xframe);
 
   dataHist.plotOn(xframe);
   // convolution.plotOn(xframe);
