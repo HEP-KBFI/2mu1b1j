@@ -16,13 +16,13 @@ using namespace RooFit;
 
 // interface
 
-TH1F *loadTH1F(
-  char  categoryName[]
+TH1F* loadTH1F(
+  std::string categoryName
   );
 
 bool createRooFit(
-  TH1F * histogram,
-  char  categoryName[]
+  TH1F  *histogram,
+  string categoryName
   );
 
 
@@ -36,8 +36,8 @@ bool create_roofit_plots()
   };
 
   for (string categoryName : categoryNames) {
-    TH1F *histogram = loadTH1F(categoryName.data());
-    return createRooFit(histogram, categoryName.data());
+    TH1F *histogram = loadTH1F(categoryName);
+    return createRooFit(histogram, categoryName);
   }
 }
 
