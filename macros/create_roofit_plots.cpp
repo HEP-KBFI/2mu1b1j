@@ -14,8 +14,8 @@
 using namespace RooFit;
 
 TH1F* loadTH1F();
-bool  createRooFit(TH1F       *h1,
-                   std::string name);
+bool createRooFit(TH1F       * h1,
+                  char categoryName[]);
 
 
 bool create_roofit_plots()
