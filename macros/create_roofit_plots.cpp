@@ -33,7 +33,7 @@ bool createRooFit(TH1F *h1, std::string name) {
 
   RooRealVar x("x", "x", -10, 10);
 
-  // RooDataHist dataHist("dataHist", "dataHist", x, h1);
+  RooDataHist dataHist("dataHist", "dataHist", x, h1);
 
   // RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", 90);
   // RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
