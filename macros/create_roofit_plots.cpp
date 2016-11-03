@@ -5,6 +5,8 @@
 #include "RooDataSet.h"
 #include "RooGaussian.h"
 #include "RooLandau.h"
+#include "RooNumConvPdf.h"
+#include "RooBreitWigner.h"
 #include "RooFFTConvPdf.h"
 #include "RooPlot.h"
 #include "TCanvas.h"
