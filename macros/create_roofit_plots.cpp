@@ -31,9 +31,9 @@ bool createRooFit(
   );
 
 bool createRooFits(
-  string years[],
-  string categoryNames[],
-  float ranges[][3]
+  vector<string>  years,
+  vector<string>  categoryNames,
+  vector<float[3]>ranges
   );
 
 
@@ -41,12 +41,12 @@ bool createRooFits(
 
 bool create_roofit_plots()
 {
-  string years[] = {
+  vector<string> years = {
     "2015",
     "2016"
   };
 
-  string categoryNames[] = {
+  vector<string> categoryNames = {
     "CategoryA",
     "CategoryARelaxed",
     "CategoryACompare",
@@ -62,7 +62,7 @@ bool create_roofit_plots()
   };
 
   // value, range
-  float ranges[][3] = {
+  vector<float[3]> ranges = {
     {  3.0,  1.0,   5.0 },
     { 10.0, 8.00, 12.00 },
     { 28.5, 24.5,  32.5 },
@@ -74,9 +74,9 @@ bool create_roofit_plots()
 }
 
 bool createRooFits(
-  string years[],
-  string categoryNames[],
-  float  ranges[][3]
+  vector<string>  years,
+  vector<string>  categoryNames,
+  vector<float[3]>ranges
   )
 {
   for (string year : years) {
