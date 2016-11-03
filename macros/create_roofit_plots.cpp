@@ -77,16 +77,16 @@ bool createRooFit(
   RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
 
 
-  RooNumConvPdf convolution("convolution", "convolution", x, model1, model2);
+  // RooNumConvPdf convolution("convolution", "convolution", x, model1, model2);
 
-  convolution.fitTo(dataHist);
+  model1.fitTo(dataHist);
 
   RooPlot *xframe = x.frame();
 
   dataHist.plotOn(xframe);
   model1.plotOn(xframe);
   model2.plotOn(xframe);
-  convolution.plotOn(xframe);
+  // convolution.plotOn(xframe);
   xframe->Draw();
 
   string pdfPath = string("/home/margusp/roofits/") + categoryName + string(".pdf");
