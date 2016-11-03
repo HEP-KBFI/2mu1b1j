@@ -46,7 +46,18 @@ bool createRooFit(TH1F *h1, std::string name) {
   // unbinned
   RooDataSet *data = model.generate(x, 10000);
 
+  std::cout << "Before fit. \n";
+  mean.Print();
+  sigma.Print();
+  model.Print();
+
   model.fitTo(*data);
+
+  std::cout << "After fit. \n";
+  mean.Print();
+  sigma.Print();
+  model.Print();
+
 
   RooPlot *xframe = x.frame();
 
