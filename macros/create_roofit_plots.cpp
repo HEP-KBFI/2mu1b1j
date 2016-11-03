@@ -19,11 +19,13 @@ using namespace RooFit;
 // interface
 
 TH1F* loadTH1F(
+  string year,
   string categoryName
   );
 
 bool createRooFit(
   TH1F  * histogram,
+  string year,
   string categoryName,
   float range[]
   );
@@ -33,7 +35,12 @@ bool createRooFit(
 
 bool create_roofit_plots()
 {
-  string categoryNames[] =  {
+  string years[] = {
+    "2015",
+    "2016"
+  }
+
+  string categoryNames[] = {
     "CategoryA",
     "CategoryB"
   };
@@ -47,10 +54,10 @@ bool create_roofit_plots()
 
   for (string categoryName : categoryNames) {
     cout << "Current category: " << categoryName << "\n";
-    TH1F *histogram = loadTH1F(categoryName);
+    TH1F *histogram = loadTH1F(year, categoryName);
 
     for (auto range : ranges) {
-      createRooFit(histogram, categoryName, range);
+      createRooFit(histogram, year, categoryName, range);
     }
   }
 
@@ -61,6 +68,7 @@ bool create_roofit_plots()
 
 bool createRooFit(
   TH1F  *histogram,
+  string year,
   string categoryName,
   float  range[] // 0 - value, 1 - begin, 2 - end
   )
@@ -107,7 +115,7 @@ bool createRooFit(
   // convolution.plotOn(xframe);
   xframe->Draw();
 
-  string pdfPath = string("/home/margusp/roofits/") + categoryName + "_" + to_string(range[0]) + ".pdf";
+  string pdfPath = string("/home/margusp/roofits/") + year + "_" + categoryName + "_" + to_string(range[0]) + ".pdf";
 
   cout << "pdfPath is: " << pdfPath << "\n";
 
@@ -134,11 +142,18 @@ bool createRooFit(
   // frame->Draw();
 }
 
-TH1F* loadTH1F(string categoryName) {
+TH1F* loadTH1F(
+  string year,
+  string categoryName
+  )
+{
   // set configuration params
 
   string rootFile =
-    "/home/margusp/analysis2mu1b1j/2015/2016Oct28_v1/histograms/histograms_harvested_stage1_2mu1b1j.root";
+    string("/home/margusp/analysis2mu1b1j/") +
+    year +
+    "/2016Oct28_v1/histograms/histograms_harvested_stage1_2mu1b1j.root";
+
   TFile *f = new TFile(rootFile.data());
 
   string histDir  = string("2mu1b1j") + categoryName + string("_Tight/sel/evt/data_obs");
