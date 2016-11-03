@@ -79,13 +79,15 @@ bool createRooFit(
 
   // RooNumConvPdf convolution("convolution", "convolution", x, model1, model2);
 
-  model1.fitTo(dataHist);
-
   RooPlot *xframe = x.frame();
 
-  dataHist.plotOn(xframe);
+  model1.fitTo(dataHist);
   model1.plotOn(xframe);
+
   model2.plotOn(xframe);
+  model2.plotOn(xframe);
+
+  dataHist.plotOn(xframe);
   // convolution.plotOn(xframe);
   xframe->Draw();
 
