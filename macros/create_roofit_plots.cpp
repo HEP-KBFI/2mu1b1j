@@ -37,7 +37,7 @@ bool createRooFit(TH1F *h1, std::string name) {
   std::cout << "x (initial).\n";
   x.Print();
 
-  RooDataHist dataHist("dataHist", "dataHist", x, h1);
+  RooDataHist dataHist("dataHist", "dataHist", x, Import(*h1));
 
   std::cout << "x (after data load from TH1F).\n";
   x.Print();
