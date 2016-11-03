@@ -30,12 +30,12 @@ bool createRooFit(
 
 bool create_roofit_plots()
 {
-  char categoryNames[20][20] =  {
+  std::string categoryNames[] =  {
     "CategoryA",
     "CategoryB"
   };
 
-  for (char categoryName[20] : categoryNames) {
+  for (char categoryName : categoryNames) {
     TH1F *histogram = loadTH1F(categoryName);
     return createRooFit(histogram, categoryName);
   }
