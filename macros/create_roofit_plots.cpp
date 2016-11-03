@@ -94,7 +94,7 @@ bool createRooFit(
   xframe->Draw();
 
   char pdfPath[100];
-  sprintf(pdfPath, "/home/margusp/roofits/%s.pdf", categoryName);
+  sprintf(pdfPath, "/home/margusp/roofits/%s.pdf", categoryName.data());
 
   cout << "pdfPath is: " << pdfPath << "\n";
 
