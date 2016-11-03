@@ -141,6 +141,10 @@ bool createRooFit(
                    "_" +
                    to_string(range[0]) +
                    "_" +
+                   to_string(range[1]) +
+                   "-" +
+                   to_string(range[2]) +
+                   "_" +
                    categoryName +
                    ".pdf";
 
