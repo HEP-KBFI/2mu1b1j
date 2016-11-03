@@ -49,7 +49,7 @@ bool create_roofit_plots()
     cout << "Current category: " << categoryName << "\n";
     TH1F *histogram = loadTH1F(categoryName);
 
-    for (float range[3] : ranges) {
+    for (auto range : ranges) {
       createRooFit(histogram, categoryName, range);
     }
   }
