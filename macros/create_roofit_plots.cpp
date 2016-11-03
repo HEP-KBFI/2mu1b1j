@@ -104,7 +104,7 @@ bool createRooFit(
   // convolution.plotOn(xframe);
   xframe->Draw();
 
-  string pdfPath = string("/home/margusp/roofits/") + categoryName + string(".pdf");
+  string pdfPath = string("/home/margusp/roofits/") + categoryName + "_" + string(range[0]) + ".pdf";
 
   cout << "pdfPath is: " << pdfPath << "\n";
 
