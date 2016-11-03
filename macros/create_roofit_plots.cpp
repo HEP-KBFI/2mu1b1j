@@ -29,7 +29,7 @@ bool create_roofit_plots()
 bool createRooFit(TH1F *h1, std::string name) {
   // create roofit
 
-  TCanvas *canvas = new TCanvas;
+  TCanvas *canvas = new TCanvas();
 
   RooRealVar x("x", "x", -10, 10);
 
@@ -54,7 +54,7 @@ bool createRooFit(TH1F *h1, std::string name) {
   model.plotOn(xframe);
   xframe->Draw();
 
-  canvas->Print("/home/margusp/roofits/" + name + ".pdf", "pdf");
+  canvas->Print("/home/margusp/roofits/CategoryA.pdf", "pdf");
 
 
   // pinned
