@@ -23,8 +23,9 @@ TH1F* loadTH1F(
   );
 
 bool createRooFit(
-  TH1F  *histogram,
-  string categoryName
+  TH1F  * histogram,
+  string categoryName,
+  float range[]
   );
 
 
@@ -32,15 +33,25 @@ bool createRooFit(
 
 bool create_roofit_plots()
 {
-  string categoryNames[2] =  {
+  string categoryNames[] =  {
     "CategoryA",
     "CategoryB"
+  };
+
+  // value, range
+  float ranges[][3] = {
+    {  3.0,  1.0,   5.0 },
+    { 10.0, 8.00, 12.00 },
+    { 28.5, 24.5,  32.5 }
   };
 
   for (string categoryName : categoryNames) {
     cout << "Current category: " << categoryName << "\n";
     TH1F *histogram = loadTH1F(categoryName);
-    createRooFit(histogram, categoryName);
+
+    for (float range[] : ranges) {
+      createRooFit(histogram, categoryName, range);
+    }
   }
 
   return true;
@@ -50,7 +61,8 @@ bool create_roofit_plots()
 
 bool createRooFit(
   TH1F  *histogram,
-  string categoryName
+  string categoryName,
+  float  range[] // 0 - value, 1 - begin, 2 - end
   )
 {
   // create roofit
@@ -68,7 +80,7 @@ bool createRooFit(
   x.Print();
 
 
-  RooRealVar mean1("breitWigner mean", "breitWigner mean", 91, 80, 100);
+  RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
   RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", 1, 0.01, 10);
   RooBreitWigner model1("breitWigner", "breitWigner", x, mean1, sigma1);
 
@@ -84,10 +96,11 @@ bool createRooFit(
   convolution.fitTo(dataHist);
   convolution.plotOn(xframe);
 
-  // model2.plotOn(xframe);
-  // model2.plotOn(xframe);
+  model1.plotOn(xframe);
+  model2.plotOn(xframe);
 
   dataHist.plotOn(xframe);
+
   // convolution.plotOn(xframe);
   xframe->Draw();
 
