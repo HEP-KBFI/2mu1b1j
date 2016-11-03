@@ -129,11 +129,11 @@ bool createRooFit(
 
 
   RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
-  RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", 0.01, 0.01, 10);
+  RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", range[0], range[1], range[2]);
   RooBreitWigner model1("breitWigner", "breitWigner", x, mean1, sigma1);
 
-  RooRealVar  mean2("gauss mean", "gauss mean", 0);
-  RooRealVar  sigma2("gauss sigma", "gauss sigma", 1, 0.01, 10);
+  RooRealVar  mean2("gauss mean", "gauss mean", range[0], range[1], range[2]);
+  RooRealVar  sigma2("gauss sigma", "gauss sigma", range[0], range[1], range[2]);
   RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
 
   RooFFTConvPdf convolution("convolution", "breitWigner (X) gauss", x, model1, model2);
