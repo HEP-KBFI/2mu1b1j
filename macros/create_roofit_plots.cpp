@@ -50,7 +50,7 @@ bool createRooFit(TH1F *h1, std::string name) {
   sigma.Print();
   model.Print();
 
-  model.fitTo(x);
+  model.fitTo(dataHist);
 
   std::cout << "After fit. \n";
   mean.Print();
