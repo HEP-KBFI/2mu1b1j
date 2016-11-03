@@ -30,8 +30,14 @@ bool createRooFit(
   float range[]
   );
 
+bool createRooFits(
+  string years[],
+  string categoryNames[],
+  float ranges[][]
+  );
 
-// entry-point
+
+// entry-point (basically main)
 
 bool create_roofit_plots()
 {
@@ -64,6 +70,15 @@ bool create_roofit_plots()
     {    0,  0.0, 120.0 }
   };
 
+  return createRooFits(years, categoryNames, ranges);
+}
+
+bool createRooFits(
+  string years[],
+  string categoryNames[],
+  float  ranges[][]
+  )
+{
   for (string year : years) {
     for (string categoryName : categoryNames) {
       cout << "Current category: " << categoryName << "\n";
