@@ -71,7 +71,7 @@ bool createRooFit(
 
   canvas->Divide(2);
 
-  RooRealVar x("x", "x", 80, 100);
+  RooRealVar x("x", "x", range[1], range[2]);
 
   std::cout << "x (initial).\n";
   x.Print();
