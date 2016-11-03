@@ -14,19 +14,19 @@
 using namespace RooFit;
 
 TH1F* loadTH1F();
-bool  createRooFit(TH1F *h1);
+bool createRooFit(TH1F * h1, std::string name);
 
 
-bool  create_roofit_plots()
+bool create_roofit_plots()
 {
   TH1F *h1 = loadTH1F();
 
   h1->Draw();
 
-  return createRooFit(h1);
+  return createRooFit(h1, "CategoryA");
 }
 
-bool createRooFit(TH1F *h1) {
+bool createRooFit(TH1F *h1, std::string name) {
   // create roofit
 
   TCanvas *canvas = new TCanvas;
@@ -54,7 +54,7 @@ bool createRooFit(TH1F *h1) {
   model.plotOn(xframe);
   xframe->Draw();
 
-  canvas->Print("/home/margusp/roofits/fit1.pfg", "pdf");
+  canvas->Print("/home/margusp/roofits/" + name + ".pdf", "pdf");
 
 
   // pinned
