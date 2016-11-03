@@ -152,7 +152,7 @@ bool createRooFit(
 
   // generatedData->plotOn(xframe);
 
-  xframe->Draw();
+  frame->Draw();
 
   string pdfPath = string("/home/margusp/roofits/") +
                    year +
