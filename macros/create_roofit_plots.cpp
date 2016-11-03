@@ -1,3 +1,20 @@
+
+// Intro
+// =====
+//
+// This program creates Roofit plots from TH1F histograms for 2mu1b1j analysis.
+//
+// If you have any questions, send an email to margus@wave.ee
+//
+//
+// Architecture
+// ============
+//
+// * create_roofit_plots() - entry method that generates plots for different years, GeV ranges
+// * loadTH1F() - loads TH1F from .root file
+// * createRooFit() - createsRooFit from loaded TH1F
+
+
 #ifndef __CINT__
 # include "RooGlobalFunc.h"
 #endif // ifndef __CINT__
@@ -78,8 +95,6 @@ bool create_roofit_plots()
   return true;
 }
 
-// methods
-
 bool createRooFit(
   TH1F  *histogram,
   string year,
@@ -102,36 +117,34 @@ bool createRooFit(
 
   RooRealVar x("x", "x", range[1], range[2]);
 
-  std::cout << "x (initial).\n";
-  x.Print();
-
-  RooDataHist dataHist("dataHist", "dataHist", x, Import(*histogram));
-
-  std::cout << "x (after data load from TH1F).\n";
-  x.Print();
-
-
-  // RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
-  // RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", 0.01, 0.01, 10);
-  // RooBreitWigner model1("breitWigner", "breitWigner", x, mean1, sigma1);
+  // std::cout << "x (initial).\n";
+  // x.Print();
   //
-  // RooRealVar  mean2("gauss mean", "gauss mean", 0.001);
-  // RooRealVar  sigma2("gauss sigma", "gauss sigma", 1, 0.01, 10);
-  // RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
+  // RooDataHist dataHist("dataHist", "dataHist", x, Import(*histogram));
+  //
+  // std::cout << "x (after data load from TH1F).\n";
+  // x.Print();
 
 
-  // RooNumConvPdf convolution("convolution", "convolution", x, model1, model2);
-  // convolution.fitTo(dataHist);
-  // model1.fitTo(dataHist);
-  // model2.fitTo(dataHist);
+  RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
+  RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", 0.01, 0.01, 10);
+  RooBreitWigner model1("breitWigner", "breitWigner", x, mean1, sigma1);
+
+  RooRealVar  mean2("gauss mean", "gauss mean", 0.001);
+  RooRealVar  sigma2("gauss sigma", "gauss sigma", 1, 0.01, 10);
+  RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
+
+  x.setBins(10000, "cache");
+  RooFFTConvPdf convolution("convolution", "FFT convolution", x, model1, model2);
+
+  RooDataSet *data = convolution.generate(t, 10000);
+  convolution.fitTo(*data);
+
 
   RooPlot *xframe = x.frame();
 
-  // convolution.plotOn(xframe);
-  // model1.plotOn(xframe);
-  // model2.plotOn(xframe);
-
-  dataHist.plotOn(xframe);
+  convolution.plotOn(xframe);
+  data->plotOn(xframe);
 
   // convolution.plotOn(xframe);
   xframe->Draw();
