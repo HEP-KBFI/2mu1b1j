@@ -37,7 +37,7 @@ bool createRooFit(TH1F *h1, std::string name) {
   std::cout << "x (initial).\n";
   x.Print();
 
-  RooDataHist dataHist("dataHist", "dataHist", x, Import(*h1));
+  // RooDataHist dataHist("dataHist", "dataHist", x, Import(*h1));
 
   std::cout << "x (after data load from TH1F).\n";
   x.Print();
@@ -47,7 +47,7 @@ bool createRooFit(TH1F *h1, std::string name) {
   // RooRealVar breitWignerSigma("breitWignerSigma", "breitWignerSigma", 3, 0.1, 5.0);
   // RooBreitWigner breitWigner("breitWigner", "breitWigner", x, breitWignerMean, breitWignerSigma);
 
-  RooRealVar  mean("mean", "mean", 0);
+  RooRealVar  mean("mean", "mean", 90);
   RooRealVar  sigma("sigma", "sigma", 3, 0.01, 5);
   RooGaussian model("gauss", "gauss", x, mean, sigma);
 
@@ -57,7 +57,8 @@ bool createRooFit(TH1F *h1, std::string name) {
   sigma.Print();
   model.Print();
 
-  model.fitTo(dataHist);
+  Ro
+  model. fitTo(dataHist);
 
   std::cout << "After fit. \n";
   mean.Print();
