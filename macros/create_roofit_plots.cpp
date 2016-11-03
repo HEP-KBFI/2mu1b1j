@@ -136,7 +136,7 @@ bool createRooFit(
   RooRealVar  sigma2("gauss sigma", "gauss sigma", 5, range[1], range[2]);
   RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
 
-  RooFFTConvPdf convolution("convolution", "breitWigner (X) gauss", x, model1, model2);
+  RooFFTConvPdf convolution("convolution", "breitWigner (X) gauss", x, model2, model1);
 
   x.setBins(10000, "cache");
   RooDataSet *generatedData = convolution.generate(x, 10000);
