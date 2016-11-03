@@ -81,8 +81,8 @@ bool createRooFit(
 
   RooPlot *xframe = x.frame();
 
-  model1.fitTo(dataHist);
-  model1.plotOn(xframe);
+  convolution.fitTo(dataHist);
+  convolution.plotOn(xframe);
 
   // model2.plotOn(xframe);
   // model2.plotOn(xframe);
