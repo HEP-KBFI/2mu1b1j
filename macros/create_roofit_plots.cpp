@@ -29,6 +29,8 @@ bool  create_roofit_plots()
 bool createRooFit(TH1F *h1) {
   // create roofit
 
+  TCanvas *canvas = new TCanvas;
+
   RooRealVar x("x", "x", -10, 10);
 
   // RooDataHist dataHist("dataHist", "dataHist", x, h1);
@@ -51,6 +53,8 @@ bool createRooFit(TH1F *h1) {
   // data->plotOn(xframe);
   model.plotOn(xframe);
   xframe->Draw();
+
+  canvas->Print("/home/margusp/roofits/fit1.pfg", "pdf");
 
 
   // pinned
