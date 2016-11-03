@@ -33,7 +33,7 @@ bool createRooFit(
 bool createRooFits(
   string years[],
   string categoryNames[],
-  float ranges[][]
+  float ranges[][3]
   );
 
 
