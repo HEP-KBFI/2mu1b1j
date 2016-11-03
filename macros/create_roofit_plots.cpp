@@ -14,7 +14,8 @@
 using namespace RooFit;
 
 TH1F* loadTH1F();
-bool createRooFit(TH1F * h1, std::string name);
+bool  createRooFit(TH1F       *h1,
+                   std::string name);
 
 
 bool create_roofit_plots()
@@ -31,7 +32,7 @@ bool createRooFit(TH1F *h1, std::string name) {
 
   TCanvas *canvas = new TCanvas();
 
-  RooRealVar x("x", "x", -10, 10);
+  RooRealVar x("x", "x", 80, 100);
 
   RooDataHist dataHist("dataHist", "dataHist", x, h1);
 
@@ -43,15 +44,13 @@ bool createRooFit(TH1F *h1, std::string name) {
   RooRealVar  sigma("sigma", "sigma", 3, 0.01, 10);
   RooGaussian model("gauss", "gauss", x, mean, sigma);
 
-  // unbinned
-  RooDataSet *data = model.generate(x, 10000);
 
   std::cout << "Before fit. \n";
   mean.Print();
   sigma.Print();
   model.Print();
 
-  model.fitTo(*data);
+  model.fitTo(x);
 
   std::cout << "After fit. \n";
   mean.Print();
