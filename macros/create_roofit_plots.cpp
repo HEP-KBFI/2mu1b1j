@@ -36,6 +36,7 @@ bool create_roofit_plots()
   };
 
   for (string categoryName : categoryNames) {
+    count << "Current category: " << categoryName << "\n";
     TH1F *histogram = loadTH1F(categoryName);
     return createRooFit(histogram, categoryName);
   }
