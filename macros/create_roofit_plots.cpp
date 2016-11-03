@@ -48,8 +48,8 @@ bool createRooFit(TH1F *h1) {
 
   RooPlot *xframe = x.frame();
 
+  // data->plotOn(xframe);
   model.plotOn(xframe);
-  data->plotOn(xframe);
   xframe->Draw();
 
 
