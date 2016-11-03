@@ -52,11 +52,7 @@ bool create_roofit_plots()
     "CategoryC",
     "CategoryCRelaxed",
     "CategoryCCompare",
-    "CategoryCCompareRelaxed",
-    "CategoryD",
-    "CategoryDRelaxed",
-    "CategoryDCompare",
-    "CategoryDCompareRelaxed"
+    "CategoryCCompareRelaxed"
   };
 
   // value, range
