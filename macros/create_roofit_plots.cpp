@@ -138,16 +138,17 @@ bool createRooFit(
 
   RooFFTConvPdf convolution("convolution", "breitWigner (X) gauss", x, model1, model2);
 
-  x.setBins(100, "cache");
-  RooDataSet *generatedData = convolution.generate(x, 1000);
+  x.setBins(10000, "cache");
+  RooDataSet *generatedData = convolution.generate(x, 10000);
   convolution.fitTo(*generatedData);
 
 
-  RooPlot *xframe = x.frame(Title("breitWigner (x) gauss convolution"));
+  RooPlot *frame = x.frame(Title("breitWigner (x) gauss convolution"));
 
-  convolution.plotOn(xframe, LineColor(kRed));
-  model2.plotOn(xframe, LineColor(kBlue));
-  model1.plotOn(xframe, LineColor(kGreen));
+  generatedData->plotOn(frame);
+  convolution.plotOn(frame, LineColor(kRed));
+  model2.plotOn(frame, LineColor(kBlue));
+  model1.plotOn(frame, LineColor(kGreen));
 
   // generatedData->plotOn(xframe);
 
