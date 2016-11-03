@@ -75,7 +75,9 @@ bool createRooFit(
   RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
 
 
-  model2.fitTo(dataHist);
+  RooNumConvPdf convolution('convolution', 'convolution', x, model1, model2);
+
+  convolution.fitTo(dataHist);
 
   RooPlot *xframe = x.frame();
 
