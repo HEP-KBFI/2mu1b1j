@@ -35,7 +35,7 @@ bool create_roofit_plots()
     "CategoryB"
   };
 
-  for (char categoryName[] : categoryNames) {
+  for (char categoryName[20] : categoryNames) {
     TH1F *histogram = loadTH1F(categoryName);
     return createRooFit(histogram, categoryName);
   }
