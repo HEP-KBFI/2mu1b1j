@@ -74,10 +74,10 @@ bool createRooFit(TH1F *h1, std::string categoryName) {
   std::string pdfDir       = "/home/margusp/roofits/";
   std::string pdfExtension = ".pdf";
   std::string pdfPath      = pdfDir + categoryName + pdfExtension;
-  const char *pdfPathChar  = malloc(strlen(pdfPath.c_str()) + 1);
-  strcpy(pdfPathChar, pdfPath.c_str());
 
-  canvas->Print(pdfPathChar, "pdf");
+  cout << "pdfPath is: " << pdfPath << "\n";
+
+  canvas->Print(pdfPath.c_str(), "pdf");
 
   // pinned
   // RooDataSet *data = model.generateBinned(x, 10000);
