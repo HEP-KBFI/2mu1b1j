@@ -30,23 +30,17 @@ bool createRooFit(
   float range[]
   );
 
-bool createRooFits(
-  vector<string>  years,
-  vector<string>  categoryNames,
-  vector<float[3]>ranges
-  );
 
-
-// entry-point (basically main)
+// entry-point
 
 bool create_roofit_plots()
 {
-  vector<string> years = {
+  string years[] = {
     "2015",
     "2016"
   };
 
-  vector<string> categoryNames = {
+  string categoryNames[] = {
     "CategoryA",
     "CategoryARelaxed",
     "CategoryACompare",
@@ -62,7 +56,7 @@ bool create_roofit_plots()
   };
 
   // value, range
-  vector<float[3]> ranges = {
+  float ranges[][3] = {
     {  3.0,  1.0,   5.0 },
     { 10.0, 8.00, 12.00 },
     { 28.5, 24.5,  32.5 },
@@ -70,15 +64,6 @@ bool create_roofit_plots()
     {    0,  0.0, 120.0 }
   };
 
-  return createRooFits(years, categoryNames, ranges);
-}
-
-bool createRooFits(
-  vector<string>  years,
-  vector<string>  categoryNames,
-  vector<float[3]>ranges
-  )
-{
   for (string year : years) {
     for (string categoryName : categoryNames) {
       cout << "Current category: " << categoryName << "\n";
