@@ -40,7 +40,7 @@ bool createRooFit(TH1F *h1, std::string name) {
   // RooBreitWigner breitWigner("breitWigner", "breitWigner", x, breitWignerMean, breitWignerSigma);
 
   RooRealVar  mean("mean", "mean", 0);
-  RooRealVar  sigma("sigma", "sigma", 3);
+  RooRealVar  sigma("sigma", "sigma", 3, 0.01, 10);
   RooGaussian model("gauss", "gauss", x, mean, sigma);
 
   // unbinned
@@ -50,7 +50,7 @@ bool createRooFit(TH1F *h1, std::string name) {
 
   RooPlot *xframe = x.frame();
 
-  // data->plotOn(xframe);
+  data->plotOn(xframe);
   model.plotOn(xframe);
   xframe->Draw();
 
