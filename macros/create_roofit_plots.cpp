@@ -93,12 +93,11 @@ bool createRooFit(
   model.plotOn(xframe);
   xframe->Draw();
 
-  char pdfPath[100];
-  sprintf(pdfPath, "/home/margusp/roofits/%s.pdf", categoryName.data());
+  string pdfPath = string("/home/margusp/roofits/") + categoryName + string(".pdf");
 
   cout << "pdfPath is: " << pdfPath << "\n";
 
-  canvas->Print(pdfPath, "pdf");
+  canvas->Print(pdfPath.data(), "pdf");
 
   // pinned
   // RooDataSet *data = model.generateBinned(x, 10000);
@@ -124,12 +123,12 @@ bool createRooFit(
 TH1F* loadTH1F(string categoryName) {
   // set configuration params
 
-  char rootFile[] =
+  string rootFile =
     "/home/margusp/analysis2mu1b1j/2015/2016Oct28_v1/histograms/histograms_harvested_stage1_2mu1b1j.root";
-  TFile *f = new TFile(rootFile);
+  TFile *f = new TFile(rootFile.data());
 
-  char histDir[]  = "2mu1b1jCategoryA_Tight/sel/evt/data_obs";
-  char histName[] = "massOfOppositeChargeMuons1PinPerGeV";
+  string histDir  = string("2mu1b1j") + categoryName + string("_Tight/sel/evt/data_obs");
+  string histName = "massOfOppositeChargeMuons1PinPerGeV";
 
 
   // show TH1F histogram
@@ -137,7 +136,7 @@ TH1F* loadTH1F(string categoryName) {
   std::cout << "Contents of current directory: \n";
   f->ls();
 
-  bool cdSuccessful = f->Cd(histDir);
+  bool cdSuccessful = f->Cd(histDir.data());
 
   if (cdSuccessful) {
     std::cout << "Success: CD to " << histDir << "\n";
@@ -149,7 +148,7 @@ TH1F* loadTH1F(string categoryName) {
   std::cout << "Contents of current directory: \n";
   f->ls();
 
-  TH1F *histogram = (TH1F *)gDirectory->Get(histName);
+  TH1F *histogram = (TH1F *)gDirectory->Get(histName.data());
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
