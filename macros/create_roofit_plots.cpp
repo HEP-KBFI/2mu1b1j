@@ -138,8 +138,8 @@ bool createRooFit(
 
   RooFFTConvPdf convolution("convolution", "FFT convolution", x, model1, model2);
 
-  x.setBins(10000, "cache");
-  RooDataSet *generatedData = convolution.generate(x, 10000);
+  x.setBins(100, "cache");
+  RooDataSet *generatedData = convolution.generate(x, 1000);
   convolution.fitTo(*generatedData);
 
 
