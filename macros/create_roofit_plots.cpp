@@ -30,7 +30,10 @@ bool createRooFit(
 
 bool create_roofit_plots()
 {
-  char categoryNames[][] = loadCategoryNames();
+  char categoryNames[][] =  {
+    "CategoryA",
+    "CategoryB"
+  };
 
   for (char categoryName[] : categoryNames) {
     TH1F *histogram = loadTH1F(categoryName);
@@ -39,15 +42,6 @@ bool create_roofit_plots()
 }
 
 // methods
-
-char[][] loadCategoryNames() {
-  char categoryNames[][] =  {
-    "CategoryA",
-    "CategoryB"
-  };
-
-  return categoryNames;
-}
 
 bool createRooFit(
   TH1F *histogram,
