@@ -27,7 +27,7 @@ bool create_roofit_plots()
   return createRooFit(h1, "CategoryA");
 }
 
-bool createRooFit(TH1F *h1, std::string name) {
+bool createRooFit(TH1F *h1, std::string categoryName) {
   // create roofit
 
   TCanvas *canvas = new TCanvas();
@@ -71,8 +71,11 @@ bool createRooFit(TH1F *h1, std::string name) {
   model.plotOn(xframe);
   xframe->Draw();
 
-  canvas->Print("/home/margusp/roofits/CategoryA.pdf", "pdf");
+  std::string pdfDir       = "/home/margusp/roofits/";
+  std::string pdfExtension = ".pdf";
+  std::string pdfPath      = pdfDir + categoryName + pdfExtension;
 
+  canvas->Print(pdfPath, "pdf");
 
   // pinned
   // RooDataSet *data = model.generateBinned(x, 10000);
