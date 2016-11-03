@@ -38,7 +38,7 @@ bool create_roofit_plots()
   string years[] = {
     "2015",
     "2016"
-  }
+  };
 
   string categoryNames[] = {
     "CategoryA",
