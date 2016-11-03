@@ -140,12 +140,12 @@ bool createRooFit(
                    "_" +
                    categoryName +
                    "_" +
-                   to_string(range[1]) +
-                   "-" +
-                   to_string(range[2]) +
                    "(" +
                    to_string(range[0]) +
                    ")" +
+                   to_string(range[1]) +
+                   "-" +
+                   to_string(range[2]) +
                    ".pdf";
 
   cout << "pdfPath is: " << pdfPath << "\n";
