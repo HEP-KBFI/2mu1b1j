@@ -84,7 +84,7 @@ bool createRooFits(
       cout << "Current category: " << categoryName << "\n";
       TH1F *histogram = loadTH1F(year, categoryName);
 
-      for (auto range : ranges) {
+      for (float range[3] : ranges) {
         createRooFit(histogram, year, categoryName, range);
       }
     }
