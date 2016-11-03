@@ -80,7 +80,7 @@ bool createRooFit(
   RooPlot *xframe = x.frame();
 
   dataHist.plotOn(xframe);
-  model.plotOn(xframe);
+  model2.plotOn(xframe);
   xframe->Draw();
 
   string pdfPath = string("/home/margusp/roofits/") + categoryName + string(".pdf");
