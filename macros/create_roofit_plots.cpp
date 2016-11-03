@@ -52,12 +52,14 @@ bool create_roofit_plots()
     { 28.5, 24.5,  32.5 }
   };
 
-  for (string categoryName : categoryNames) {
-    cout << "Current category: " << categoryName << "\n";
-    TH1F *histogram = loadTH1F(year, categoryName);
+  for (string year : years) {
+    for (string categoryName : categoryNames) {
+      cout << "Current category: " << categoryName << "\n";
+      TH1F *histogram = loadTH1F(year, categoryName);
 
-    for (auto range : ranges) {
-      createRooFit(histogram, year, categoryName, range);
+      for (auto range : ranges) {
+        createRooFit(histogram, year, categoryName, range);
+      }
     }
   }
 
