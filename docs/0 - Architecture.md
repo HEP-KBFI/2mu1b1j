@@ -38,4 +38,4 @@
 	* waitForJobs - returns when all the jobs are finished
 
 
-6.
+6. Makefile task wait until sbatch has ran, then next tasks are done (histograms adding etc).
