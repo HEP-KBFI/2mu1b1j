@@ -39,3 +39,5 @@
 
 
 6. Makefile task wait until sbatch has ran, then next tasks are done (histograms adding etc).
+
+7. Commands that are executed in the node are described in python/sbatchManager.py
