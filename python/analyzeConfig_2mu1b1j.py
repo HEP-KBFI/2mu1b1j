@@ -41,7 +41,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
                            continue
                     initDict(self.dirs, [key_dir, dir_type])
                     self.dirs[key_dir][dir_type] = os.path.join(
-                                                                self.temporaryOutputDir,
+                                                                self.outputDir,
                                                                 dir_type,
                                                                 self.channel,
                                                                 "_".join([lepton_selection]),
