@@ -32,7 +32,16 @@ git clone https://github.com/mxrguspxrt/tth-htt  $CMSSW_BASE/src/tthAnalysis/Hig
 rm -rf $CMSSW_BASE/src/analysis2mu1b1j/analysis2mu1b1j
 git clone -b master https://github.com/HEP-KBFI/2mu1b1j $CMSSW_BASE/src/analysis2mu1b1j/analysis2mu1b1j
 scram b -j8
+```
 
+Or without recompile:
+
+```bash
+cd $CMSSW_BASE/src/tthAnalysis/HiggsToTauTau
+git pull
+
+cd $CMSSW_BASE/src/analysis2mu1b1j/analysis2mu1b1j
+git pull
 ```
 
 
