@@ -39,7 +39,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
         self.select_root_output = select_root_output
         self.era = era
 
-    def build_dir_names():
+    def build_dir_names(self):
         for sample_name, sample_info in self.samples.items():
             if not sample_info["use_it"] or sample_info["sample_category"] in ["additional_signal_overlap", "background_data_estimate"]:
                 continue
