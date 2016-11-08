@@ -29,17 +29,6 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
 
         self.lepton_selections = lepton_selections
 
-        self.build_dir_names()
-        # print "self.dirs = ", self.dirs
-
-        self.cfgFile_analyze_original = os.path.join(
-            self.workingDir, "analyze_2mu1b1j_cfg_"+era+".py")
-        self.histogramDir_prep_dcard = "2mu1b1j_Tight"
-        self.select_rle_output = select_rle_output
-        self.select_root_output = select_root_output
-        self.era = era
-
-    def build_dir_names(self):
         for sample_name, sample_info in self.samples.items():
             if not sample_info["use_it"] or sample_info["sample_category"] in ["additional_signal_overlap", "background_data_estimate"]:
                 continue
@@ -58,6 +47,15 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
                                                                 "_".join([lepton_selection]),
                                                                 process_name
                                                                 )
+        print "self.dirs = ", self.dirs
+
+        self.cfgFile_analyze_original = os.path.join(
+            self.workingDir, "analyze_2mu1b1j_cfg_"+era+".py")
+        self.histogramDir_prep_dcard = "2mu1b1j_Tight"
+        self.select_rle_output = select_rle_output
+        self.select_root_output = select_root_output
+        self.era = era
+
 
     def createCfg_analyze(self, inputFiles, outputFile, sample_category, era, triggers, lepton_selection,
                           is_mc, central_or_shift, lumi_scale, cfgFile_modified, rle_output_file, root_output_file):
