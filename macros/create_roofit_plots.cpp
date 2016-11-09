@@ -156,7 +156,7 @@ bool createRooFit(
   // Draw fitted result onto RooPlot
 
   RooPlot *frame = x.frame();
-  data->plotOn(frame);
+  dataHist->plotOn(frame);
   signalAndBackground.plotOn(frame);
   signalAndBackground.plotOn(frame, Components(background), LineStyle(kDashed));
 
