@@ -119,7 +119,7 @@ bool createRooFit(
 
   // Import histogram from x range to dataHist
 
-  RooDataHist dataHist("dataHist", "dataHist", x, Import(*histogram));
+  // RooDataHist dataHist("dataHist", "dataHist", x, Import(*histogram));
 
 
   // Set model for signal
@@ -149,12 +149,14 @@ bool createRooFit(
 
   // Make fitting
 
-  signalAndBackground.fitTo(dataHist, Extended());
+  RooDataSet *data = signalAndBackground.generate(mes, 2000);
+  signalAndBackground.fitTo(data, Extended());
 
 
   // Draw fitted result onto RooPlot
 
   RooPlot *frame = x.frame();
+  data->plotOn(frame);
   signalAndBackground.plotOn(frame, Components(background), LineColor(kBlue));
 
 
