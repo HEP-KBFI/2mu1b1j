@@ -149,7 +149,7 @@ bool createRooFit(
 
   // Make fitting
 
-  RooDataSet *data = signalAndBackground.generate(mes, 2000);
+  RooDataSet *data = signalAndBackground.generate(x, 2000);
   signalAndBackground.fitTo(*data, Extended());
 
 
