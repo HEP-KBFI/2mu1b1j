@@ -146,7 +146,6 @@ bool createRooFit(
   RooPlot *frame = x.frame(Title("breitWigner (x) gauss convolution"));
   signal.plotOn(frame, LineColor(kBlue));
   background.plotOn(frame, LineColor(kRed));
-  dataHist.plotOn(frame);
 
 
   // Print it to .pdf file
