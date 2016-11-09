@@ -117,39 +117,32 @@ bool createRooFit(
 
   canvas->Divide(2);
 
-  RooRealVar x("x", "x", range[1], range[2]);
-
-  // std::cout << "x (initial).\n";
-  // x.Print();
-  //
-  // RooDataHist dataHist("dataHist", "dataHist", x, Import(*histogram));
-  //
-  // std::cout << "x (after data load from TH1F).\n";
-  // x.Print();
-
+  RooRealVar  x("x", "x", range[1], range[2]);
+  RooDataHist dataHist("dataHist", "dataHist", x, Import(*histogram));
 
   RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
   RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", range[0], range[1], range[2]);
   RooBreitWigner model1("breitWigner", "breitWigner", x, mean1, sigma1);
 
-  RooRealVar  mean2("gauss mean", "gauss mean", 0);
-  RooRealVar  sigma2("gauss sigma", "gauss sigma", range[0], range[1], range[2]);
-  RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
+  // RooRealVar  mean2("gauss mean", "gauss mean", 0);
+  // RooRealVar  sigma2("gauss sigma", "gauss sigma", range[0], range[1], range[2]);
+  // RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
+  //
+  // RooFFTConvPdf convolution("convolution", "breitWigner (X) gauss", x, model1, model2);
 
-  RooFFTConvPdf convolution("convolution", "breitWigner (X) gauss", x, model1, model2);
-
-  x.setBins(10000, "cache");
-  RooDataSet *generatedData = convolution.generate(x, 10000);
-  convolution.fitTo(*generatedData);
-
+  // x.setBins(10000, "cache");
+  // RooDataSet *generatedData = convolution.generate(x, 10000);
+  // convolution.fitTo(*generatedData);
 
   RooPlot *frame = x.frame(Title("breitWigner (x) gauss convolution"));
 
-  generatedData->plotOn(frame);
-  convolution.plotOn(frame, LineColor(kRed));
-  model2.plotOn(frame, LineColor(kBlue));
-  model1.plotOn(frame, LineColor(kGreen));
+  // generatedData->plotOn(frame);
+  // convolution.plotOn(frame, LineColor(kRed));
 
+  x.plotOn(frame);
+  model1.plotOn(frame, LineColor(kBlue));
+
+  // model1.plotOn(frame, LineColor(kGreen));
   // generatedData->plotOn(xframe);
 
   frame->Draw();
