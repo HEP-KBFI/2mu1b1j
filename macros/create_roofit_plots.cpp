@@ -41,7 +41,7 @@ TH1F* loadTH1F(
   );
 
 bool createRooFit(
-  TH1F  *histogram,
+  TH1F  * histogram,
   string year,
   string categoryName,
   float  range[]
@@ -128,20 +128,8 @@ bool createRooFit(
   RooExponential background("expo", "exponential PDF", x, lambda);
 
 
-  // RooRealVar  mean2("gauss mean", "gauss mean", 0);
-  // RooRealVar  sigma2("gauss sigma", "gauss sigma", range[0], range[1], range[2]);
-  // RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
-  //
-  // RooFFTConvPdf convolution("convolution", "breitWigner (X) gauss", x, model1, model2);
-
-  // x.setBins(10000, "cache");
-  // RooDataSet *generatedData = convolution.generate(x, 10000);
-  // convolution.fitTo(*generatedData);
-
   RooPlot *frame = x.frame(Title("breitWigner (x) gauss convolution"));
 
-  // generatedData->plotOn(frame);
-  // convolution.plotOn(frame, LineColor(kRed));
 
   dataHist.plotOn(frame);
   model1.fitTo(dataHist);
