@@ -130,7 +130,7 @@ bool createRooFit(
   // Set model for signal
 
   RooRealVar signalMean("signalMean", "signalMean", range[0], range[1] * 0.9, range[2] * 1.1);
-  RooRealVar signalWidth("signalWidth", "signalWidth", 1, 0.1, 10);
+  RooRealVar signalWidth("signalWidth", "signalWidth", 0, 0.1, 10);
   RooBreitWigner signal("gauss", "gauss", x, signalMean, signalWidth);
 
 
@@ -142,12 +142,12 @@ bool createRooFit(
 
   // Signal + background
 
-  RooRealVar signalEventsCount("signalEventsCount", "#signal events", 200, 0., 10000);
-  RooRealVar backgroundEventsCount("backgroundEventsCount", "#background events", 800, 0., 10000);
+  RooRealVar signalEventsCount("signalEventsCount", "#signal events", 3, 0., 10000);
+  RooRealVar backgroundEventsCount("backgroundEventsCount", "#background events", 3, 0., 10000);
 
   RooAddPdf signalAndBackground(
     "signalAndBackground",
-    "gauss + lambda",
+    "signalAndBackground",
     RooArgList(signal,            background),
     RooArgList(signalEventsCount, backgroundEventsCount)
     );
