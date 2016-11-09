@@ -117,7 +117,7 @@ bool createRooFit(
 
   canvas->Divide(2);
 
-  RooRealVar  x("x", "x", 0.0, 120.0);
+  RooRealVar  x("x", "x", range[1], range[2]);
   RooDataHist dataHist("dataHist", "dataHist", x, Import(*histogram));
 
   RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
