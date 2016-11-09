@@ -117,7 +117,7 @@ bool createRooFit(
 
   canvas->Divide(2);
 
-  RooRealVar  x("x", "x", 0, 120);
+  RooRealVar  x("x", "x", 0.0, 120.0);
   RooDataHist dataHist("dataHist", "dataHist", x, Import(*histogram));
 
   RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
@@ -140,6 +140,7 @@ bool createRooFit(
   // convolution.plotOn(frame, LineColor(kRed));
 
   x.plotOn(frame);
+  model1.fitTo(x);
   model1.plotOn(frame, LineColor(kBlue));
 
   // model1.plotOn(frame, LineColor(kGreen));
