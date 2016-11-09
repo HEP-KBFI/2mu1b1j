@@ -111,35 +111,48 @@ bool createRooFit(
     return false;
   }
 
-  // create roofit
 
-  TCanvas *canvas = new TCanvas();
+  // Create roofit variable
 
-  canvas->Divide(2);
+  RooRealVar x("x", "x", range[1], range[2]);
 
-  RooRealVar  x("x", "x", range[1], range[2]);
+
+  // Import histogram from x range to dataHist
+
   RooDataHist dataHist("dataHist", "dataHist", x, Import(*histogram));
+
+
+  // Set model for signal
 
   RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
   RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", range[0], range[1], range[2]);
   RooBreitWigner signal("breitWigner", "breitWigner", x, mean1, sigma1);
 
+
+  // Set model for background
+
   RooRealVar lambda("lambda", "slope", 0, 0., 120.);
   RooExponential background("expo", "exponential PDF", x, lambda);
 
 
+  // Make fitting
+
+  signal.fitTo(dataHist);
+  background.fitTo(dataHist);
+
+
+  // Draw fitted result onto RooPlot
+
   RooPlot *frame = x.frame(Title("breitWigner (x) gauss convolution"));
-
-
+  signal.plotOn(frame, LineColor(kBlue));
+  background.plotOn(frame, LineColor(kRed));
   dataHist.plotOn(frame);
-  model1.fitTo(dataHist);
-  model1.plotOn(frame, LineColor(kBlue));
 
-  // model1.plotOn(frame, LineColor(kGreen));
-  // generatedData->plotOn(xframe);
 
+  // Print it to .pdf file
+
+  TCanvas *canvas = new TCanvas();
   frame->Draw();
-
   string pdfPath = string("/home/margusp/roofits/") +
                    year +
                    "_" +
@@ -151,11 +164,8 @@ bool createRooFit(
                    "_" +
                    categoryName +
                    ".pdf";
-
   cout << "pdfPath is: " << pdfPath << "\n";
-
   canvas->Print(pdfPath.data(), "pdf");
-
 
   return true;
 }
