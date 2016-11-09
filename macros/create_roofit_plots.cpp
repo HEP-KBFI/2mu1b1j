@@ -74,7 +74,9 @@ bool create_roofit_plots()
     // "CategoryCCompareRelaxed"
   };
 
+
   // value, rangeStart, rangeEnd
+
   float ranges[][3] = {
     {  3.0,  1.0,   5.0 },
     { 10.0, 8.00, 12.00 },
@@ -83,6 +85,7 @@ bool create_roofit_plots()
     { 91.0, 60.0, 120.0 },
     { 91.0,  0.0, 120.0 }
   };
+
 
   for (string year : years) {
     for (string categoryName : categoryNames) {
@@ -94,6 +97,7 @@ bool create_roofit_plots()
       }
     }
   }
+
 
   return true;
 }
@@ -125,7 +129,7 @@ bool createRooFit(
 
   // Set model for signal
 
-  RooRealVar signalMean("signalMean", "signalMean", range[0], range[1], range[2]);
+  RooRealVar signalMean("signalMean", "signalMean", range[0], range[1] * 0.9, range[2] * 1.1);
   RooRealVar signalWidth("signalWidth", "signalWidth", 1, 0.1, range[0] / 5);
   RooBreitWigner signal("gauss", "gauss", x, signalMean, signalWidth);
 
