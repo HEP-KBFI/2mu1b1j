@@ -158,7 +158,7 @@ bool createRooFit(
   RooPlot *frame = x.frame();
   data->plotOn(frame);
   signalAndBackground.plotOn(frame);
-  signalAndBackground.plotOn(frame, Components(background), LineColor(kBlue));
+  signalAndBackground.plotOn(frame, Components(background), LineStyle(kDashed));
 
 
   // Print it to .pdf file
