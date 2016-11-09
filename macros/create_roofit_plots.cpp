@@ -157,6 +157,7 @@ bool createRooFit(
 
   RooPlot *frame = x.frame();
   data->plotOn(frame);
+  signalAndBackground.plotOn(xframe);
   signalAndBackground.plotOn(frame, Components(background), LineColor(kBlue));
 
 
