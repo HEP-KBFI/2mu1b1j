@@ -74,13 +74,13 @@ bool create_roofit_plots()
     // "CategoryCCompareRelaxed"
   };
 
-  // value, range
+  // value, rangeStart, rangeEnd
   float ranges[][3] = {
     {  3.0,  1.0,   5.0 },
     { 10.0, 8.00, 12.00 },
     { 28.5, 24.5,  32.5 },
     { 91.0, 60.0, 120.0 },
-    {    0,  0.0, 120.0 }
+    { 91.0,  0.0, 120.0 }
   };
 
   for (string year : years) {
@@ -124,9 +124,9 @@ bool createRooFit(
 
   // Set model for signal
 
-  RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
-  RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", range[0], range[1], range[2]);
-  RooBreitWigner signal("breitWigner", "breitWigner", x, mean1, sigma1);
+  RooRealVar signalMean("signalMean", "signalMean", range[0], range[1], range[2]);
+  RooRealVar signalWidth("signalWidth", "signalWidth", range[0], range[0] * 0.9, range[2] * 1.1);
+  RooBreitWigner signal("gauss", "gauss", x, signalMean, signalWidth);
 
 
   // Set model for background
@@ -135,17 +135,27 @@ bool createRooFit(
   RooExponential background("expo", "exponential PDF", x, lambda);
 
 
+  // Signal + background
+
+  RooRealVar signalEventsCount("signalEventsCount", "#signal events", 200, 0., 10000);
+  RooRealVar backgroundEventsCount("backgroundEventsCount", "#background events", 800, 0., 10000);
+
+  RooAddPdf signalAndBackground(
+    "signalAndBackground",
+    "gauss + lambda",
+    RooArgList(signal,            background),
+    RooArgList(signalEventsCount, backgroundEventsCount)
+    );
+
   // Make fitting
 
-  signal.fitTo(dataHist);
-  background.fitTo(dataHist);
+  signalAndBackground.fitTo(dataHist, Extended());
 
 
   // Draw fitted result onto RooPlot
 
-  RooPlot *frame = x.frame(Title("breitWigner (x) gauss convolution"));
-  signal.plotOn(frame, LineColor(kBlue));
-  background.plotOn(frame, LineColor(kRed));
+  RooPlot *frame = x.frame();
+  signalAndBackground.plotOn(frame, Components(background), LineColor(kBlue));
 
 
   // Print it to .pdf file
