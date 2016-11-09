@@ -122,7 +122,11 @@ bool createRooFit(
 
   RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
   RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", range[0], range[1], range[2]);
-  RooBreitWigner model1("breitWigner", "breitWigner", x, mean1, sigma1);
+  RooBreitWigner signal("breitWigner", "breitWigner", x, mean1, sigma1);
+
+  RooRealVar lambda("lambda", "slope", 0, 0., 120.);
+  RooExponential background("expo", "exponential PDF", x, lambda);
+
 
   // RooRealVar  mean2("gauss mean", "gauss mean", 0);
   // RooRealVar  sigma2("gauss sigma", "gauss sigma", range[0], range[1], range[2]);
