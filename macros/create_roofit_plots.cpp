@@ -140,7 +140,7 @@ bool createRooFit(
   // convolution.plotOn(frame, LineColor(kRed));
 
   x.plotOn(frame);
-  model1.fitTo(x);
+  model1.fitTo(dataHist);
   model1.plotOn(frame, LineColor(kBlue));
 
   // model1.plotOn(frame, LineColor(kGreen));
