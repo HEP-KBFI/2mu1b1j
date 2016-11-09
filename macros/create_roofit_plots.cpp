@@ -41,10 +41,10 @@ TH1F* loadTH1F(
   );
 
 bool createRooFit(
-  TH1F  * histogram,
+  TH1F  *histogram,
   string year,
   string categoryName,
-  float range[]
+  float  range[]
   );
 
 
@@ -128,12 +128,12 @@ bool createRooFit(
   // x.Print();
 
 
-  RooRealVar mean1("breitWigner mean", "breitWigner mean", 20.0, 19.0, 21.0);
+  RooRealVar mean1("breitWigner mean", "breitWigner mean", range[0], range[1], range[2]);
   RooRealVar sigma1("breitWigner sigma", "breitWigner sigma", range[0], range[1], range[2]);
   RooBreitWigner model1("breitWigner", "breitWigner", x, mean1, sigma1);
 
   RooRealVar  mean2("gauss mean", "gauss mean", 0);
-  RooRealVar  sigma2("gauss sigma", "gauss sigma", 1, 0.1, 10);
+  RooRealVar  sigma2("gauss sigma", "gauss sigma", range[0], range[1], range[2]);
   RooGaussian model2("gauss", "gauss", x, mean2, sigma2);
 
   RooFFTConvPdf convolution("convolution", "breitWigner (X) gauss", x, model1, model2);
