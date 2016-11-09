@@ -141,9 +141,9 @@ bool createRooFit(
 
 
   // Signal + background
-
-  RooRealVar signalEventsCount("signalEventsCount", "#signal events", 3, 0., 10000);
-  RooRealVar backgroundEventsCount("backgroundEventsCount", "#background events", 3, 0., 10000);
+  float entriesCount = dataHist.sumEntries();
+  RooRealVar signalEventsCount("signalEventsCount", "#signal events", entriesCount, 0.0, entriesCount);
+  RooRealVar backgroundEventsCount("backgroundEventsCount", "#background events", 1, 0.0, entriesCount);
 
   RooAddPdf signalAndBackground(
     "signalAndBackground",
