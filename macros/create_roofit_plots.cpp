@@ -125,7 +125,7 @@ bool createRooFit(
   // Set model for signal
 
   RooRealVar signalMean("signalMean", "signalMean", range[0], range[1], range[2]);
-  RooRealVar signalWidth("signalWidth", "signalWidth", range[0], range[0] * 0.9, range[0] * 1.1);
+  RooRealVar signalWidth("signalWidth", "signalWidth", 1, range[0] * 0.9, range[0] * 1.1);
   RooBreitWigner signal("gauss", "gauss", x, signalMean, signalWidth);
 
 
