@@ -244,9 +244,9 @@ TH1F* loadTH1F(
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
+    histogram->Rebin(2);
   } else {
     std::cout << "Failed: Histogram not found. " << histName << "\n";
+    return NULL;
   }
-
-  return histogram;
 }
