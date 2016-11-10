@@ -149,7 +149,7 @@ bool createRooFit(
 
   // Set model for background
 
-  RooRealVar lambda("lambda", "slope", 0, 0., 120.);
+  RooRealVar lambda("lambda", "slope", 0, range[1], range[2]);
   RooExponential background("expo", "exponential PDF", x, lambda);
 
 
