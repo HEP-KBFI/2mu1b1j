@@ -62,19 +62,17 @@ bool create_roofit_plots()
 
   string categoryNames[] = {
     "CategoryA",
-
-    // "CategoryARelaxed",
+    "CategoryARelaxed",
     "CategoryACompare",
-
-    // "CategoryACompareRelaxed",
-    // "CategoryB",
-    // "CategoryBRelaxed",
-    // "CategoryBCompare",
-    // "CategoryBCompareRelaxed",
-    // "CategoryC",
-    // "CategoryCRelaxed",
-    // "CategoryCCompare",
-    // "CategoryCCompareRelaxed"
+    "CategoryACompareRelaxed",
+    "CategoryB",
+    "CategoryBRelaxed",
+    "CategoryBCompare",
+    "CategoryBCompareRelaxed",
+    "CategoryC",
+    "CategoryCRelaxed",
+    "CategoryCCompare",
+    "CategoryCCompareRelaxed"
   };
 
 
