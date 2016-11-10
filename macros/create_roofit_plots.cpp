@@ -128,18 +128,18 @@ bool createRooFit(
   RooDataHist dataHist("dataHist", "dataHist", x, histogram);
 
 
-  // Landau
+  // Theory model (Landau)
 
-  RooRealVar landauMean("landauMean", "landauMean", range[0], range[0] * 0.9, range[0] * 1.1);
-  RooRealVar landauWidth("landauWidth", "landauWidth", 1, 0.1, 10);
-  RooLandau  landau("landau", "landau", x, landauMean, landauWidth);
+  RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", range[0], range[0] * 0.9, range[0] * 1.1);
+  RooRealVar breitWignerWidth("breitWignerWidth", "breitWignerWidth", 1, 0.1, 10);
+  RooBreitWigner bw("bw", "bw", x, landauMean, landauWidth);
 
 
-  // Gauss
+  // Resolution model (Gauss)
 
-  RooRealVar gaussMean("signalMean", "signalMean", 0);
-  RooRealVar gaussWidth("signalWidth", "signalWidth", 4, 0.1, 10);
-  RooBreitWigner gauss("gauss", "gauss", x, gaussMean, gaussWidth);
+  RooRealVar  gaussMean("gaussMean", "gaussMean", 0);
+  RooRealVar  gaussWidth("gaussWidth", "gaussWidth", 4, 0.1, 10);
+  RooGaussian gauss("gauss", "gauss", x, gaussMean, gaussWidth);
 
 
   // Set model for signal
