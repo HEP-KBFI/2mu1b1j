@@ -144,7 +144,7 @@ bool createRooFit(
 
   // Set model for signal
 
-  RooFFTConvPdf signal("signal", "signal", x, breitWigner, gaussMean);
+  RooFFTConvPdf signal("signal", "signal", x, breitWigner, gauss);
 
 
   // Set model for background
