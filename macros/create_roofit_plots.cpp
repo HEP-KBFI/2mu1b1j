@@ -125,7 +125,7 @@ bool createRooFit(
 
   // Create roofit variable
 
-  RooRealVar x("x", "x", range[1], range[2]);
+  RooRealVar x("x", "x", xStart, xEnd);
   x.setBins(10000, "fft");
 
 
