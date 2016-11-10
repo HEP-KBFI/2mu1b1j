@@ -120,7 +120,7 @@ bool createRooFit(
   // Create roofit variable
 
   RooRealVar x("x", "x", range[1], range[2]);
-  x.setBins("fft", 10000).
+  x.setBins("fft", 10000);
 
 
   // Import histogram from x range to dataHist
