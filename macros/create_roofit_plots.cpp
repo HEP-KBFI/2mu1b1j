@@ -244,7 +244,7 @@ TH1F* loadTH1F(
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
-    return dynamic_cast<TH1F *>(histogram->Rebin(2, histName.data()));
+    return histogram->Rebin(2, histName.data());
   } else {
     std::cout << "Failed: Histogram not found. " << histName << "\n";
     return NULL;
