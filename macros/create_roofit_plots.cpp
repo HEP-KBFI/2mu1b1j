@@ -132,7 +132,7 @@ bool createRooFit(
 
   RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", range[0], range[0] * 0.9, range[0] * 1.1);
   RooRealVar breitWignerWidth("breitWignerWidth", "breitWignerWidth", 1, 0.1, 10);
-  RooBreitWigner bw("bw", "bw", x, landauMean, landauWidth);
+  RooBreitWigner breitWigner("bw", "bw", x, breitWignerMean, breitWignerWidth);
 
 
   // Resolution model (Gauss)
@@ -144,7 +144,7 @@ bool createRooFit(
 
   // Set model for signal
 
-  RooFFTConvPdf signal("signal", "signal", x, landau, gauss);
+  RooFFTConvPdf signal("signal", "signal", x, breitWigner, gaussMean);
 
 
   // Set model for background
