@@ -129,7 +129,7 @@ bool createRooFit(
 
   // Set model for signal
 
-  RooRealVar signalMean("signalMean", "signalMean", range[0], range[1] * 0.9, range[2] * 1.1);
+  RooRealVar signalMean("signalMean", "signalMean", range[0], range[0] * 0.9, range[0] * 1.1);
   RooRealVar signalWidth("signalWidth", "signalWidth", 4, 0.1, 10);
   RooBreitWigner signal("gauss", "gauss", x, signalMean, signalWidth);
 
@@ -155,7 +155,6 @@ bool createRooFit(
 
 
   // Make fitting
-
 
   // RooDataSet *data = signalAndBackground.generate(x, 2000);
   signalAndBackground.fitTo(dataHist, Extended());
