@@ -41,10 +41,13 @@ TH1F* loadTH1F(
   );
 
 bool createRooFit(
-  TH1F  * histogram,
+  TH1F  *histogram,
   string year,
   string categoryName,
-  float  range[]
+  float  peak,
+  float  peakWidth,
+  float  xStart,
+  float  xEnd
   );
 
 
@@ -75,15 +78,15 @@ bool create_roofit_plots()
   };
 
 
-  // value, rangeStart, rangeEnd
+  // peak, peakWidth, xStart, xEnd
 
-  float ranges[][3] = {
-    {  3.0,  1.0,   5.0 },
-    { 10.0, 8.00, 12.00 },
-    { 28.5, 24.5,  32.5 },
-    { 28.5,  0.0,  70.0 },
-    { 91.0, 60.0, 120.0 },
-    { 91.0,  0.0, 120.0 }
+  float ranges[][4] = {
+    {  3.0,  1.0,  1.0,   5.0 },
+    { 10.0,  1.0, 8.00, 12.00 },
+    { 28.5,  1.0, 24.5,  32.5 },
+    { 28.5,  1.0,  0.0,  70.0 },
+    { 91.0,  1.0, 60.0, 120.0 },
+    { 91.0,  1.0,  0.0, 120.0 }
   };
 
 
@@ -93,7 +96,7 @@ bool create_roofit_plots()
       TH1F *histogram = loadTH1F(year, categoryName);
 
       for (auto range : ranges) {
-        createRooFit(histogram, year, categoryName, range);
+        createRooFit(histogram, year, categoryName, range[0], range[1], range[2], range[3]);
       }
     }
   }
@@ -106,7 +109,10 @@ bool createRooFit(
   TH1F  *histogram,
   string year,
   string categoryName,
-  float  range[] // 0 - value, 1 - begin, 2 - end
+  float  peak,
+  float  peakWidth,
+  float  xStart,
+  float  xEnd
   )
 {
   if (histogram) {
@@ -130,15 +136,15 @@ bool createRooFit(
 
   // Theory model (Landau)
 
-  RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", range[0], range[0] * 0.9, range[0] * 1.1);
-  RooRealVar breitWignerWidth("breitWignerWidth", "breitWignerWidth", 1, 0.1, 10);
+  RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", peak, peak - peakWidth, peak + peakWidth);
+  RooRealVar breitWignerWidth("breitWignerWidth", "breitWignerWidth", 1, 0.1, peakWidth * 2);
   RooBreitWigner breitWigner("bw", "bw", x, breitWignerMean, breitWignerWidth);
 
 
   // Resolution model (Gauss)
 
   RooRealVar  gaussMean("gaussMean", "gaussMean", 0);
-  RooRealVar  gaussWidth("gaussWidth", "gaussWidth", 4, 0.1, 10);
+  RooRealVar  gaussWidth("gaussWidth", "gaussWidth", 1, 0.1, peakWidth * 2);
   RooGaussian gauss("gauss", "gauss", x, gaussMean, gaussWidth);
 
 
@@ -149,7 +155,7 @@ bool createRooFit(
 
   // Set model for background
 
-  RooRealVar lambda("lambda", "slope", 0, range[1], range[2]);
+  RooRealVar lambda("lambda", "slope", 0, xStart, xEnd);
   RooExponential background("expo", "exponential PDF", x, lambda);
 
 
@@ -188,11 +194,11 @@ bool createRooFit(
   string pdfPath = string("/home/margusp/roofits/") +
                    year +
                    "_" +
-                   to_string(range[0]) +
+                   to_string(peak) +
                    "_" +
-                   to_string(range[1]) +
+                   to_string(xStart) +
                    "-" +
-                   to_string(range[2]) +
+                   to_string(xEnd) +
                    "_" +
                    categoryName +
                    ".pdf";
