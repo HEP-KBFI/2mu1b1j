@@ -61,6 +61,11 @@ bool saveRooPlot(
   float    binning
   );
 
+TH1F* rebinHistogram(
+  TH1F  *histogram,
+  double originalPinning,
+  double newPinning);
+
 // entry-point
 
 bool create_roofit_plots()
@@ -89,7 +94,7 @@ bool create_roofit_plots()
   // peak, peakWidth, xStart, xEnd, pinning
 
   float ranges[][5] = {
-    {  3.0,   0.2,  2.0,    4.0, 0.1 },
+    {  3.1,   0.2,  2.0,    4.0, 0.1 },
     { 10.0,   1.0,  8.0,  12.00, 0.2 },
     { 28.5,   1.0, 20.0,   40.0,   1 },
     { 91.0,   1.0, 80.0,  100.0,   1 },
@@ -103,7 +108,8 @@ bool create_roofit_plots()
       TH1F *histogram = loadTH1F(year, categoryName);
 
       for (auto range : ranges) {
-        RooPlot *frame = createRooFit(histogram, year, categoryName, range[0], range[1], range[2], range[3]);
+        TH1F *rebinnedHistogram = rebinHistogram(histogram, 0.1, range[4]);
+        RooPlot *frame          = createRooFit(histogram, year, categoryName, range[0], range[1], range[2], range[3]);
         saveRooPlot(frame, year, categoryName, range[0], range[1], range[2], range[3], range[4]);
       }
     }
@@ -303,4 +309,15 @@ bool saveRooPlot(
   canvas->Print(pdfPath.data(), "pdf");
 
   return true;
+}
+
+TH1F* rebinHistogram(
+  TH1F  *histogram,
+  double originalPinning,
+  double newPinning)
+{
+  TH1F  *clonedHistogram   = (TH1F *)histogram->Clone();
+  double pinningMultiplier = (1.0 / originalPinning) * newPinning;
+
+  return (TH1F *)clonedHistogram->Rebin(pinningMultiplier, "suva");
 }
