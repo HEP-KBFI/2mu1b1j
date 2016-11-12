@@ -308,7 +308,7 @@ bool saveRooPlot(
                    "_" +
                    categoryName +
                    "_binning-" +
-                   binning +
+                   to_string(binning) +
                    ".pdf";
   cout << "pdfPath is: " << pdfPath << "\n";
   canvas->Print(pdfPath.data(), "pdf");
