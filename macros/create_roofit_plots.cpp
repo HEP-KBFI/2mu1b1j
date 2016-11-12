@@ -98,6 +98,7 @@ bool create_roofit_plots()
     { 10.0,   1.0,  8.0,  12.00,   0.2 },
     { 28.5,   1.0, 20.0,   40.0,   0.5 },
     { 28.5,   1.0, 20.0,   40.0,     1 },
+    { 28.5,   1.0, 20.0,   40.0,     2 },
     { 91.0,   1.0, 80.0,  100.0,     1 },
     { 91.0,   1.0,  0.0,  120.0,     1 }
   };
@@ -322,7 +323,10 @@ TH1F* rebinHistogram(
   double originalPinning,
   double newPinning)
 {
-  TH1F  *clonedHistogram   = (TH1F *)histogram->Clone("hnew");
+  TH1F *clonedHistogram = (TH1F *)histogram->Clone("hnew");
+
+  // note: somehow crustify needs this here :()
+
   double binningMultiplier = (1.0 / originalPinning) * (newPinning);
 
   cout << "originalPinning: " << originalPinning
