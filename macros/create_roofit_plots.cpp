@@ -91,7 +91,7 @@ bool create_roofit_plots()
   };
 
 
-  // peak, peakWidth, xStart, xEnd, pinning
+  // peak, peakWidth, xStart, xEnd, binning
 
   float ranges[][5] = {
     {  3.1,   0.2,  2.0,    4.0, 0.1 },
@@ -109,7 +109,13 @@ bool create_roofit_plots()
 
       for (auto range : ranges) {
         TH1F *rebinnedHistogram = rebinHistogram(histogram, 0.1, range[4]);
-        RooPlot *frame          = createRooFit(rebinnedHistogram, year, categoryName, range[0], range[1], range[2], range[3]);
+        RooPlot *frame          = createRooFit(rebinnedHistogram,
+                                               year,
+                                               categoryName,
+                                               range[0],
+                                               range[1],
+                                               range[2],
+                                               range[3]);
         saveRooPlot(frame, year, categoryName, range[0], range[1], range[2], range[3], range[4]);
       }
     }
@@ -243,9 +249,6 @@ TH1F* loadTH1F(
   string histDir = string("2mu1b1j") + categoryName + string("_Tight/sel/evt/data_obs");
 
   // string histName = "massOfOppositeChargeMuons1PinPerGeV";
-
-  // double originalPinning     = 0.1;
-  // int    rePinningMultiplier = (int)(10.0 * pinning);
   string histName = "massOfOppositeChargeMuons10PinsPerGev";
 
 
@@ -304,6 +307,8 @@ bool saveRooPlot(
                    to_string(xEnd) +
                    "_" +
                    categoryName +
+                   "_binning-" +
+                   binning +
                    ".pdf";
   cout << "pdfPath is: " << pdfPath << "\n";
   canvas->Print(pdfPath.data(), "pdf");
@@ -316,10 +321,12 @@ TH1F* rebinHistogram(
   double originalPinning,
   double newPinning)
 {
-  TH1F  *clonedHistogram   = (TH1F *)histogram->Clone("hnew");
-  double pinningMultiplier = (1.0 / originalPinning) * newPinning;
+  TH1F *clonedHistogram = (TH1F *)histogram->Clone("hnew");
+  double binningMultiplier = (1.0 / originalPinning) * (newPinning);
+
   cout << "originalPinning: " << originalPinning
-    << ", newPinning: " << newPinning
-    << ", pinningMultiplier: " << pinningMultiplier << "\n";
-  return (TH1F *)clonedHistogram->Rebin(pinningMultiplier, "suva");
+       << ", newPinning: " << newPinning
+       << ", binningMultiplier: " << binningMultiplier << "\n";
+
+  return clonedHistogram->Rebin(binningMultiplier, "suva");
 }
