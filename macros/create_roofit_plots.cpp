@@ -76,23 +76,23 @@ bool create_roofit_plots()
   };
 
 
-  // peak, peakWidth, xStart, xEnd
+  // peak, peakWidth, xStart, xEnd, pinning
 
-  float ranges[][4] = {
-    {  3.0,  1.0,  0.0,   10.0 },
-    { 10.0,  1.0,  8.0,  12.00 },
-    { 28.5,  1.0, 20.0,   40.0 },
-    { 91.0,  1.0, 80.0,  100.0 },
-    { 91.0,  1.0,  0.0,  120.0 }
+  float ranges[][5] = {
+    {  3.0,  1.0,  2.0,    4.0, 0.1 },
+    { 10.0,  1.0,  8.0,  12.00, 0.2 },
+    { 28.5,  1.0, 20.0,   40.0,   1 },
+    { 91.0,  1.0, 80.0,  100.0,   1 },
+    { 91.0,  1.0,  0.0,  120.0,   1 }
   };
 
 
   for (string year : years) {
     for (string categoryName : categoryNames) {
       cout << "Current category: " << categoryName << "\n";
-      TH1F *histogram = loadTH1F(year, categoryName);
 
       for (auto range : ranges) {
+        TH1F *histogram = loadTH1F(year, categoryName, range[5]);
         createRooFit(histogram, year, categoryName, range[0], range[1], range[2], range[3]);
       }
     }
@@ -229,7 +229,8 @@ bool createRooFit(
 
 TH1F* loadTH1F(
   string year,
-  string categoryName
+  string categoryName,
+  double pinning
   )
 {
   // set configuration params
@@ -245,7 +246,9 @@ TH1F* loadTH1F(
 
   // string histName = "massOfOppositeChargeMuons1PinPerGeV";
 
-  string histName = "massOfOppositeChargeMuons10PinsPerGev";
+  double originalPinning     = 0.1;
+  double rePinningMultiplier = (1.0 / originalPinning) * pinning;
+  string histName            = "massOfOppositeChargeMuons10PinsPerGev";
 
 
   // show TH1F histogram
@@ -269,7 +272,7 @@ TH1F* loadTH1F(
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
-    return (TH1F *)histogram->Rebin(2, histName.data());
+    return (TH1F *)histogram->Rebin(rePinningMultiplier, histName.data());
   } else {
     std::cout << "Failed: Histogram not found. " << histName << "\n";
     return NULL;
