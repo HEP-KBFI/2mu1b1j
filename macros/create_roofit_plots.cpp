@@ -37,8 +37,7 @@ using namespace RooFit;
 
 TH1F* loadTH1F(
   string year,
-  string categoryName,
-  double pinning
+  string categoryName
   );
 
 bool createRooFit(
@@ -91,10 +90,10 @@ bool create_roofit_plots()
   for (string year : years) {
     for (string categoryName : categoryNames) {
       cout << "Current category: " << categoryName << "\n";
+      TH1F *histogram = loadTH1F(year, categoryName);
 
       for (auto range : ranges) {
-        TH1F *histogram = loadTH1F(year, categoryName, range[4]);
-        createRooFit(histogram, year, categoryName, range[0], range[1], range[2], range[3]);
+        createRooFit(histogram, year, categoryName, range[0], range[1], range[2], range[3], range[4]);
       }
     }
   }
@@ -163,7 +162,7 @@ bool createRooFit(
 
   RooGenericPdf background(
     "background",
-    "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
+    "(backgroundA * backgroundX * backgroundX) + (backgroundB * backgroundX) + backgroundC",
     RooArgList(
       backgroundA,
       backgroundB,
@@ -247,9 +246,9 @@ TH1F* loadTH1F(
 
   // string histName = "massOfOppositeChargeMuons1PinPerGeV";
 
-  double originalPinning     = 0.1;
-  int    rePinningMultiplier = (int)(10.0 * pinning);
-  string histName            = "massOfOppositeChargeMuons10PinsPerGev";
+  // double originalPinning     = 0.1;
+  // int    rePinningMultiplier = (int)(10.0 * pinning);
+  string histName = "massOfOppositeChargeMuons10PinsPerGev";
 
 
   // show TH1F histogram
@@ -273,7 +272,9 @@ TH1F* loadTH1F(
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
-    return (TH1F *)histogram->Rebin(rePinningMultiplier, histName.data());
+    return (TH1F *)histogram;
+
+    // return (TH1F *)histogram->Rebin(rePinningMultiplier, histName.data());
   } else {
     std::cout << "Failed: Histogram not found. " << histName << "\n";
     return NULL;
