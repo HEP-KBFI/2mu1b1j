@@ -108,18 +108,45 @@ bool create_roofit_plots()
   for (string year : years) {
     for (string categoryName : categoryNames) {
       cout << "Current category: " << categoryName << "\n";
+
+      // Load histogram from analysis
+
       TH1F *histogram = loadTH1F(year, categoryName);
 
+
+      // Iterate over interesting areas
+
       for (auto range : ranges) {
-        TH1F *rebinnedHistogram = rebinHistogram(histogram, 0.1, range[4]);
-        RooPlot *frame          = createRooFit(rebinnedHistogram,
-                                               year,
-                                               categoryName,
-                                               range[0],
-                                               range[1],
-                                               range[2],
-                                               range[3]);
-        saveRooPlot(frame, year, categoryName, range[0], range[1], range[2], range[3], range[4]);
+        // Create rebinned histogram
+
+        TH1F *rebinnedHistogram = rebinHistogram(
+          histogram,
+          0.1, range[4]
+          );
+
+
+        // Generate roofit plot
+
+        RooPlot *frame = createRooFit(rebinnedHistogram,
+                                      year,
+                                      categoryName,
+                                      range[0],
+                                      range[1],
+                                      range[2],
+                                      range[3]);
+
+        // Save rooplot to pdf file
+
+        saveRooPlot(
+          frame,
+          year,
+          categoryName,
+          range[0],
+          range[1],
+          range[2],
+          range[3],
+          range[4]
+          );
       }
     }
   }
@@ -207,12 +234,11 @@ RooPlot* createRooFit(
 
   RooGenericPdf background(
     "background",
-    "(backgroundA * backgroundX * backgroundX) + (backgroundB * backgroundX) + backgroundC",
+    "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
     RooArgList(
       backgroundA,
       backgroundB,
       backgroundC,
-      backgroundX,
       x
       )
     );
@@ -338,15 +364,14 @@ bool saveRooPlot(
   return true;
 }
 
+// Returns clone of histogram with new binning
+
 TH1F* rebinHistogram(
   TH1F  *histogram,
   double originalPinning,
   double newPinning)
 {
-  TH1F *clonedHistogram = (TH1F *)histogram->Clone("hnew");
-
-  // note: somehow crustify needs this here :()
-
+  TH1F  *clonedHistogram   = (TH1F *)histogram->Clone("hnew");
   double binningMultiplier = (1.0 / originalPinning) * (newPinning);
 
   cout << "originalPinning: " << originalPinning
