@@ -109,7 +109,7 @@ bool create_roofit_plots()
 
       for (auto range : ranges) {
         TH1F *rebinnedHistogram = rebinHistogram(histogram, 0.1, range[4]);
-        RooPlot *frame          = createRooFit(histogram, year, categoryName, range[0], range[1], range[2], range[3]);
+        RooPlot *frame          = createRooFit(rebinnedHistogram, year, categoryName, range[0], range[1], range[2], range[3]);
         saveRooPlot(frame, year, categoryName, range[0], range[1], range[2], range[3], range[4]);
       }
     }
