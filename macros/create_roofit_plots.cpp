@@ -280,7 +280,8 @@ bool saveRooPlot(
   float    peak,
   float    peakWidth,
   float    xStart,
-  float    xEnd
+  float    xEnd,
+  float    binning
   ) {
   // Print it to .pdf file
 
