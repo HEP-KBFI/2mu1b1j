@@ -37,7 +37,8 @@ using namespace RooFit;
 
 TH1F* loadTH1F(
   string year,
-  string categoryName
+  string categoryName,
+  double pinning
   );
 
 bool createRooFit(
@@ -92,7 +93,7 @@ bool create_roofit_plots()
       cout << "Current category: " << categoryName << "\n";
 
       for (auto range : ranges) {
-        TH1F *histogram = loadTH1F(year, categoryName, range[5]);
+        TH1F *histogram = loadTH1F(year, categoryName, range[4]);
         createRooFit(histogram, year, categoryName, range[0], range[1], range[2], range[3]);
       }
     }
@@ -229,7 +230,8 @@ bool createRooFit(
 
 TH1F* loadTH1F(
   string year,
-  string categoryName
+  string categoryName,
+  double pinning
   )
 {
   // set configuration params
@@ -271,7 +273,7 @@ TH1F* loadTH1F(
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
-    return (TH1F *)histogram;
+    return (TH1F *)histogram->Rebin(rePinningMultiplier, histName.data());
   } else {
     std::cout << "Failed: Histogram not found. " << histName << "\n";
     return NULL;
