@@ -37,7 +37,8 @@ using namespace RooFit;
 
 TH1F* loadTH1F(
   string year,
-  string categoryName
+  string categoryName,
+  double pinning
   );
 
 bool createRooFit(
