@@ -182,8 +182,14 @@ bool createRooFit(
   RooAddPdf signalAndBackground(
     "signalAndBackground",
     "signalAndBackground",
-    RooArgList(signal,            background),
-    RooArgList(signalEventsCount, backgroundEventsCount)
+    RooArgList(
+      signal,
+      *background
+      ),
+    RooArgList(
+      signalEventsCount,
+      backgroundEventsCount
+      )
     );
 
 
