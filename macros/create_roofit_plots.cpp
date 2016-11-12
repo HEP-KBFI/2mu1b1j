@@ -273,7 +273,7 @@ TH1F* loadTH1F(
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
-    return (TH1F *)histogram->Rebin(originalPinning, histName.data());
+    return (TH1F *)histogram->Rebin(rePinningMultiplier, histName.data());
   } else {
     std::cout << "Failed: Histogram not found. " << histName << "\n";
     return NULL;
