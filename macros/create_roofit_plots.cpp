@@ -156,10 +156,10 @@ bool createRooFit(
   // RooRealVar lambda("lambda", "slope", -1.0, -100.0, 100.0);
   // RooExponential background("expo", "exponential PDF", x, lambda);
 
-  RooRealVar backgroundA('backgroundA', 'backgroundA');
-  RooRealVar backgroundB('backgroundB', 'backgroundB');
-  RooRealVar backgroundC('backgroundC', 'backgroundC');
-  RooRealVar backgroundX('backgroundX', 'backgroundX');
+  RooRealVar backgroundA("backgroundA", "backgroundA");
+  RooRealVar backgroundB("backgroundB", "backgroundB");
+  RooRealVar backgroundC("backgroundC", "backgroundC");
+  RooRealVar backgroundX("backgroundX", "backgroundX");
 
   RooAbsPdf *background = RooClassFactory::makePdfInstance(
     "background",
