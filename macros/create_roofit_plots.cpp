@@ -178,7 +178,8 @@ RooPlot* createRooFit(
       backgroundA,
       backgroundB,
       backgroundC,
-      backgroundX
+      backgroundX,
+      x
       )
     );
 
