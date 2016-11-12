@@ -158,7 +158,7 @@ bool createRooFit(
 
   RooAbsPdf *background = RooClassFactory::makePdfInstance(
     "background",
-    "a * x ^ 2 + b * x + c"
+    "backgroundA * backgroundX ^ 2 + backgroundB * backgroundX + backgroundC"
     );
 
 
