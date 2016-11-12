@@ -181,20 +181,34 @@ RooPlot* createRooFit(
   // RooRealVar lambda("lambda", "slope", -1.0, -100.0, 100.0);
   // RooExponential background("expo", "exponential PDF", x, lambda);
 
-  RooRealVar backgroundA("backgroundA", "backgroundA", 1.1);
-  RooRealVar backgroundB("backgroundB", "backgroundB", 1.1);
-  RooRealVar backgroundC("backgroundC", "backgroundC", 1.1);
-  RooRealVar backgroundX("backgroundX", "backgroundX", 1.1);
+  RooRealVar backgroundA(
+    "backgroundA",
+    "backgroundA",
+    100.0, -10000.0, 10000.0);
+
+  RooRealVar backgroundB(
+    "backgroundB",
+    "backgroundB",
+    100.0, -10000.0, 10000.0);
+
+  RooRealVar backgroundC(
+    "backgroundC",
+    "backgroundC",
+    1000.0, -10000.0, 10000.0);
+
+  RooRealVar backgroundX(
+    "backgroundX",
+    "backgroundX",
+    -2.5, -10000.0, 10000.0);
 
   RooGenericPdf background(
     "background",
-    "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
+    "(backgroundA * backgroundX * backgroundX) + (backgroundB * backgroundX) + backgroundC",
     RooArgList(
       backgroundA,
       backgroundB,
       backgroundC,
-      backgroundX,
-      x
+      backgroundX
       )
     );
 
