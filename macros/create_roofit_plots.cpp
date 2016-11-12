@@ -316,8 +316,10 @@ TH1F* rebinHistogram(
   double originalPinning,
   double newPinning)
 {
-  TH1F  *clonedHistogram   = (TH1F *)histogram->Clone();
+  TH1F  *clonedHistogram   = (TH1F *)histogram->Clone("hnew");
   double pinningMultiplier = (1.0 / originalPinning) * newPinning;
-  cout << "Original pinning: " << originalPinning << ", new pinning: " << newPinning << ", " << pinningMultiplier << "\n";
+  cout << "originalPinning: " << originalPinning
+    << ", newPinning: " << newPinning
+    << ", pinningMultiplier" << pinningMultiplier << "\n";
   return (TH1F *)clonedHistogram->Rebin(pinningMultiplier, "suva");
 }
