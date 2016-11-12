@@ -163,7 +163,7 @@ bool createRooFit(
 
   RooGenericPdf background(
     "background",
-    "backgroundA * (backgroundX * backgroundA) + backgroundB * backgroundX + backgroundC",
+    "(backgroundA * backgroundX * backgroundX) + (backgroundB * backgroundX) + backgroundC",
     RooArgList(
       backgroundA,
       backgroundB,
