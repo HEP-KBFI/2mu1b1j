@@ -37,8 +37,7 @@ using namespace RooFit;
 
 TH1F* loadTH1F(
   string year,
-  string categoryName,
-  double pinning
+  string categoryName
   );
 
 bool createRooFit(
@@ -230,8 +229,7 @@ bool createRooFit(
 
 TH1F* loadTH1F(
   string year,
-  string categoryName,
-  double pinning
+  string categoryName
   )
 {
   // set configuration params
@@ -273,7 +271,7 @@ TH1F* loadTH1F(
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
-    return (TH1F *)histogram->Rebin(2, histName.data());
+    return (TH1F *)histogram;
   } else {
     std::cout << "Failed: Histogram not found. " << histName << "\n";
     return NULL;
