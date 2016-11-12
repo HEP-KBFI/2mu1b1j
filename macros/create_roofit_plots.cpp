@@ -248,7 +248,7 @@ TH1F* loadTH1F(
   // string histName = "massOfOppositeChargeMuons1PinPerGeV";
 
   double originalPinning     = 0.1;
-  double rePinningMultiplier = 10.0 * pinning;
+  int    rePinningMultiplier = (int)(10.0 * pinning);
   string histName            = "massOfOppositeChargeMuons10PinsPerGev";
 
 
@@ -273,7 +273,7 @@ TH1F* loadTH1F(
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
-    return (TH1F *)histogram->Rebin(1, histName.data());
+    return (TH1F *)histogram->Rebin(originalPinning, histName.data());
   } else {
     std::cout << "Failed: Histogram not found. " << histName << "\n";
     return NULL;
