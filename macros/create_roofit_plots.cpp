@@ -40,7 +40,7 @@ TH1F* loadTH1F(
   string categoryName
   );
 
-bool createRooFit(
+RooPlot* createRooFit(
   TH1F  *histogram,
   string year,
   string categoryName,
@@ -50,6 +50,16 @@ bool createRooFit(
   float  xEnd
   );
 
+bool saveRooPlot(
+  RooPlot *frame,
+  string   year,
+  string   categoryName,
+  float    peak,
+  float    peakWidth,
+  float    xStart,
+  float    xEnd,
+  float    binning
+  );
 
 // entry-point
 
@@ -93,7 +103,8 @@ bool create_roofit_plots()
       TH1F *histogram = loadTH1F(year, categoryName);
 
       for (auto range : ranges) {
-        createRooFit(histogram, year, categoryName, range[0], range[1], range[2], range[3], range[4]);
+        RooPlot *frame = createRooFit(histogram, year, categoryName, range[0], range[1], range[2], range[3]);
+        saveRooPlot(frame, year, categoryName, range[0], range[1], range[2], range[3], range[4]);
       }
     }
   }
@@ -102,7 +113,7 @@ bool create_roofit_plots()
   return true;
 }
 
-bool createRooFit(
+RooPlot* createRooFit(
   TH1F  *histogram,
   string year,
   string categoryName,
@@ -205,26 +216,7 @@ bool createRooFit(
   signalAndBackground.plotOn(frame);
   signalAndBackground.plotOn(frame, Components(background), LineStyle(kDashed));
 
-
-  // Print it to .pdf file
-
-  TCanvas *canvas = new TCanvas();
-  frame->Draw();
-  string pdfPath = string("/home/margusp/roofits/") +
-                   year +
-                   "_" +
-                   to_string(peak) +
-                   "_" +
-                   to_string(xStart) +
-                   "-" +
-                   to_string(xEnd) +
-                   "_" +
-                   categoryName +
-                   ".pdf";
-  cout << "pdfPath is: " << pdfPath << "\n";
-  canvas->Print(pdfPath.data(), "pdf");
-
-  return true;
+  return frame;
 }
 
 TH1F* loadTH1F(
@@ -279,4 +271,35 @@ TH1F* loadTH1F(
     std::cout << "Failed: Histogram not found. " << histName << "\n";
     return NULL;
   }
+}
+
+bool saveRooPlot(
+  RooPlot *frame,
+  string   year,
+  string   categoryName,
+  float    peak,
+  float    peakWidth,
+  float    xStart,
+  float    xEnd
+  ) {
+  // Print it to .pdf file
+
+  TCanvas *canvas = new TCanvas();
+
+  frame->Draw();
+  string pdfPath = string("/home/margusp/roofits/") +
+                   year +
+                   "_" +
+                   to_string(peak) +
+                   "_" +
+                   to_string(xStart) +
+                   "-" +
+                   to_string(xEnd) +
+                   "_" +
+                   categoryName +
+                   ".pdf";
+  cout << "pdfPath is: " << pdfPath << "\n";
+  canvas->Print(pdfPath.data(), "pdf");
+
+  return true;
 }
