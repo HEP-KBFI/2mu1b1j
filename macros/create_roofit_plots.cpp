@@ -248,7 +248,7 @@ TH1F* loadTH1F(
   // string histName = "massOfOppositeChargeMuons1PinPerGeV";
 
   double originalPinning     = 0.1;
-  double rePinningMultiplier = (1.0 / originalPinning) * pinning;
+  double rePinningMultiplier = 10.0 * pinning;
   string histName            = "massOfOppositeChargeMuons10PinsPerGev";
 
 
