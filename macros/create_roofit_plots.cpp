@@ -199,7 +199,7 @@ RooPlot* createRooFit(
   RooRealVar backgroundX(
     "backgroundX",
     "backgroundX",
-    -2.5, -1000.0, 1000.0);
+    -2.5, -100.0, 100.0);
 
   RooGenericPdf background(
     "background",
