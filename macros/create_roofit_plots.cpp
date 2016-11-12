@@ -161,7 +161,7 @@ bool createRooFit(
   RooRealVar backgroundC("backgroundC", "backgroundC", 1.1);
   RooRealVar backgroundX("backgroundX", "backgroundX", 1.1);
 
-  RooAbsPdf *background = RooClassFactory::makePdfInstance(
+  RooGenericPdf background(
     "background",
     "backgroundA * (backgroundX * backgroundA) + backgroundB * backgroundX + backgroundC",
     RooArgList(
@@ -184,7 +184,7 @@ bool createRooFit(
     "signalAndBackground",
     RooArgList(
       signal,
-      *background
+      background
       ),
     RooArgList(
       signalEventsCount,
@@ -204,7 +204,7 @@ bool createRooFit(
   RooPlot *frame = x.frame();
   dataHist.plotOn(frame);
   signalAndBackground.plotOn(frame);
-  signalAndBackground.plotOn(frame, Components(*background), LineStyle(kDashed));
+  signalAndBackground.plotOn(frame, Components(background), LineStyle(kDashed));
 
 
   // Print it to .pdf file
