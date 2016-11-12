@@ -127,7 +127,7 @@ RooPlot* createRooFit(
     cout << "Histogram loaded. \n";
   } else {
     cout << "Histogram not loaded. \n";
-    return false;
+    return NULL;
   }
 
 
