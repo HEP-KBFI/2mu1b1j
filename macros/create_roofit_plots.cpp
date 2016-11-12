@@ -173,7 +173,7 @@ RooPlot* createRooFit(
 
   RooGenericPdf background(
     "background",
-    "(backgroundA * backgroundX * backgroundX) + (backgroundB * backgroundX) + backgroundC",
+    "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
     RooArgList(
       backgroundA,
       backgroundB,
