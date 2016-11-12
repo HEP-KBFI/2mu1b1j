@@ -121,7 +121,8 @@ bool create_roofit_plots()
 
         TH1F *rebinnedHistogram = rebinHistogram(
           histogram,
-          0.1, range[4]
+          0.1,
+          range[4]
           );
 
 
@@ -133,7 +134,9 @@ bool create_roofit_plots()
                                       range[0],
                                       range[1],
                                       range[2],
-                                      range[3]);
+                                      range[3]
+                                      );
+
 
         // Save rooplot to pdf file
 
@@ -187,14 +190,14 @@ RooPlot* createRooFit(
   // Theory model (Landau)
 
   RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", peak, peak - peakWidth, peak + peakWidth);
-  RooRealVar breitWignerWidth("breitWignerWidth", "breitWignerWidth", 1, 0.1, peakWidth * 2);
+  RooRealVar breitWignerWidth("breitWignerWidth", "breitWignerWidth", peakWidth, peakWidth, peakWidth * 2);
   RooBreitWigner breitWigner("bw", "bw", x, breitWignerMean, breitWignerWidth);
 
 
   // Resolution model (Gauss)
 
   RooRealVar  gaussMean("gaussMean", "gaussMean", 0);
-  RooRealVar  gaussWidth("gaussWidth", "gaussWidth", 1, 0.1, peakWidth * 2);
+  RooRealVar  gaussWidth("gaussWidth", "gaussWidth", peakWidth, peakWidth, peakWidth * 2);
   RooGaussian gauss("gauss", "gauss", x, gaussMean, gaussWidth);
 
 
@@ -234,11 +237,12 @@ RooPlot* createRooFit(
 
   RooGenericPdf background(
     "background",
-    "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
+    "(backgroundA * backgroundX * backgroundX) + (backgroundB * backgroundX) + backgroundC",
     RooArgList(
       backgroundA,
       backgroundB,
       backgroundC,
+      backgroundX,
       x
       )
     );
