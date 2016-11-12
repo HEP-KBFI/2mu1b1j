@@ -221,8 +221,7 @@ RooPlot* createRooFit(
 
 TH1F* loadTH1F(
   string year,
-  string categoryName,
-  double pinning
+  string categoryName
   )
 {
   // set configuration params
