@@ -315,7 +315,7 @@ RooPlot* createRooFit(
   }
 
   if (backgroundType.compare("exponential") == 0) {
-    cout << "Background is exponential";
+    cout << "Background is exponential\n";
     background = new RooGenericPdf(
       "background",
       "a * exp(-b * x ^ c)",
