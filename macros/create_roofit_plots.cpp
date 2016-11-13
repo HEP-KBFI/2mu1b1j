@@ -304,7 +304,7 @@ RooPlot* createRooFit(
 
   // if (backgroundType.compare("polynomial") == 0) {
   cout << "Background is polynomial";
-  RooGenericPdf background(
+  RooGenericPdf *background = new RooGenericPdf(
     "background",
     "(a * x * x) + (b * x) + c",
     "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
@@ -336,7 +336,7 @@ RooPlot* createRooFit(
     "signalAndBackground",
     RooArgList(
       signal,
-      background
+      *background
       ),
     RooArgList(
       signalEventsCount,
@@ -356,7 +356,7 @@ RooPlot* createRooFit(
   RooPlot *frame = x.frame();
   dataHist.plotOn(frame);
   signalAndBackground.plotOn(frame);
-  signalAndBackground.plotOn(frame, Components(background), LineStyle(kDashed));
+  signalAndBackground.plotOn(frame, Components(*background), LineStyle(kDashed));
 
   return frame;
 }
