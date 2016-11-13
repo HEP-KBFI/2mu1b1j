@@ -259,7 +259,7 @@ RooPlot* createRooFit(
     x
     );
 
-  RooGenericPdf background = NULL;
+  RooGenericPdf background;
 
   if (backgroundType == "polynomial") {
     RooGenericPdf background(
