@@ -83,6 +83,9 @@ TH1F* rebinHistogram(
 
 bool create_roofit_plots()
 {
+  if ("tere" == "tere") {
+    return false;
+  }
   string years[] = {
     "2015",
     "2016"
