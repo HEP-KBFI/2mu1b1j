@@ -266,7 +266,7 @@ RooPlot* createRooFit(
 
   // Set model for signal
 
-  RooFFTConvPdf *signal = new RooFFTConvPdf(
+  RooFFTConvPdf signal(
     "signal",
     "signal",
     x,
