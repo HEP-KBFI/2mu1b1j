@@ -48,7 +48,8 @@ RooPlot* createRooFit(
   float  peak,
   float  peakWidth,
   float  xStart,
-  float  xEnd
+  float  xEnd,
+  string backgroundType
   );
 
 
@@ -62,7 +63,9 @@ bool saveRooPlot(
   float    peakWidth,
   float    xStart,
   float    xEnd,
-  float    binning
+  float    binning,
+  string   backgroundType
+
   );
 
 
@@ -98,6 +101,11 @@ bool create_roofit_plots()
     "CategoryCRelaxed",
     "CategoryCCompare",
     "CategoryCCompareRelaxed"
+  };
+
+  string backgroundTypes[] = {
+    "polynomial",
+    "exponential"
   };
 
 
@@ -138,31 +146,35 @@ bool create_roofit_plots()
           );
 
 
-        // Generate roofit plot
+        for (auto backgroundType : backgroundTypes) {
+          // Generate roofit plot
 
-        RooPlot *frame = createRooFit(
-          rebinnedHistogram,
-          year,
-          categoryName,
-          range[0],
-          range[1],
-          range[2],
-          range[3]
-          );
+          RooPlot *frame = createRooFit(
+            rebinnedHistogram,
+            year,
+            categoryName,
+            range[0],
+            range[1],
+            range[2],
+            range[3],
+            backgroundType
+            );
 
 
-        // Save rooplot to pdf file
+          // Save rooplot to pdf file
 
-        saveRooPlot(
-          frame,
-          year,
-          categoryName,
-          range[0],
-          range[1],
-          range[2],
-          range[3],
-          range[4]
-          );
+          saveRooPlot(
+            frame,
+            year,
+            categoryName,
+            range[0],
+            range[1],
+            range[2],
+            range[3],
+            range[4],
+            backgroundType
+            );
+        }
       }
     }
   }
@@ -178,7 +190,8 @@ RooPlot* createRooFit(
   float  peak,
   float  peakWidth,
   float  xStart,
-  float  xEnd
+  float  xEnd,
+  string backgroundType
   )
 {
   if (histogram) {
@@ -239,18 +252,31 @@ RooPlot* createRooFit(
     0.3
     );
 
-
-  RooGenericPdf background(
-    "background",
-    "(a * x * x) + (b * x) + c",
-    "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
-    RooArgList(
-      backgroundA,
-      backgroundB,
-      backgroundC,
-      x
-      )
+  RooArgList backgroundDependents(
+    backgroundA,
+    backgroundB,
+    backgroundC,
+    x
     );
+
+
+  if (backgroundType == "polynomial") {
+    RooGenericPdf background(
+      "background",
+      "(a * x * x) + (b * x) + c",
+      "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
+      backgroundDependents
+      );
+  }
+
+  if (backgroundType == "exponential") {
+    RooGenericPdf background(
+      "background",
+      "a * exp(-b * x ^ c)",
+      "backgroundA * exp(-backgroundB * x ^ backgroundC)",
+      backgroundDependents
+      );
+  }
 
 
   // Signal + background
@@ -347,7 +373,8 @@ bool saveRooPlot(
   float    peakWidth,
   float    xStart,
   float    xEnd,
-  float    binning
+  float    binning,
+  string   backgroundType
   )
 {
   // Print it to .pdf file
@@ -367,6 +394,8 @@ bool saveRooPlot(
                    categoryName +
                    "_binning-" +
                    to_string(binning) +
+                   "_background-" +
+                   to_string(backgroundType) +
                    ".pdf";
   cout << "pdfPath is: " << pdfPath << "\n";
   canvas->Print(pdfPath.data(), "pdf");
