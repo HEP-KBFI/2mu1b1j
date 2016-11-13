@@ -127,26 +127,25 @@ bool create_roofit_plots()
 
   for (string year : years) {
     for (string categoryName : categoryNames) {
-      cout << "Current category: " << categoryName << "\n";
+      for (auto backgroundType : backgroundTypes) {
+        cout << "Current category: " << categoryName << "\n";
 
-      // Load histogram from analysis
+        // Load histogram from analysis
 
-      TH1F *histogram = loadTH1F(year, categoryName);
-
-
-      // Iterate over interesting areas
-
-      for (auto range : ranges) {
-        // Create rebinned histogram
-
-        TH1F *rebinnedHistogram = rebinHistogram(
-          histogram,
-          0.1,
-          range[4]
-          );
+        TH1F *histogram = loadTH1F(year, categoryName);
 
 
-        for (auto backgroundType : backgroundTypes) {
+        // Iterate over interesting areas
+
+        for (auto range : ranges) {
+          // Create rebinned histogram
+
+          TH1F *rebinnedHistogram = rebinHistogram(
+            histogram,
+            0.1,
+            range[4]
+            );
+
           // Generate roofit plot
 
           RooPlot *frame = createRooFit(
