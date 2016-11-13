@@ -258,7 +258,7 @@ RooPlot* createRooFit(
     x
     );
 
-  if (backgroundType.compare("polynomial")) {
+  if (backgroundType.compare("polynomial") == 0) {
     cout << "Background is polynomial";
     RooGenericPdf background(
       "background",
@@ -268,7 +268,7 @@ RooPlot* createRooFit(
       );
   }
 
-  if (backgroundType.compare("exponential")) {
+  if (backgroundType.compare("exponential") == 0) {
     cout << "Background is exponential";
     RooGenericPdf background(
       "background",
