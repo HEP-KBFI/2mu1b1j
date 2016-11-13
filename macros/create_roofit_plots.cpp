@@ -212,23 +212,67 @@ RooPlot* createRooFit(
   RooDataHist dataHist("dataHist", "dataHist", x, histogram);
 
 
-  // Theory model (Landau)
+  // Theory model (Breit-Wigner)
 
-  RooRealVar breitWignerMean("breitWignerMean", "breitWignerMean", peak, peak - peakWidth, peak + peakWidth);
-  RooRealVar breitWignerWidth("breitWignerWidth", "breitWignerWidth", peakWidth, peakWidth, peakWidth * 2);
-  RooBreitWigner breitWigner("bw", "bw", x, breitWignerMean, breitWignerWidth);
+  RooRealVar breitWignerMean(
+    "breitWignerMean",
+    "breitWignerMean",
+    peak,
+    peak - peakWidth,
+    peak + peakWidth
+    );
+
+  RooRealVar breitWignerWidth(
+    "breitWignerWidth",
+    "breitWignerWidth",
+    peakWidth,
+    peakWidth,
+    peakWidth * 2
+    );
+
+  RooBreitWigner breitWigner(
+    "bw",
+    "bw",
+    x,
+    breitWignerMean,
+    breitWignerWidth
+    );
 
 
   // Resolution model (Gauss)
 
-  RooRealVar  gaussMean("gaussMean", "gaussMean", 0);
-  RooRealVar  gaussWidth("gaussWidth", "gaussWidth", peakWidth, peakWidth, peakWidth * 2);
-  RooGaussian gauss("gauss", "gauss", x, gaussMean, gaussWidth);
+  RooRealVar gaussMean(
+    "gaussMean",
+    "gaussMean",
+    0
+    );
+
+  RooRealVar gaussWidth(
+    "gaussWidth",
+    "gaussWidth",
+    peakWidth,
+    peakWidth,
+    peakWidth * 2
+    );
+
+  RooGaussian gauss(
+    "gauss",
+    "gauss",
+    x,
+    gaussMean,
+    gaussWidth
+    );
 
 
   // Set model for signal
 
-  RooFFTConvPdf signal("signal", "signal", x, breitWigner, gauss);
+  RooFFTConvPdf *signal = new RooFFTConvPdf(
+    "signal",
+    "signal",
+    x,
+    breitWigner,
+    gauss
+    );
 
 
   // Set model for background
