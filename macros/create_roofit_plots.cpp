@@ -240,21 +240,15 @@ RooPlot* createRooFit(
     0.3
     );
 
-  RooRealVar backgroundX(
-    "backgroundX",
-    "backgroundX",
-    0.4
-    );
 
   RooGenericPdf background(
     "background",
     "(a * x * x) + (b * x) + c",
-    "(backgroundA * backgroundX * backgroundX) + (backgroundB * backgroundX) + backgroundC",
+    "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
     RooArgList(
       backgroundA,
       backgroundB,
       backgroundC,
-      backgroundX,
       x
       )
     );
