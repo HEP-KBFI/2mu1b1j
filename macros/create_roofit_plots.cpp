@@ -7,12 +7,6 @@
 // If you have any questions, send an email to margus@wave.ee
 //
 //
-// Architecture
-// ============
-//
-// * create_roofit_plots() - entry method that generates plots for different years, GeV ranges
-// * loadTH1F() - loads TH1F from .root file
-// * createRooFit() - createsRooFit from loaded TH1F
 
 
 #ifndef __CINT__
@@ -33,12 +27,19 @@
 using namespace RooFit;
 
 
-// interface
+// Interface
+// =========
+
+
+// Loads TH1F from pregenerated analysis .root file
 
 TH1F* loadTH1F(
   string year,
   string categoryName
   );
+
+
+// Creates RooPlot from TH1F fitting
 
 RooPlot* createRooFit(
   TH1F  *histogram,
@@ -49,6 +50,9 @@ RooPlot* createRooFit(
   float  xStart,
   float  xEnd
   );
+
+
+// Saves RooPlot into .pdf file
 
 bool saveRooPlot(
   RooPlot *frame,
@@ -61,12 +65,18 @@ bool saveRooPlot(
   float    binning
   );
 
+
+// Original TH1F files are 10 datapoints per GeV, but you might want to have it different some times
+// so rebinned clone is created
+
 TH1F* rebinHistogram(
   TH1F  *histogram,
   double originalPinning,
-  double newPinning);
+  double newPinning
+  );
 
-// entry-point
+
+// Entry point function. Iterates over interesting years, categories and ranges and creates .pdf files for visual inspection
 
 bool create_roofit_plots()
 {
@@ -128,14 +138,15 @@ bool create_roofit_plots()
 
         // Generate roofit plot
 
-        RooPlot *frame = createRooFit(rebinnedHistogram,
-                                      year,
-                                      categoryName,
-                                      range[0],
-                                      range[1],
-                                      range[2],
-                                      range[3]
-                                      );
+        RooPlot *frame = createRooFit(
+          rebinnedHistogram,
+          year,
+          categoryName,
+          range[0],
+          range[1],
+          range[2],
+          range[3]
+          );
 
 
         // Save rooplot to pdf file
@@ -344,7 +355,8 @@ bool saveRooPlot(
   float    xStart,
   float    xEnd,
   float    binning
-  ) {
+  )
+{
   // Print it to .pdf file
 
   TCanvas *canvas = new TCanvas();
