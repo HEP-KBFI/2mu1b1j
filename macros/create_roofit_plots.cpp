@@ -268,15 +268,16 @@ RooPlot* createRooFit(
       );
   }
 
-  if (backgroundType.compare("exponential") == 0) {
-    cout << "Background is exponential";
-    RooGenericPdf background(
-      "background",
-      "a * exp(-b * x ^ c)",
-      "backgroundA * exp(-backgroundB * x ^ backgroundC)",
-      backgroundDependents
-      );
-  }
+  // if (backgroundType.compare("exponential") == 0) {
+  cout << "Background is exponential";
+  RooGenericPdf background(
+    "background",
+    "a * exp(-b * x ^ c)",
+    "backgroundA * exp(-backgroundB * x ^ backgroundC)",
+    backgroundDependents
+    );
+
+  // }
 
 
   // Signal + background
