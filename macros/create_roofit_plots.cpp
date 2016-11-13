@@ -258,25 +258,26 @@ RooPlot* createRooFit(
     x
     );
 
-  if (backgroundType.compare("polynomial") == 0) {
-    cout << "Background is polynomial";
-    RooGenericPdf background(
-      "background",
-      "(a * x * x) + (b * x) + c",
-      "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
-      backgroundDependents
-      );
-  }
-
-  // if (backgroundType.compare("exponential") == 0) {
-  cout << "Background is exponential";
+  // if (backgroundType.compare("polynomial") == 0) {
+  cout << "Background is polynomial";
   RooGenericPdf background(
     "background",
-    "a * exp(-b * x ^ c)",
-    "backgroundA * exp(-backgroundB * x ^ backgroundC)",
+    "(a * x * x) + (b * x) + c",
+    "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
     backgroundDependents
     );
 
+  // }
+
+  // if (backgroundType.compare("exponential") == 0) {
+  // cout << "Background is exponential";
+  // RooGenericPdf background(
+  //   "background",
+  //   "a * exp(-b * x ^ c)",
+  //   "backgroundA * exp(-backgroundB * x ^ backgroundC)",
+  //   backgroundDependents
+  //   );
+  //
   // }
 
 
