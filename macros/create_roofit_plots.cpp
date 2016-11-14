@@ -178,6 +178,10 @@ bool create_roofit_plots()
 
           delete rebinnedHistogram;
         }
+
+        // clear reserved memory
+
+        delete histogram;
       }
     }
   }
