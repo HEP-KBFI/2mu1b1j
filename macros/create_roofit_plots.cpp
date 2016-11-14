@@ -417,7 +417,8 @@ TH1F* loadTH1F(
   f->ls();
 
   TH1F *histogram = (TH1F *)gDirectory->Get(histName.data());
-  delete f;
+
+  // delete f; - causes  *** Break *** segmentation violation
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
