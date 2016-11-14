@@ -173,9 +173,6 @@ bool create_roofit_plots()
             range[4],
             backgroundType
             );
-
-          delete frame;
-          delete rebinnedHistogram;
         }
       }
     }
@@ -362,11 +359,6 @@ RooPlot* createRooFit(
   signalAndBackground.plotOn(frame, Components(*background), LineStyle(kDashed));
 
 
-  // delete pointers
-
-  delete background;
-
-
   // return frame
 
   return frame;
@@ -402,7 +394,6 @@ TH1F* loadTH1F(
   if (cdSuccessful) {
     std::cout << "Success: CD to " << histDir << "\n";
   } else {
-    delete f;
     std::cout << "Failed: CD to " << histDir << "\n";
     return NULL;
   }
@@ -411,7 +402,6 @@ TH1F* loadTH1F(
   f->ls();
 
   TH1F *histogram = (TH1F *)gDirectory->Get(histName.data());
-  delete f;
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
@@ -459,8 +449,6 @@ bool saveRooPlot(
     ".pdf";
   cout << "pdfPath is: " << pdfPath << "\n";
   canvas->Print(pdfPath.data(), "pdf");
-
-  delete canvas;
 
   return true;
 }
