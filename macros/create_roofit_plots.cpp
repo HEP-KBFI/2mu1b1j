@@ -132,15 +132,13 @@ bool create_roofit_plots()
 
 
   for (string year : years) {
-    TFile *rootFile = loadRootFile(year);
-
     for (string categoryName : categoryNames) {
       for (auto backgroundType : backgroundTypes) {
         cout << "Current category: " << categoryName << "\n";
 
         // Load histogram from analysis
-
-        TH1F *histogram = loadTH1F(rootFile, year, categoryName);
+        TFile *rootFile  = loadRootFile(year);
+        TH1F  *histogram = loadTH1F(rootFile, year, categoryName);
 
 
         // Iterate over interesting areas
@@ -191,12 +189,9 @@ bool create_roofit_plots()
         // clear reserved memory
 
         delete histogram;
+        delete rootFile;
       }
     }
-
-    // clear reserved memory
-
-    delete rootFile;
   }
 
 
