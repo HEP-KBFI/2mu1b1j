@@ -53,7 +53,8 @@ RooPlot* createRooFit(
   string year,
   string categoryName,
   float  peak,
-  float  peakWidth,
+  float  minPeakWidth,
+  float  maxPeakWidth,
   float  xStart,
   float  xEnd,
   string backgroundType
@@ -67,7 +68,8 @@ bool saveRooPlot(
   string   year,
   string   categoryName,
   float    peak,
-  float    peakWidth,
+  float    minPeakWidth,
+  float    maxPeakWidth,
   float    xStart,
   float    xEnd,
   float    binning,
@@ -115,19 +117,19 @@ bool create_roofit_plots()
   };
 
 
-  // peak, peakWidth, xStart, xEnd, binning
+  // peak, minPeakWidth, maxPeakWidth, xStart, xEnd, binning
 
-  float ranges[][5] = {
-    {     3.1,   0.1,  2.0,    4.0,   0.1 },
-    {     3.1,   0.1,  2.0,    4.0,   0.2 },
-    {    9.46,   0.1,  8.0,  12.00,   0.2 },
-    {    10.0,   0.1,  8.0,  12.00,   0.2 },
-    {   10.35,   0.1,  8.0,  12.00,   0.2 },
-    {    28.5,   1.0, 20.0,   40.0,   0.5 },
-    {    28.5,   1.0, 20.0,   40.0,     1 },
-    {    28.5,   1.0, 20.0,   40.0,     2 },
-    {    91.0,   1.0, 80.0,  100.0,     1 },
-    {    91.0,   1.0,  0.0,  120.0,     1 }
+  float ranges[][6] = {
+    {     3.1,   0.1,  1.0,    2.0,    4.0,   0.1 },
+    {     3.1,   0.1,  1.0,    2.0,    4.0,   0.2 },
+    {    9.46,   0.1,  2.0,    8.0,  12.00,   0.2 },
+    {    10.0,   0.1,  2.0,    8.0,  12.00,   0.2 },
+    {   10.35,   0.1,  2.0,    8.0,  12.00,   0.2 },
+    {    28.5,   1.0,  2.0,   20.0,   40.0,   0.5 },
+    {    28.5,   1.0,  2.0,   20.0,   40.0,     1 },
+    {    28.5,   1.0,  2.0,   20.0,   40.0,     2 },
+    {    91.0,   1.0,  2.0,   80.0,  100.0,     1 },
+    {    91.0,   1.0,  2.0,    0.0,  120.0,     1 }
   };
 
 
@@ -149,7 +151,7 @@ bool create_roofit_plots()
           TH1F *rebinnedHistogram = rebinHistogram(
             histogram,
             0.1,
-            range[4]
+            range[5]
             );
 
           // Generate roofit plot
@@ -162,6 +164,7 @@ bool create_roofit_plots()
             range[1],
             range[2],
             range[3],
+            range[4],
             backgroundType
             );
 
@@ -177,6 +180,7 @@ bool create_roofit_plots()
             range[2],
             range[3],
             range[4],
+            range[5],
             backgroundType
             );
 
@@ -203,7 +207,8 @@ RooPlot* createRooFit(
   string year,
   string categoryName,
   float  peak,
-  float  peakWidth,
+  float  minPeakWidth,
+  float  maxPeakWidth,
   float  xStart,
   float  xEnd,
   string backgroundType
@@ -234,16 +239,16 @@ RooPlot* createRooFit(
     "breitWignerMean",
     "breitWignerMean",
     peak,
-    peak - peakWidth,
-    peak + peakWidth
+    xStart + minPeakWidth,
+    xEnd - minPeakWidth
     );
 
   RooRealVar breitWignerWidth(
     "breitWignerWidth",
     "breitWignerWidth",
-    peakWidth,
-    peakWidth,
-    peakWidth * 2
+    (minPeakWidth + maxPeakWidth) / 2,
+    minPeakWidth,
+    maxPeakWidth
     );
 
   RooBreitWigner breitWigner(
@@ -262,13 +267,14 @@ RooPlot* createRooFit(
     "gaussMean",
     0
     );
+  gaussMean.setConstant(true);
 
   RooRealVar gaussWidth(
     "gaussWidth",
     "gaussWidth",
-    peakWidth,
-    peakWidth,
-    peakWidth * 2
+    (minPeakWidth + maxPeakWidth) / 2,
+    minPeakWidth,
+    maxPeakWidth
     );
 
   RooGaussian gauss(
@@ -451,7 +457,8 @@ bool saveRooPlot(
   string   year,
   string   categoryName,
   float    peak,
-  float    peakWidth,
+  float    minPeakWidth,
+  float    maxPeakWidth,
   float    xStart,
   float    xEnd,
   float    binning,
