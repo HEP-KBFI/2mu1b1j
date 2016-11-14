@@ -128,7 +128,7 @@ bool create_roofit_plots()
     {    91.0,   1.0,  0.0,  120.0,     1 }
   };
 
-  TFile *rootFile = laodRootFile();
+  TFile *rootFile = loadRootFile();
 
   for (string year : years) {
     for (string categoryName : categoryNames) {
