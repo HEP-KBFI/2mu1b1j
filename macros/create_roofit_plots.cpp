@@ -177,8 +177,6 @@ bool create_roofit_plots()
           delete frame;
           delete rebinnedHistogram;
         }
-
-        delete histogram;
       }
     }
   }
