@@ -32,7 +32,9 @@ using namespace RooFit;
 
 // Load root file
 
-TFile* loadRootFile();
+TFile *loadRootFile(
+  string year;
+  );
 
 
 // Loads TH1F from pregenerated analysis .root file
@@ -128,9 +130,10 @@ bool create_roofit_plots()
     {    91.0,   1.0,  0.0,  120.0,     1 }
   };
 
-  TFile *rootFile = loadRootFile();
 
   for (string year : years) {
+    TFile *rootFile = loadRootFile(year);
+
     for (string categoryName : categoryNames) {
       for (auto backgroundType : backgroundTypes) {
         cout << "Current category: " << categoryName << "\n";
@@ -190,11 +193,12 @@ bool create_roofit_plots()
         delete histogram;
       }
     }
+
+    // clear reserved memory
+
+    delete rootFile;
   }
 
-  // clear reserved memory
-
-  delete rootFile;
 
   return true;
 }
@@ -386,7 +390,10 @@ RooPlot* createRooFit(
   return frame;
 }
 
-TFile* loadRootFile() {
+TFile* loadRootFile(
+  string year
+  )
+{
   string rootFilePath = string("/home/margusp/analysis2mu1b1j/") +
                         year +
                         "/2016Oct28_v1/histograms/histograms_harvested_stage1_2mu1b1j.root";
