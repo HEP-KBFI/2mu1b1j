@@ -409,6 +409,7 @@ TH1F* loadTH1F(
     std::cout << "Success: CD to " << histDir << "\n";
   } else {
     std::cout << "Failed: CD to " << histDir << "\n";
+    delete f;
     return NULL;
   }
 
