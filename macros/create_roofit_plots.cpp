@@ -30,10 +30,15 @@ using namespace RooFit;
 // Interface
 // =========
 
+// Load root file
+
+TFile* loadRootFile();
+
 
 // Loads TH1F from pregenerated analysis .root file
 
 TH1F* loadTH1F(
+  TFile *rootFile,
   string year,
   string categoryName
   );
@@ -123,6 +128,7 @@ bool create_roofit_plots()
     {    91.0,   1.0,  0.0,  120.0,     1 }
   };
 
+  TFile *rootFile = laodRootFile();
 
   for (string year : years) {
     for (string categoryName : categoryNames) {
@@ -131,7 +137,7 @@ bool create_roofit_plots()
 
         // Load histogram from analysis
 
-        TH1F *histogram = loadTH1F(year, categoryName);
+        TH1F *histogram = loadTH1F(rootFile, year, categoryName);
 
 
         // Iterate over interesting areas
@@ -186,6 +192,9 @@ bool create_roofit_plots()
     }
   }
 
+  // clear reserved memory
+
+  delete rootFile;
 
   return true;
 }
@@ -377,19 +386,23 @@ RooPlot* createRooFit(
   return frame;
 }
 
+TFile* loadRootFile() {
+  string rootFilePath = string("/home/margusp/analysis2mu1b1j/") +
+                        year +
+                        "/2016Oct28_v1/histograms/histograms_harvested_stage1_2mu1b1j.root";
+
+  TFile *rootFile = new TFile(rootFile.data());
+
+  return rootFile;
+}
+
 TH1F* loadTH1F(
+  TFile *rootFile,
   string year,
   string categoryName
   )
 {
   // set configuration params
-
-  string rootFile =
-    string("/home/margusp/analysis2mu1b1j/") +
-    year +
-    "/2016Oct28_v1/histograms/histograms_harvested_stage1_2mu1b1j.root";
-
-  TFile *f = new TFile(rootFile.data());
 
   string histDir = string("2mu1b1j") + categoryName + string("_Tight/sel/evt/data_obs");
 
@@ -400,30 +413,25 @@ TH1F* loadTH1F(
   // show TH1F histogram
 
   std::cout << "Contents of current directory: \n";
-  f->ls();
+  rootFile->ls();
 
-  bool cdSuccessful = f->Cd(histDir.data());
+  bool cdSuccessful = rootFile->Cd(histDir.data());
 
   if (cdSuccessful) {
     std::cout << "Success: CD to " << histDir << "\n";
   } else {
     std::cout << "Failed: CD to " << histDir << "\n";
-    delete f;
     return NULL;
   }
 
   std::cout << "Contents of current directory: \n";
-  f->ls();
+  rootFile->ls();
 
   TH1F *histogram = (TH1F *)gDirectory->Get(histName.data());
-
-  // delete f; - causes  *** Break *** segmentation violation
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
     return (TH1F *)histogram;
-
-    // return (TH1F *)histogram->Rebin(rePinningMultiplier, histName.data());
   } else {
     std::cout << "Failed: Histogram not found. " << histName << "\n";
     return NULL;
