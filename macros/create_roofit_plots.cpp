@@ -173,6 +173,10 @@ bool create_roofit_plots()
             range[4],
             backgroundType
             );
+
+          // clear reserved memory
+
+          delete rebinnedHistogram;
         }
       }
     }
@@ -454,7 +458,6 @@ bool saveRooPlot(
 }
 
 // Returns clone of histogram with new binning
-
 
 TH1F* rebinHistogram(
   TH1F  *histogram,
