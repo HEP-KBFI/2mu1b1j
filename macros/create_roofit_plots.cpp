@@ -32,8 +32,8 @@ using namespace RooFit;
 
 // Load root file
 
-TFile *loadRootFile(
-  string year;
+TFile* loadRootFile(
+  string year
   );
 
 
