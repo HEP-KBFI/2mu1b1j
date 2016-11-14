@@ -65,7 +65,6 @@ bool saveRooPlot(
   float    xEnd,
   float    binning,
   string   backgroundType
-
   );
 
 
