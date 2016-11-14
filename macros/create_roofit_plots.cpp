@@ -484,5 +484,6 @@ TH1F* rebinHistogram(
        << ", newPinning: " << newPinning
        << ", binningMultiplier: " << binningMultiplier << "\n";
 
-  return (TH1F *)histogram->Rebin(binningMultiplier, "newHistogramName");
+  TH1F *clonedHistogram = histogram->Clone("hnew");
+  return (TH1F *)clonedHistogram->Rebin(binningMultiplier, "newHistogramName");
 }
