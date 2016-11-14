@@ -462,7 +462,6 @@ TH1F* rebinHistogram(
   double newPinning
   )
 {
-  TH1F  *clonedHistogram   = (TH1F *)histogram->Clone("hnew");
   double binningMultiplier = (1.0 / originalPinning) * (newPinning);
 
   cout << "originalPinning: " << originalPinning
