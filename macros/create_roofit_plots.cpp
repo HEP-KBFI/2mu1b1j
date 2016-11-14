@@ -400,6 +400,12 @@ TFile* loadRootFile(
 
   TFile *rootFile = new TFile(rootFilePath.data());
 
+  if (rootFile) {
+    cout << "Loaded root file: " << rootFilePath << "\n";
+  } else {
+    cout << "Unable to load root file: " << rootFilePath << "\n";
+  }
+
   return rootFile;
 }
 
