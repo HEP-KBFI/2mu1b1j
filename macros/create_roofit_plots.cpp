@@ -469,21 +469,19 @@ bool saveRooPlot(
 
 // Returns clone of histogram with new binning
 
+
 TH1F* rebinHistogram(
   TH1F  *histogram,
   double originalPinning,
-  double newPinning)
+  double newPinning
+  )
 {
-  if (!histogram) {
-    cout << "#rebinHistogram: histogram missing?";
-  }
-
+  TH1F  *clonedHistogram   = (TH1F *)histogram->Clone("hnew");
   double binningMultiplier = (1.0 / originalPinning) * (newPinning);
 
   cout << "originalPinning: " << originalPinning
        << ", newPinning: " << newPinning
        << ", binningMultiplier: " << binningMultiplier << "\n";
 
-  TH1F *clonedHistogram = (TH1F *)histogram->Clone("hnew");
-  return (TH1F *)clonedHistogram->Rebin(binningMultiplier, "newHistogramName");
+  return (TH1F *)clonedHistogram->Rebin(binningMultiplier, "suva");
 }
