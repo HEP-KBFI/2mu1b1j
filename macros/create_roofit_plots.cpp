@@ -173,7 +173,12 @@ bool create_roofit_plots()
             range[4],
             backgroundType
             );
+
+          delete frame;
+          delete rebinnedHistogram;
         }
+
+        delete histogram;
       }
     }
   }
@@ -358,6 +363,14 @@ RooPlot* createRooFit(
   signalAndBackground.plotOn(frame);
   signalAndBackground.plotOn(frame, Components(*background), LineStyle(kDashed));
 
+
+  // delete pointers
+
+  delete background;
+
+
+  // return frame
+
   return frame;
 }
 
@@ -391,6 +404,7 @@ TH1F* loadTH1F(
   if (cdSuccessful) {
     std::cout << "Success: CD to " << histDir << "\n";
   } else {
+    delete f;
     std::cout << "Failed: CD to " << histDir << "\n";
     return NULL;
   }
@@ -399,6 +413,7 @@ TH1F* loadTH1F(
   f->ls();
 
   TH1F *histogram = (TH1F *)gDirectory->Get(histName.data());
+  delete f;
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
@@ -447,6 +462,8 @@ bool saveRooPlot(
   cout << "pdfPath is: " << pdfPath << "\n";
   canvas->Print(pdfPath.data(), "pdf");
 
+  delete canvas;
+
   return true;
 }
 
@@ -457,12 +474,11 @@ TH1F* rebinHistogram(
   double originalPinning,
   double newPinning)
 {
-  TH1F  *clonedHistogram   = (TH1F *)histogram->Clone("hnew");
   double binningMultiplier = (1.0 / originalPinning) * (newPinning);
 
   cout << "originalPinning: " << originalPinning
        << ", newPinning: " << newPinning
        << ", binningMultiplier: " << binningMultiplier << "\n";
 
-  return (TH1F *)clonedHistogram->Rebin(binningMultiplier, "suva");
+  return (TH1F *)histogram->Rebin(binningMultiplier, "newHistogramName");
 }
