@@ -391,7 +391,7 @@ TFile* loadRootFile() {
                         year +
                         "/2016Oct28_v1/histograms/histograms_harvested_stage1_2mu1b1j.root";
 
-  TFile *rootFile = new TFile(rootFile.data());
+  TFile *rootFile = new TFile(rootFilePath.data());
 
   return rootFile;
 }
