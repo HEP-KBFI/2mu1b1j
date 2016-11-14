@@ -417,6 +417,7 @@ TH1F* loadTH1F(
   f->ls();
 
   TH1F *histogram = (TH1F *)gDirectory->Get(histName.data());
+  delete f;
 
   if (histogram) {
     std::cout << "Success: Histogram loaded. " << histName << "\n";
