@@ -474,6 +474,10 @@ TH1F* rebinHistogram(
   double originalPinning,
   double newPinning)
 {
+  if (!histogram) {
+    count << "#rebinHistogram: histogram missing?";
+  }
+
   double binningMultiplier = (1.0 / originalPinning) * (newPinning);
 
   cout << "originalPinning: " << originalPinning
