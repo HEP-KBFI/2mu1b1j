@@ -177,6 +177,7 @@ bool create_roofit_plots()
           // clear reserved memory
 
           delete rebinnedHistogram;
+          delete frame;
         }
 
         // clear reserved memory
