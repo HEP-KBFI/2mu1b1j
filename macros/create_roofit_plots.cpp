@@ -368,6 +368,11 @@ RooPlot* createRooFit(
   signalAndBackground.plotOn(frame, Components(*background), LineStyle(kDashed));
 
 
+  // clean reserved memory
+
+  delete background;
+
+
   // return frame
 
   return frame;
