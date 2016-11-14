@@ -469,5 +469,5 @@ TH1F* rebinHistogram(
        << ", newPinning: " << newPinning
        << ", binningMultiplier: " << binningMultiplier << "\n";
 
-  return (TH1F *)clonedHistogram->Rebin(binningMultiplier, "suva");
+  return (TH1F *)histogram->Rebin(binningMultiplier, "suva");
 }
