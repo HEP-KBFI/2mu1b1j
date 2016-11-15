@@ -489,23 +489,24 @@ bool saveRooPlot(
   TCanvas *canvas = new TCanvas();
 
   frame->Draw();
-  string pdfPath =
-    string("/home/margusp/roofits/") +
-    year +
-    "_" +
-    to_string(peak) +
-    "_" +
-    to_string(xStart) +
-    "-" +
-    to_string(xEnd) +
-    "_" +
-    categoryName +
-    "_binning-" +
-    to_string(binning) +
-    "_background-" +
-    backgroundType +
-    ".pdf";
+  string pdfPath = string("/home/margusp/roofits/") +
+                   year +
+                   "_" +
+                   to_string(peak) +
+                   "_" +
+                   to_string(xStart) +
+                   "-" +
+                   to_string(xEnd) +
+                   "_" +
+                   categoryName +
+                   "_binning-" +
+                   to_string(binning) +
+                   "_background-" +
+                   backgroundType +
+                   ".pdf";
+
   cout << "pdfPath is: " << pdfPath << "\n";
+
   canvas->Print(pdfPath.data(), "pdf");
 
   return true;
