@@ -91,7 +91,8 @@ public:
   MyRooFitResult(
     RooPlot *frame,
     double   signalEventsCount,
-    double   fitError);
+    double   fitError
+    );
 
   double getPull();
   double getPValue();
@@ -190,7 +191,7 @@ bool create_roofit_plots()
 
   for (string year : years) {
     for (string categoryName : categoryNames) {
-      for (auto backgroundType : backgroundTypes) {
+      for (string backgroundType : backgroundTypes) {
         cout << "Current category: " << categoryName << "\n";
 
 
@@ -258,8 +259,8 @@ bool createPValuePlotAndSaveAsPdf(
       currentGEV,
       0.1,
       20.0,
-      0,
-      140,
+      15,
+      20,
       backgroundType,
       "peakIsConstant"
       );
@@ -315,7 +316,7 @@ bool savePValuePlotAsPdf(
 
   cout << "pValue pdfPath is: " << pdfPath << "\n";
 
-  graph->Draw("AC*");
+  graph->Draw();
   canvas->Print(pdfPath.data(), "pdf");
   return true;
 }
