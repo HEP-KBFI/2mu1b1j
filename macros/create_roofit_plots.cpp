@@ -46,6 +46,17 @@ TH1F* loadTH1F(
   );
 
 
+// Creates RooPlot fit and saves as PDF file for specific range
+
+bool createRooFitPlotForRangeAndSaveAsPdf(
+  string  year,
+  string  categoryName,
+  string  backgroundType,
+  float[] range,
+  TH1F   *dataHistogram
+  );
+
+
 // Creates RooPlot from TH1F fitting
 
 RooPlot* createRooFit(
@@ -153,7 +164,7 @@ bool create_roofit_plots()
             categoryName,
             backgroundType,
             range,
-            histogram
+            dataHistogram
             );
         }
 
