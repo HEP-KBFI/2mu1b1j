@@ -133,66 +133,33 @@ bool create_roofit_plots()
   };
 
 
+  // Generate plots
+
   for (string year : years) {
     for (string categoryName : categoryNames) {
       for (auto backgroundType : backgroundTypes) {
         cout << "Current category: " << categoryName << "\n";
 
         // Load histogram from analysis
-        TFile *rootFile  = loadRootFile(year);
-        TH1F  *histogram = loadTH1F(rootFile, year, categoryName);
+        TFile *rootFile      = loadRootFile(year);
+        TH1F  *dataHistogram = loadTH1F(rootFile, year, categoryName);
 
 
         // Iterate over interesting areas
 
         for (auto range : ranges) {
-          // Create rebinned histogram
-
-          TH1F *rebinnedHistogram = rebinHistogram(
-            histogram,
-            0.1,
-            range[5]
-            );
-
-          // Generate roofit plot
-
-          RooPlot *frame = createRooFit(
-            rebinnedHistogram,
+          createRooFitPlotForRangeAndSaveAsPdf(
             year,
             categoryName,
-            range[0],
-            range[1],
-            range[2],
-            range[3],
-            range[4],
-            backgroundType
+            backgroundType,
+            range,
+            histogram
             );
-
-
-          // Save rooplot to pdf file
-
-          saveRooPlot(
-            frame,
-            year,
-            categoryName,
-            range[0],
-            range[1],
-            range[2],
-            range[3],
-            range[4],
-            range[5],
-            backgroundType
-            );
-
-          // clear reserved memory
-
-          delete rebinnedHistogram;
-          delete frame;
         }
 
         // clear reserved memory
 
-        delete histogram;
+        delete dataHistogram;
         delete rootFile;
       }
     }
@@ -200,6 +167,58 @@ bool create_roofit_plots()
 
 
   return true;
+}
+
+bool createRooFitPlotForRangeAndSaveAsPdf(
+  string  year,
+  string  categoryName,
+  string  backgroundType,
+  float[] range,
+  TH1F   *dataHistogram
+  )
+{
+  // Create rebinned histogram
+
+  TH1F *rebinnedHistogram = rebinHistogram(
+    dataHistogram,
+    0.1,
+    range[5]
+    );
+
+  // Generate roofit plot
+
+  RooPlot *frame = createRooFit(
+    rebinnedHistogram,
+    year,
+    categoryName,
+    range[0],
+    range[1],
+    range[2],
+    range[3],
+    range[4],
+    backgroundType
+    );
+
+
+  // Save rooplot to pdf file
+
+  saveRooPlot(
+    frame,
+    year,
+    categoryName,
+    range[0],
+    range[1],
+    range[2],
+    range[3],
+    range[4],
+    range[5],
+    backgroundType
+    );
+
+  // clear reserved memory
+
+  delete rebinnedHistogram;
+  delete frame;
 }
 
 RooPlot* createRooFit(
