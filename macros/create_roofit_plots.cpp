@@ -21,6 +21,7 @@
 #include "RooFFTConvPdf.h"
 #include "RooPlot.h"
 #include "TCanvas.h"
+#include "TGraph.h"
 #include "TAxis.h"
 #include "TH1.h"
 
@@ -291,7 +292,7 @@ bool savePValuePlotAsPdf(
   double pValues[]
   )
 {
-  TGrapgh *graph   = new TGraph(120, GEVs, pValues);
+  TGraph  *graph   = new TGraph(120, GEVs, pValues);
   TCanvas *canvas  = new TCanvas();
   string   pdfPath = string("/home/margusp/roofits/") +
                      year +
