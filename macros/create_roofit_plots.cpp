@@ -58,7 +58,7 @@ bool createPValuePlotAndSaveAsPdf(
 
 // Saves pValues and GEVs to pdf
 
-savePValuePlotAsPdf(
+bool savePValuePlotAsPdf(
   string year,
   string categoryName,
   string backgroundType,
