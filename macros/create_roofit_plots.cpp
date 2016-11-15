@@ -381,7 +381,7 @@ MyRooFitResult::MyRooFitResult(
   this->fitError          = fitError;
 }
 
-MyRooFitResult::getPValue() {
+double MyRooFitResult::getPValue() {
   double pull   = this->signalEventsCount / this->fitError;
   double pValue = 2. * (1. - TMath::Erf(pull));
 
