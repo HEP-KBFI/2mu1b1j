@@ -301,15 +301,17 @@ bool savePValuePlotAsPdf(
   double pValues[]
   )
 {
-  TGraph  *graph   = new TGraph(120, GEVs, pValues);
-  TCanvas *canvas  = new TCanvas();
-  string   pdfPath = string("/home/margusp/roofits/") +
-                     year +
-                     "_" +
-                     categoryName +
-                     "_background-" +
-                     backgroundType +
-                     ".pdf";
+  TGraph  *graph  = new TGraph(120, GEVs, pValues);
+  TCanvas *canvas = new TCanvas();
+
+  canvas->SetLogy();
+  string pdfPath = string("/home/margusp/roofits/") +
+                   year +
+                   "_" +
+                   categoryName +
+                   "_background-" +
+                   backgroundType +
+                   ".pdf";
 
   cout << "pValue pdfPath is: " << pdfPath << "\n";
 
