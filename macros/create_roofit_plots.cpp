@@ -56,6 +56,17 @@ bool createPValuePlotAndSaveAsPdf(
   );
 
 
+// Saves pValues and GEVs to pdf
+
+savePValuePlotAsPdf(
+  year,
+  categoryName,
+  backgroundType,
+  GEVs,
+  pValues
+  );
+
+
 // Creates RooPlot fit and saves as PDF file for specific range
 
 bool createRooFitPlotForRangeAndSaveAsPdf(
