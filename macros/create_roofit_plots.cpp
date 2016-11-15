@@ -93,6 +93,7 @@ public:
     double   signalEventsCount,
     double   fitError);
 
+  double getPull();
   double getPValue();
 };
 
@@ -266,6 +267,14 @@ bool createPValuePlotAndSaveAsPdf(
     // Calculate p value
     double pValue = myRooFitResult->getPValue();
 
+    cout << "pValuePlotInfo:"
+         << "\tGev: " << currentGEV
+         << "\tpValue: " << pValue
+         << "\tpull: " << myRooFitResult->getPull()
+         << "\tsignalEventCount: " << myRooFitResult->signalEventCount
+         << "\tfitError: " << myRooFitResult->fitError
+         << "\n";
+
     // Store pValue and GEV info
     GEVs[i]    = currentGEV;
     pValues[i] = pValue;
@@ -381,8 +390,14 @@ MyRooFitResult::MyRooFitResult(
   this->fitError          = fitError;
 }
 
+double MyRooFitResult::getPull() {
+  double pull = this->signalEventsCount / this->fitError;
+
+  return pull;
+}
+
 double MyRooFitResult::getPValue() {
-  double pull   = this->signalEventsCount / this->fitError;
+  double pull   = this->getPull();
   double pValue = 2. * (1. - TMath::Erf(pull));
 
   return pValue;
