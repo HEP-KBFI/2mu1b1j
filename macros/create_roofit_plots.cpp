@@ -578,8 +578,8 @@ MyRooFitResult* createRooFit(
 
   MyRooFitResult *myRooFitResult = new MyRooFitResult(
     frame,
-    signalEventsCount->getVal(),
-    signalEventsCount->getError()
+    signalEventsCount.getVal(),
+    signalEventsCount.getError()
     );
 
   // return myRooFitResult
