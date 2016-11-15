@@ -230,6 +230,10 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
 
   delete rebinnedHistogram;
   delete frame;
+
+  count << "createRooFitPlotForRangeAndSaveAsPdf() end\n";
+
+  return true;
 }
 
 RooPlot* createRooFit(
