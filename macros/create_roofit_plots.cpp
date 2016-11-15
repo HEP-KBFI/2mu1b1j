@@ -59,11 +59,11 @@ bool createPValuePlotAndSaveAsPdf(
 // Saves pValues and GEVs to pdf
 
 savePValuePlotAsPdf(
-  year,
-  categoryName,
-  backgroundType,
-  GEVs,
-  pValues
+  string year,
+  string categoryName,
+  string backgroundType,
+  double GEVs[],
+  double pValues[]
   );
 
 
@@ -284,11 +284,11 @@ bool createPValuePlotAndSaveAsPdf(
 //
 
 bool savePValuePlotAsPdf(
-  year,
-  categoryName,
-  backgroundType,
-  GEVs,
-  pValues
+  string year,
+  string categoryName,
+  string backgroundType,
+  double GEVs[],
+  double pValues[]
   )
 {
   TGrapgh *graph   = new TGraph(120, GEVs, pValues);
