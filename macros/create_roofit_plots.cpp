@@ -46,6 +46,16 @@ TH1F* loadTH1F(
   );
 
 
+// Creates pValue plot
+
+bool createPValuePlotAndSaveAsPdf(
+  string year,
+  string categoryName,
+  string backgroundType,
+  TH1F  *dataHistogram
+  );
+
+
 // Creates RooPlot fit and saves as PDF file for specific range
 
 bool createRooFitPlotForRangeAndSaveAsPdf(
@@ -57,9 +67,27 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
   );
 
 
+// MyRooFitResult
+
+class MyRooFitResult {
+public:
+
+  RooPlot *frame;
+  double   signalEventsCount;
+  double   fitError;
+
+  MyRooFitResult(
+    RooPlot *frame,
+    double   signalEventsCount,
+    double   fitError);
+
+  double getPValue();
+};
+
+
 // Creates RooPlot from TH1F fitting
 
-RooPlot* createRooFit(
+MyRooFitResult* createRooFit(
   TH1F  *histogram,
   string year,
   string categoryName,
@@ -151,9 +179,21 @@ bool create_roofit_plots()
       for (auto backgroundType : backgroundTypes) {
         cout << "Current category: " << categoryName << "\n";
 
+
         // Load histogram from analysis
+
         TFile *rootFile      = loadRootFile(year);
         TH1F  *dataHistogram = loadTH1F(rootFile, year, categoryName);
+
+
+        // Generate pValue plot
+
+        createPValuePlotAndSaveAsPdf(
+          year,
+          categoryName,
+          backgroundType,
+          dataHistogram
+          );
 
 
         // Iterate over interesting areas
@@ -168,6 +208,7 @@ bool create_roofit_plots()
             );
         }
 
+
         // clear reserved memory
 
         delete dataHistogram;
@@ -179,6 +220,83 @@ bool create_roofit_plots()
 
   return true;
 }
+
+//
+
+bool createPValuePlotAndSaveAsPdf(
+  string year,
+  string categoryName,
+  string backgroundType,
+  TH1F  *dataHistogram
+  )
+{
+  auto GEVs    = new double[120]();
+  auto pValues = new double[120]();
+
+  for (double i = 1; i < 121; i++) {
+    double currentGEV = 1.0 * i;
+
+    // Create fit
+    MyRooFitResult *myRooFitResult = createRooFit(
+      dataHistogram,
+      year,
+      categoryName,
+      currentGEV,
+      0.1,
+      20.0,
+      0,
+      140,
+      backgroundType,
+      "peakIsConstant"
+      );
+
+    // Calculate p value
+    double pValue = myRooFitResult->getPValue();
+
+    // Store pValue and GEV info
+    GEVs[i]    = currentGEV;
+    pValues[i] = pValue;
+  }
+
+  savePValuePlotAsPdf(
+    year,
+    categoryName,
+    backgroundType,
+    GEVs,
+    pValues
+    );
+
+  return true;
+}
+
+//
+
+bool savePValuePlotAsPdf(
+  year,
+  categoryName,
+  backgroundType,
+  GEVs,
+  pValues
+  )
+{
+  TGrapgh *graph   = new TGraph(120, GEVs, pValues);
+  TCanvas *canvas  = new TCanvas();
+  string   pdfPath = string("/home/margusp/roofits/") +
+                     year +
+                     "_" +
+                     categoryName +
+                     "_background-" +
+                     backgroundType +
+                     ".pdf";
+
+  cout << "pValue pdfPath is: " << pdfPath << "\n";
+
+  graph->Draw("AC*");
+  canvas->Print(pdfPath.data(), "pdf");
+  return true;
+}
+
+//
 
 bool createRooFitPlotForRangeAndSaveAsPdf(
   string year,
@@ -198,7 +316,7 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
 
   // Generate roofit plot
 
-  RooPlot *frame = createRooFit(
+  MyRooFitResult *myRooFitResult = createRooFit(
     rebinnedHistogram,
     year,
     categoryName,
@@ -207,14 +325,15 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
     range[2],
     range[3],
     range[4],
-    backgroundType
+    backgroundType,
+    "peakIsVariable"
     );
 
 
   // Save rooplot to pdf file
 
   saveRooPlot(
-    frame,
+    myRooFitResult->frame,
     year,
     categoryName,
     range[0],
@@ -229,14 +348,34 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
   // clear reserved memory
 
   delete rebinnedHistogram;
-  delete frame;
+  delete myRooFitResult;
 
   cout << "createRooFitPlotForRangeAndSaveAsPdf() end\n";
 
   return true;
 }
 
-RooPlot* createRooFit(
+//
+
+MyRooFitResult::MyRooFitResult(
+  RooPlot *frame,
+  double   signalEventsCount,
+  double   fitError
+  )
+{
+  this->frame             = frame;
+  this->signalEventsCount = signalEventsCount;
+  this->fitError          = fitError;
+}
+
+MyRooFitResult::getPValue() {
+  double pull   = this->signalEventsCount / this->fitError;
+  double pValue = 2. * (1. - TMath::Erf(pull));
+
+  return pValue;
+}
+
+MyRooFitResult* createRooFit(
   TH1F  *histogram,
   string year,
   string categoryName,
@@ -245,7 +384,8 @@ RooPlot* createRooFit(
   float  maxPeakWidth,
   float  xStart,
   float  xEnd,
-  string backgroundType
+  string backgroundType,
+  string peakType
   )
 {
   if (histogram) {
@@ -276,6 +416,10 @@ RooPlot* createRooFit(
     xStart + minPeakWidth,
     xEnd - minPeakWidth
     );
+
+  if (peakType.compare("peakIsConstant") == 0) {
+    breitWignerMean.setConstant(true);
+  }
 
   RooRealVar breitWignerWidth(
     "breitWignerWidth",
@@ -419,11 +563,18 @@ RooPlot* createRooFit(
 
   delete background;
 
+  MyRooFitResult *myRooFitResult = new MyRooFitResult(
+    frame,
+    signalEventsCount->getVal(),
+    signalEventsCount->getError()
+    );
 
-  // return frame
+  // return myRooFitResult
 
-  return frame;
+  return myRooFitResult;
 }
+
+//
 
 TFile* loadRootFile(
   string year
@@ -443,6 +594,8 @@ TFile* loadRootFile(
 
   return rootFile;
 }
+
+//
 
 TH1F* loadTH1F(
   TFile *rootFile,
@@ -485,6 +638,8 @@ TH1F* loadTH1F(
     return NULL;
   }
 }
+
+//
 
 bool saveRooPlot(
   RooPlot *frame,
