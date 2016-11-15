@@ -96,7 +96,8 @@ MyRooFitResult* createRooFit(
   float  maxPeakWidth,
   float  xStart,
   float  xEnd,
-  string backgroundType
+  string backgroundType,
+  string peakType
   );
 
 
@@ -233,7 +234,7 @@ bool createPValuePlotAndSaveAsPdf(
   auto GEVs    = new double[120]();
   auto pValues = new double[120]();
 
-  for (double i = 1; i < 121; i++) {
+  for (int i = 1; i < 121; i++) {
     double currentGEV = 1.0 * i;
 
     // Create fit
