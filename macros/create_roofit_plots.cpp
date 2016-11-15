@@ -271,7 +271,7 @@ bool createPValuePlotAndSaveAsPdf(
          << "\tGev: " << currentGEV
          << "\tpValue: " << pValue
          << "\tpull: " << myRooFitResult->getPull()
-         << "\tsignalEventCount: " << myRooFitResult->signalEventCount
+         << "\tsignalEventsCount: " << myRooFitResult->signalEventsCount
          << "\tfitError: " << myRooFitResult->fitError
          << "\n";
 
