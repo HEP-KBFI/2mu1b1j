@@ -256,13 +256,13 @@ bool createPValuePlotAndSaveAsPdf(
       dataHistogram,
       year,
       categoryName,
-      currentGEV,
-      0.1,
-      20.0,
-      15,
-      20,
-      backgroundType,
-      "peakIsConstant"
+      currentGEV,       // peak
+      0.1,              // minPeakWidth
+      20.0,             // maxPeakWidth
+      15,               // xStart
+      20,               // xEnd
+      backgroundType,   // backgroundType
+      "peakIsConstant"  // peakType
       );
 
     // Calculate p value
@@ -345,13 +345,13 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
     rebinnedHistogram,
     year,
     categoryName,
-    range[0],
-    range[1],
-    range[2],
-    range[3],
-    range[4],
-    backgroundType,
-    "peakIsVariable"
+    range[0],           // peak
+    range[1],           // minPeakWidth
+    range[2],           // maxPeakWidth
+    range[3],           // xStart
+    range[4],           // xEnd
+    backgroundType,     // backgroundType
+    "peakIsVariable"    // peakType
     );
 
 
