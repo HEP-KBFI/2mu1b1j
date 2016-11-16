@@ -420,17 +420,17 @@ double MyRooFitResult::getPValue() {
 }
 
 string MyRooFitResult::getInfo() {
-  string info = ""
-                + "\tx: " + string(x)
-                + "\tsignalEventsCount: " + string(signalEventsCount)
-                + "\tfitError: " + string(fitError)
-                + "\tbreitWignerMean: " + string(breitWignerMean)
-                + "\tbreitWignerWidth: " + string(breitWignerWidth)
-                + "\tgaussMean: " + string(gaussMean)
-                + "\tgaussWidth: " + string(gaussWidth)
-                + "\tbackgroundA: " + string(backgroundA)
-                + "\tbackgroundB: " + string(backgroundB)
-                + "\tbackgroundC: " + string(backgroundC);
+  string info = string("")
+                + "\tx: " + to_string(x)
+                + "\tsignalEventsCount: " + to_string(signalEventsCount)
+                + "\tfitError: " + to_string(fitError)
+                + "\tbreitWignerMean: " + to_string(breitWignerMean)
+                + "\tbreitWignerWidth: " + to_string(breitWignerWidth)
+                + "\tgaussMean: " + to_string(gaussMean)
+                + "\tgaussWidth: " + to_string(gaussWidth)
+                + "\tbackgroundA: " + to_string(backgroundA)
+                + "\tbackgroundB: " + to_string(backgroundB)
+                + "\tbackgroundC: " + to_string(backgroundC);
 
   return info;
 }
