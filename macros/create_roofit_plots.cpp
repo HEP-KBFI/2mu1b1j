@@ -338,7 +338,7 @@ bool savePValuePlotAsPdf(
 
   cout << "pValue pdfPath is: " << pdfPath << "\n";
 
-  graph->Draw();
+  graph->Draw("AC*");
   canvas->Print(pdfPath.data(), "pdf");
   return true;
 }
