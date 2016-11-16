@@ -269,7 +269,7 @@ bool createPValuePlotAndSaveAsPdf(
       categoryName,
       currentGEV,       // peak
       0.1,              // minPeakWidth
-      20.0,             // maxPeakWidth
+      5.0,              // maxPeakWidth
       15,               // xStart
       70,               // xEnd
       backgroundType,   // backgroundType
