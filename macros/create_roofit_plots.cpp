@@ -85,17 +85,22 @@ class MyRooFitResult {
 public:
 
   RooPlot *frame;
+  double   x;
   double   signalEventsCount;
   double   fitError;
+  double   breitWignerMean;
+  double   breitWignerWidth;
+  double   gaussMean;
+  double   gaussWidth;
+  double   backgroundA;
+  double   backgroundB;
+  double   backgroundC;
 
-  MyRooFitResult(
-    RooPlot *frame,
-    double   signalEventsCount,
-    double   fitError
-    );
+  MyRooFitResult();
 
   double getPull();
   double getPValue();
+  string getInfo();
 };
 
 
@@ -250,10 +255,10 @@ bool createPValuePlotAndSaveAsPdf(
   TH1F  *dataHistogram
   )
 {
-  auto GEVs    = new double[120]();
-  auto pValues = new double[120]();
+  auto GEVs    = new double[55]();
+  auto pValues = new double[55]();
 
-  for (int i = 1; i < 121; i++) {
+  for (int i = 15; i < 70; i++) {
     double currentGEV = 1.0 * i;
 
     // Create fit
@@ -264,8 +269,8 @@ bool createPValuePlotAndSaveAsPdf(
       currentGEV,       // peak
       0.1,              // minPeakWidth
       20.0,             // maxPeakWidth
-      0,                // xStart
-      120,              // xEnd
+      15,               // xStart
+      70,               // xEnd
       backgroundType,   // backgroundType
       "peakIsConstant"  // peakType
       );
@@ -278,8 +283,8 @@ bool createPValuePlotAndSaveAsPdf(
       currentGEV,
       0.1,
       20.0,
-      0.0,
-      120.0,
+      15.0,
+      70.0,
       1,
       backgroundType
       );
@@ -289,10 +294,7 @@ bool createPValuePlotAndSaveAsPdf(
 
     cout << "pValuePlotInfo:"
          << "\tGev: " << currentGEV
-         << "\tpValue: " << pValue
-         << "\tpull: " << myRooFitResult->getPull()
-         << "\tsignalEventsCount: " << myRooFitResult->signalEventsCount
-         << "\tfitError: " << myRooFitResult->fitError
+         << myRooFitResult->getInfo()
          << "\n";
 
     // Store pValue and GEV info
@@ -401,16 +403,8 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
 
 //
 
-MyRooFitResult::MyRooFitResult(
-  RooPlot *frame,
-  double   signalEventsCount,
-  double   fitError
-  )
-{
-  this->frame             = frame;
-  this->signalEventsCount = signalEventsCount;
-  this->fitError          = fitError;
-}
+MyRooFitResult::MyRooFitResult()
+{}
 
 double MyRooFitResult::getPull() {
   double pull = this->signalEventsCount / this->fitError;
@@ -423,6 +417,22 @@ double MyRooFitResult::getPValue() {
   double pValue = 2. * (1. - TMath::Erf(pull));
 
   return pValue;
+}
+
+string MyRooFitResult::getInfo() {
+  string info = ""
+                + "\tx: " + string(x)
+                + "\tsignalEventsCount: " + string(signalEventsCount)
+                + "\tfitError: " + string(fitError)
+                + "\tbreitWignerMean: " + string(breitWignerMean)
+                + "\tbreitWignerWidth: " + string(breitWignerWidth)
+                + "\tgaussMean: " + string(gaussMean)
+                + "\tgaussWidth: " + string(gaussWidth)
+                + "\tbackgroundA: " + string(backgroundA)
+                + "\tbackgroundB: " + string(backgroundB)
+                + "\tbackgroundC: " + string(backgroundC);
+
+  return info;
 }
 
 MyRooFitResult* createRooFit(
@@ -449,6 +459,7 @@ MyRooFitResult* createRooFit(
   // Create roofit variable
 
   RooRealVar x("x", "x", xStart, xEnd);
+
   x.setBins(10000, "fft");
 
 
@@ -613,13 +624,22 @@ MyRooFitResult* createRooFit(
 
   delete background;
 
-  MyRooFitResult *myRooFitResult = new MyRooFitResult(
-    frame,
-    signalEventsCount.getVal(),
-    signalEventsCount.getError()
-    );
 
   // return myRooFitResult
+
+  MyRooFitResult *myRooFitResult = new MyRooFitResult();
+
+  myRooFitResult->frame             = frame;
+  myRooFitResult->x                 = x.getVal();
+  myRooFitResult->signalEventsCount = signalEventsCount.getVal();
+  myRooFitResult->fitError          = signalEventsCount.getError();
+  myRooFitResult->breitWignerMean   = breitWignerMean.getVal();
+  myRooFitResult->breitWignerWidth  = breitWignerWidth.getVal();
+  myRooFitResult->gaussMean         = gaussMean.getVal();
+  myRooFitResult->gaussWidth        = gaussWidth.getVal();
+  myRooFitResult->backgroundA       = backgroundA.getVal();
+  myRooFitResult->backgroundB       = backgroundB.getVal();
+  myRooFitResult->backgroundC       = backgroundC.getVal();
 
   return myRooFitResult;
 }
