@@ -88,6 +88,7 @@ public:
   double   x;
   double   signalEventsCount;
   double   fitError;
+  double   backgroundEventsCount;
   double   breitWignerMean;
   double   breitWignerWidth;
   double   gaussMean;
@@ -629,17 +630,18 @@ MyRooFitResult* createRooFit(
 
   MyRooFitResult *myRooFitResult = new MyRooFitResult();
 
-  myRooFitResult->frame             = frame;
-  myRooFitResult->x                 = x.getVal();
-  myRooFitResult->signalEventsCount = signalEventsCount.getVal();
-  myRooFitResult->fitError          = signalEventsCount.getError();
-  myRooFitResult->breitWignerMean   = breitWignerMean.getVal();
-  myRooFitResult->breitWignerWidth  = breitWignerWidth.getVal();
-  myRooFitResult->gaussMean         = gaussMean.getVal();
-  myRooFitResult->gaussWidth        = gaussWidth.getVal();
-  myRooFitResult->backgroundA       = backgroundA.getVal();
-  myRooFitResult->backgroundB       = backgroundB.getVal();
-  myRooFitResult->backgroundC       = backgroundC.getVal();
+  myRooFitResult->frame                 = frame;
+  myRooFitResult->x                     = x.getVal();
+  myRooFitResult->signalEventsCount     = signalEventsCount.getVal();
+  myRooFitResult->fitError              = signalEventsCount.getError();
+  myRooFitResult->backgroundEventsCount = backgroundEventsCount.getVal();
+  myRooFitResult->breitWignerMean       = breitWignerMean.getVal();
+  myRooFitResult->breitWignerWidth      = breitWignerWidth.getVal();
+  myRooFitResult->gaussMean             = gaussMean.getVal();
+  myRooFitResult->gaussWidth            = gaussWidth.getVal();
+  myRooFitResult->backgroundA           = backgroundA.getVal();
+  myRooFitResult->backgroundB           = backgroundB.getVal();
+  myRooFitResult->backgroundC           = backgroundC.getVal();
 
   return myRooFitResult;
 }
