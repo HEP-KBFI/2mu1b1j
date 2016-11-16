@@ -258,8 +258,8 @@ bool createPValuePlotAndSaveAsPdf(
   auto GEVs    = new double[55]();
   auto pValues = new double[55]();
 
-  for (int i = 15; i < 70; i++) {
-    double currentGEV = 1.0 * i;
+  for (int i = 0; i < 55; i++) {
+    double currentGEV = 15.0 + i;
 
     // Create fit
     MyRooFitResult *myRooFitResult = createRooFit(
