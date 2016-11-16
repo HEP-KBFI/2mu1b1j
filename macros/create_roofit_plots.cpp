@@ -424,6 +424,7 @@ string MyRooFitResult::getInfo() {
   string info = string("")
                 + "\tx: " + to_string(x)
                 + "\tsignalEventsCount: " + to_string(signalEventsCount)
+                + "\tbackgroundEventsCount: " + to_string(backgroundEventsCount)
                 + "\tfitError: " + to_string(fitError)
                 + "\tbreitWignerMean: " + to_string(breitWignerMean)
                 + "\tbreitWignerWidth: " + to_string(breitWignerWidth)
