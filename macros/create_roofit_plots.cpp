@@ -415,7 +415,7 @@ double MyRooFitResult::getPull() {
 
 double MyRooFitResult::getPValue() {
   double pull   = this->getPull();
-  double pValue = 2. * (1. - TMath::Erf(pull));
+  double pValue = 0.5 * TMath::Erf(pull / TMath::Sqrt(2.0));
 
   return pValue;
 }
@@ -576,11 +576,31 @@ MyRooFitResult* createRooFit(
   RooGenericPdf *background = NULL;
 
   if (backgroundType.compare("polynomial") == 0) {
-    cout << "Background is polynomial\n";
+    // This is old version:
+    //
+    // background = new RooGenericPdf(
+    //   "background",
+    //   "(a * x * x) + (b * x) + c",
+    //   "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
+    //   backgroundDependents
+    //   );
+
+    // This is new version (more effective):
+
+    double meanOfTheDistribution = (xStart + xEnd) / 2;
+
+    string formula = string("backgroundA + backgroundB * (x - ")
+                     + to_string(meanOfTheDistribution)
+                     + ") + (0.5 * backgroundC * (3 * (x - "
+                     + to_string(meanOfTheDistribution)
+                     + ") - 1))";
+
+    cout << "Background is polynomial: " << formula << "\n";
+
     background = new RooGenericPdf(
       "background",
-      "(a * x * x) + (b * x) + c",
-      "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
+      "a + b * (x - meanOfTheDistribution) + (0.5 * c * (3 * (x - meanOfTheDistribution) - 1))",
+      formula.data(),
       backgroundDependents
       );
   }
