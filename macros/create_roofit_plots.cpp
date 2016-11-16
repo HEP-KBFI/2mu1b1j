@@ -208,7 +208,7 @@ bool create_roofit_plots()
         TH1F  *dataHistogram1PinsPer1Gv = rebinHistogram(
           dataHistogram,
           0.1,
-          2.0
+          1.0
           );
 
 
@@ -324,7 +324,7 @@ bool savePValuePlotAsPdf(
   double pValues[]
   )
 {
-  TGraph  *graph  = new TGraph(120, GEVs, pValues);
+  TGraph  *graph  = new TGraph(70 - 15, GEVs, pValues);
   TCanvas *canvas = new TCanvas();
 
   canvas->SetLogy();
@@ -432,7 +432,9 @@ string MyRooFitResult::getInfo() {
                 + "\tgaussWidth: " + to_string(gaussWidth)
                 + "\tbackgroundA: " + to_string(backgroundA)
                 + "\tbackgroundB: " + to_string(backgroundB)
-                + "\tbackgroundC: " + to_string(backgroundC);
+                + "\tbackgroundC: " + to_string(backgroundC)
+                + "\tpull: " + to_string(this->getPull())
+                + "\tpValue: " + to_string(this->getPValue());
 
   return info;
 }
