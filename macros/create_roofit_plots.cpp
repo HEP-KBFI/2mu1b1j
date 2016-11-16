@@ -543,19 +543,25 @@ MyRooFitResult* createRooFit(
   RooRealVar backgroundA(
     "backgroundA",
     "backgroundA",
-    0.1
+    0.1,
+    -10000.0,
+    10000.0
     );
 
   RooRealVar backgroundB(
     "backgroundB",
     "backgroundB",
-    0.2
+    0.2,
+    -10000.0,
+    10000.0
     );
 
   RooRealVar backgroundC(
     "backgroundC",
     "backgroundC",
-    0.3
+    0.3,
+    -10000.0,
+    10000.0
     );
 
   RooArgList backgroundDependents(
