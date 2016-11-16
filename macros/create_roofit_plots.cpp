@@ -197,8 +197,13 @@ bool create_roofit_plots()
 
         // Load histogram from analysis
 
-        TFile *rootFile      = loadRootFile(year);
-        TH1F  *dataHistogram = loadTH1F(rootFile, year, categoryName);
+        TFile *rootFile                 = loadRootFile(year);
+        TH1F  *dataHistogram            = loadTH1F(rootFile, year, categoryName);
+        TH1F  *dataHistogram1PinsPer1Gv = rebinHistogram(
+          dataHistogram,
+          0.1,
+          2.0
+          );
 
 
         // Generate pValue plot
@@ -207,7 +212,7 @@ bool create_roofit_plots()
           year,
           categoryName,
           backgroundType,
-          dataHistogram
+          dataHistogram1PinsPer1Gv
           );
 
 
@@ -259,10 +264,24 @@ bool createPValuePlotAndSaveAsPdf(
       currentGEV,       // peak
       0.1,              // minPeakWidth
       20.0,             // maxPeakWidth
-      15,               // xStart
-      20,               // xEnd
+      0,                // xStart
+      120,              // xEnd
       backgroundType,   // backgroundType
       "peakIsConstant"  // peakType
+      );
+
+    // Store information about the fit in plot
+    saveRooPlot(
+      myRooFitResult->frame,
+      year,
+      categoryName,
+      currentGEV,
+      0.1,
+      20.0,
+      0.0,
+      120.0,
+      1,
+      backgroundType
       );
 
     // Calculate p value
