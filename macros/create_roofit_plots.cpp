@@ -645,11 +645,17 @@ MyRooFitResult* createRooFit(
 
     double meanOfTheDistribution = (xStart + xEnd) / 2;
 
-    string formula = string("backgroundA + backgroundB * (x - ")
-                     + to_string(meanOfTheDistribution)
-                     + ") + (0.5 * backgroundC * (3 * ((x - "
-                     + to_string(meanOfTheDistribution)
-                     + ") ^ 2) - 1))";
+    string xMinusMeanOfTheDistribution = string("(x - ")
+                                         + to_string(meanOfTheDistribution)
+                                         + ")";
+
+    string formula = string("backgroundA + backgroundB * ")
+                     + xMinusMeanOfTheDistribution
+                     + ") + (0.5 * backgroundC * (3 * ("
+                     + xMinusMeanOfTheDistribution
+                     + " * "
+                     + xMinusMeanOfTheDistribution
+                     + ") - 1))";
 
     cout << "Background is polynomial: " << formula << "\n";
 
