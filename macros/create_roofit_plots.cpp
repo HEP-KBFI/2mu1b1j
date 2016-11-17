@@ -53,6 +53,7 @@ bool createPValuePlotAndSaveAsPdf(
   string year,
   string categoryName,
   string backgroundType,
+  float  range[],
   TH1F  *dataHistogram
   );
 
@@ -98,6 +99,9 @@ public:
   double   backgroundC;
 
   MyRooFitResult();
+  ~MyRooFitResult() {
+    delete this->frame;
+  }
 
   double getPull();
   double getPValue();
@@ -142,8 +146,8 @@ bool saveRooPlot(
 
 TH1F* rebinHistogram(
   TH1F  *histogram,
-  double originalPinning,
-  double newPinning
+  double originalBinning,
+  double newBinning
   );
 
 
@@ -186,7 +190,8 @@ bool create_roofit_plots()
     {    9.46,   0.1,  2.0,    8.0,  12.00,   0.2 },
     {    10.0,   0.1,  2.0,    8.0,  12.00,   0.2 },
     {   10.35,   0.1,  2.0,    8.0,  12.00,   0.2 },
-    {    28.5,   1.0,  2.0,   20.0,   40.0,   0.5 },
+    {    28.5,   0.5,  2.0,   20.0,   40.0,   0.5 },
+    {    28.5,   0.5,  5.0,   15.0,   70.0,   0.5 },
     {    28.5,   1.0,  2.0,   20.0,   40.0,     1 },
     {    28.5,   1.0,  2.0,   20.0,   40.0,     2 },
     {    91.0,   1.0,  2.0,   80.0,  100.0,     1 },
@@ -255,41 +260,61 @@ bool createPValuePlotAndSaveAsPdf(
   TH1F  *dataHistogram
   )
 {
-  auto GEVs    = new double[55]();
-  auto pValues = new double[55]();
+  double peak         = range[0];
+  double minPeakWidth = 0.1;
+  double maxPeakWidth = 5.0;
+  double xStart       = range[3];
+  double xEnd         = range[4];
+  double binWidth     = range[5];
 
-  for (int i = 0; i < 55; i++) {
-    double currentGEV = 15.0 + i;
+  int binsCount = (xEnd - xStart) / binWidth;
+
+  TH1F *rebinnedHistogram = rebinHistogram(
+    dataHistogram,
+    0.1,
+    binWidth
+    );
+
+  auto GEVs    = new double[binsCount]();
+  auto pValues = new double[binsCount]();
+
+  for (int i = 0; i < binsCount; i++) {
+    double currentGEV = xStart + (i * binWidth);
 
     // Create fit
+
     MyRooFitResult *myRooFitResult = createRooFit(
-      dataHistogram,
+      rebinnedHistogram,
       year,
       categoryName,
-      currentGEV,       // peak
-      0.1,              // minPeakWidth
-      5.0,              // maxPeakWidth
-      15,               // xStart
-      70,               // xEnd
-      backgroundType,   // backgroundType
-      "peakIsConstant"  // peakType
+      currentGEV,           // peak
+      minPeakWidth,         // minPeakWidth
+      maxPeakWidth,         // maxPeakWidth
+      xStart,               // xStart
+      xEnd,                 // xEnd
+      backgroundType,       // backgroundType
+      "peakIsConstant"      // peakType
       );
+
 
     // Store information about the fit in plot
+
     saveRooPlot(
-      myRooFitResult->frame,
-      year,
-      categoryName,
-      currentGEV,
-      0.1,
-      20.0,
-      15.0,
-      70.0,
-      1,
-      backgroundType
+      myRooFitResult->frame,    // frame
+      year + "_pValue_",        // year
+      categoryName,             // categoryName
+      currentGEV,               // peak
+      minPeakWidth,             // minPeakWidth
+      maxPeakWidth,             // maxPeakWidth
+      xStart,                   // xStart
+      xEnd,                     // xEnd
+      binWidth,                 // binning
+      backgroundType            // backgroundType
       );
 
+
     // Calculate p value
+
     double pValue = myRooFitResult->getPValue();
 
     cout << "pValuePlotInfo:"
@@ -297,9 +322,13 @@ bool createPValuePlotAndSaveAsPdf(
          << myRooFitResult->getInfo()
          << "\n";
 
+
     // Store pValue and GEV info
+
     GEVs[i]    = currentGEV;
     pValues[i] = pValue;
+
+    delete myRooFitResult;
   }
 
   savePValuePlotAsPdf(
@@ -309,6 +338,9 @@ bool createPValuePlotAndSaveAsPdf(
     GEVs,
     pValues
     );
+
+  delete[] GEVs;
+  delete[] pValues;
 
   return true;
 }
@@ -786,14 +818,14 @@ bool saveRooPlot(
 
 TH1F* rebinHistogram(
   TH1F  *histogram,
-  double originalPinning,
-  double newPinning
+  double originalBinning,
+  double newBinning
   )
 {
-  double binningMultiplier = (1.0 / originalPinning) * (newPinning);
+  double binningMultiplier = (1.0 / originalBinning) * (newBinning);
 
-  cout << "originalPinning: " << originalPinning
-       << ", newPinning: " << newPinning
+  cout << "originalBinning: " << originalBinning
+       << ", newBinning: " << newBinning
        << ", binningMultiplier: " << binningMultiplier << "\n";
 
   return (TH1F *)histogram->Rebin(binningMultiplier, "suva");
