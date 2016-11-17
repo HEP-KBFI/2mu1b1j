@@ -1,3 +1,4 @@
+git pull
 mkdir /home/margusp/roofits/
 rm /home/margusp/roofits/*
 
