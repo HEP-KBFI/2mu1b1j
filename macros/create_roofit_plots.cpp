@@ -53,7 +53,7 @@ bool createPValuePlotAndSaveAsPdf(
   string year,
   string categoryName,
   string backgroundType,
-  float  range[],
+  double range[],
   TH1F  *dataHistogram
   );
 
