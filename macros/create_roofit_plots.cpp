@@ -651,7 +651,7 @@ MyRooFitResult* createRooFit(
 
     string formula = string("backgroundA + backgroundB * ")
                      + xMinusMeanOfTheDistribution
-                     + ") + (0.5 * backgroundC * (3 * ("
+                     + " + (0.5 * backgroundC * (3 * ("
                      + xMinusMeanOfTheDistribution
                      + " * "
                      + xMinusMeanOfTheDistribution
