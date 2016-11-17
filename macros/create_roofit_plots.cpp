@@ -74,7 +74,7 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
   string year,
   string categoryName,
   string backgroundType,
-  float  range[],
+  double range[],
   TH1F  *dataHistogram
   );
 
@@ -111,11 +111,11 @@ MyRooFitResult* createRooFit(
   TH1F  *histogram,
   string year,
   string categoryName,
-  float  peak,
-  float  minPeakWidth,
-  float  maxPeakWidth,
-  float  xStart,
-  float  xEnd,
+  double peak,
+  double minPeakWidth,
+  double maxPeakWidth,
+  double xStart,
+  double xEnd,
   string backgroundType,
   string peakType
   );
@@ -127,12 +127,12 @@ bool saveRooPlot(
   RooPlot *frame,
   string   year,
   string   categoryName,
-  float    peak,
-  float    minPeakWidth,
-  float    maxPeakWidth,
-  float    xStart,
-  float    xEnd,
-  float    binning,
+  double   peak,
+  double   minPeakWidth,
+  double   maxPeakWidth,
+  double   xStart,
+  double   xEnd,
+  double   binning,
   string   backgroundType
   );
 
@@ -180,7 +180,7 @@ bool create_roofit_plots()
 
   // peak, minPeakWidth, maxPeakWidth, xStart, xEnd, binning
 
-  float ranges[][6] = {
+  double ranges[][6] = {
     {     3.1,   0.1,  1.0,    2.0,    4.0,   0.1 },
     {     3.1,   0.1,  1.0,    2.0,    4.0,   0.2 },
     {    9.46,   0.1,  2.0,    8.0,  12.00,   0.2 },
@@ -204,28 +204,25 @@ bool create_roofit_plots()
 
         // Load histogram from analysis
 
-        TFile *rootFile                 = loadRootFile(year);
-        TH1F  *dataHistogram            = loadTH1F(rootFile, year, categoryName);
-        TH1F  *dataHistogram1PinsPer1Gv = rebinHistogram(
-          dataHistogram,
-          0.1,
-          1.0
-          );
-
-
-        // Generate pValue plot
-
-        createPValuePlotAndSaveAsPdf(
-          year,
-          categoryName,
-          backgroundType,
-          dataHistogram1PinsPer1Gv
-          );
+        TFile *rootFile      = loadRootFile(year);
+        TH1F  *dataHistogram = loadTH1F(rootFile, year, categoryName);
 
 
         // Iterate over interesting areas
 
         for (auto range : ranges) {
+          // Generate pValue plot
+
+          createPValuePlotAndSaveAsPdf(
+            year,
+            categoryName,
+            backgroundType,
+            range,
+            dataHistogram
+            );
+
+          // Generate causal RooFit plot
+
           createRooFitPlotForRangeAndSaveAsPdf(
             year,
             categoryName,
@@ -254,6 +251,7 @@ bool createPValuePlotAndSaveAsPdf(
   string year,
   string categoryName,
   string backgroundType,
+  double range[],
   TH1F  *dataHistogram
   )
 {
@@ -350,7 +348,7 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
   string year,
   string categoryName,
   string backgroundType,
-  float  range[],
+  double range[],
   TH1F  *dataHistogram
   )
 {
@@ -444,11 +442,11 @@ MyRooFitResult* createRooFit(
   TH1F  *histogram,
   string year,
   string categoryName,
-  float  peak,
-  float  minPeakWidth,
-  float  maxPeakWidth,
-  float  xStart,
-  float  xEnd,
+  double peak,
+  double minPeakWidth,
+  double maxPeakWidth,
+  double xStart,
+  double xEnd,
   string backgroundType,
   string peakType
   )
@@ -619,7 +617,7 @@ MyRooFitResult* createRooFit(
 
   // Signal + background
 
-  float entriesCount = dataHist.sumEntries();
+  double entriesCount = dataHist.sumEntries();
   RooRealVar signalEventsCount("signalEventsCount", "#signal events", entriesCount, 0.0, entriesCount);
   RooRealVar backgroundEventsCount("backgroundEventsCount", "#background events", 1, 0.0, entriesCount);
 
@@ -747,12 +745,12 @@ bool saveRooPlot(
   RooPlot *frame,
   string   year,
   string   categoryName,
-  float    peak,
-  float    minPeakWidth,
-  float    maxPeakWidth,
-  float    xStart,
-  float    xEnd,
-  float    binning,
+  double   peak,
+  double   minPeakWidth,
+  double   maxPeakWidth,
+  double   xStart,
+  double   xEnd,
+  double   binning,
   string   backgroundType
   )
 {
