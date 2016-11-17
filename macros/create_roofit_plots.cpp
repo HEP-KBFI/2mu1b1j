@@ -158,17 +158,18 @@ bool create_roofit_plots()
 
   string categoryNames[] = {
     "CategoryA",
-    "CategoryARelaxed",
-    "CategoryACompare",
-    "CategoryACompareRelaxed",
-    "CategoryB",
-    "CategoryBRelaxed",
-    "CategoryBCompare",
-    "CategoryBCompareRelaxed",
-    "CategoryC",
-    "CategoryCRelaxed",
-    "CategoryCCompare",
-    "CategoryCCompareRelaxed"
+
+    // "CategoryARelaxed",
+    // "CategoryACompare",
+    // "CategoryACompareRelaxed",
+    // "CategoryB",
+    // "CategoryBRelaxed",
+    // "CategoryBCompare",
+    // "CategoryBCompareRelaxed",
+    // "CategoryC",
+    // "CategoryCRelaxed",
+    // "CategoryCCompare",
+    // "CategoryCCompareRelaxed"
   };
 
   string backgroundTypes[] = {
@@ -545,7 +546,7 @@ MyRooFitResult* createRooFit(
   RooRealVar backgroundA(
     "backgroundA",
     "backgroundA",
-    0.1,
+    -100.0,
     -10000.0,
     10000.0
     );
@@ -553,7 +554,7 @@ MyRooFitResult* createRooFit(
   RooRealVar backgroundB(
     "backgroundB",
     "backgroundB",
-    0.2,
+    100.0,
     -10000.0,
     10000.0
     );
@@ -561,7 +562,7 @@ MyRooFitResult* createRooFit(
   RooRealVar backgroundC(
     "backgroundC",
     "backgroundC",
-    0.3,
+    500.0,
     -10000.0,
     10000.0
     );
