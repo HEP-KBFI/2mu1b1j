@@ -378,7 +378,7 @@ bool savePValuePlotAsPdf(
                    year +
                    "_" +
                    categoryName +
-                   "_peak-" +
+                   "_peakWidth-" +
                    to_string(minPeakWidth) +
                    "-" +
                    to_string(maxPeakWidth) +
