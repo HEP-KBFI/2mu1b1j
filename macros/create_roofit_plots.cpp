@@ -820,7 +820,7 @@ bool saveRooPlot(
                    year +
                    "_peak-" +
                    to_string(peak) +
-                   "_range" +
+                   "_range-" +
                    to_string(xStart) +
                    "-" +
                    to_string(xEnd) +
