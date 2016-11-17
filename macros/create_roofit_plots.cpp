@@ -63,6 +63,11 @@ bool createPValuePlotAndSaveAsPdf(
 bool savePValuePlotAsPdf(
   string year,
   string categoryName,
+  double minPeakWidth,
+  double maxPeakWidth,
+  double xStart,
+  double xEnd,
+  double binWidth,
   string backgroundType,
   double GEVs[],
   double pValues[]
@@ -335,6 +340,11 @@ bool createPValuePlotAndSaveAsPdf(
     year,
     categoryName,
     backgroundType,
+    minPeakWidth,
+    maxPeakWidth,
+    xStart,
+    xEnd,
+    binWidth,
     GEVs,
     pValues
     );
@@ -350,12 +360,17 @@ bool createPValuePlotAndSaveAsPdf(
 bool savePValuePlotAsPdf(
   string year,
   string categoryName,
+  double minPeakWidth,
+  double maxPeakWidth,
+  double xStart,
+  double xEnd,
+  double binWidth,
   string backgroundType,
   double GEVs[],
   double pValues[]
   )
 {
-  TGraph  *graph  = new TGraph(70 - 15, GEVs, pValues);
+  TGraph  *graph  = new TGraph(xEnd - xStart, GEVs, pValues);
   TCanvas *canvas = new TCanvas();
 
   canvas->SetLogy();
@@ -363,6 +378,16 @@ bool savePValuePlotAsPdf(
                    year +
                    "_" +
                    categoryName +
+                   "_peak-" +
+                   to_string(minPeakWidth) +
+                   "-" +
+                   to_string(maxPeakWidth) +
+                   "_range-" +
+                   to_string(xStart) +
+                   "-" +
+                   to_string(xEnd) +
+                   "_binning-" +
+                   to_string(binWidth) +
                    "_background-" +
                    backgroundType +
                    ".pdf";
@@ -411,16 +436,16 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
   // Save rooplot to pdf file
 
   saveRooPlot(
-    myRooFitResult->frame,
-    year,
-    categoryName,
-    range[0],
-    range[1],
-    range[2],
-    range[3],
-    range[4],
-    range[5],
-    backgroundType
+    myRooFitResult->frame,  // frame
+    year,                   // year
+    categoryName,           // categoryName
+    range[0],               // peak
+    range[1],               // minPeakWidth
+    range[2],               // maxPeakWidth
+    range[3],               // xStart
+    range[4],               // xEnd
+    range[5],               // binning
+    backgroundType          // backgroundType
     );
 
   // clear reserved memory
@@ -793,13 +818,13 @@ bool saveRooPlot(
   frame->Draw();
   string pdfPath = string("/home/margusp/roofits/") +
                    year +
-                   "_" +
+                   "_peak-" +
                    to_string(peak) +
-                   "_" +
+                   "_range" +
                    to_string(xStart) +
                    "-" +
                    to_string(xEnd) +
-                   "_" +
+                   "_category-" +
                    categoryName +
                    "_binning-" +
                    to_string(binning) +
