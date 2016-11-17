@@ -591,15 +591,15 @@ MyRooFitResult* createRooFit(
 
     string formula = string("backgroundA + backgroundB * (x - ")
                      + to_string(meanOfTheDistribution)
-                     + ") + (0.5 * backgroundC * (3 * (x - "
+                     + ") + (0.5 * backgroundC * (3 * ((x - "
                      + to_string(meanOfTheDistribution)
-                     + ") - 1))";
+                     + ") ^ 2) - 1))";
 
     cout << "Background is polynomial: " << formula << "\n";
 
     background = new RooGenericPdf(
       "background",
-      "a + b * (x - meanOfTheDistribution) + (0.5 * c * (3 * (x - meanOfTheDistribution) - 1))",
+      "a + b * (x - meanOfTheDistribution) + (0.5 * c * (3 * ((x - meanOfTheDistribution) ^ 2) - 1))",
       formula.data(),
       backgroundDependents
       );
