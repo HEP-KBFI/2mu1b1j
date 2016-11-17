@@ -337,16 +337,16 @@ bool createPValuePlotAndSaveAsPdf(
   }
 
   savePValuePlotAsPdf(
-    year,
-    categoryName,
-    backgroundType,
-    minPeakWidth,
-    maxPeakWidth,
-    xStart,
-    xEnd,
-    binWidth,
-    GEVs,
-    pValues
+    year,               // year
+    categoryName,       // categoryName
+    minPeakWidth,       // minPeakWidth
+    maxPeakWidth,       // maxPeakWidth
+    xStart,             // xStart
+    xEnd,               // xEnd
+    binWidth,           // binWidth
+    backgroundType,     // backgroundType
+    GEVs,               // GEVs
+    pValues             // pValues
     );
 
   delete[] GEVs;
