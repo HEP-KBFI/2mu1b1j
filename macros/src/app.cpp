@@ -166,7 +166,7 @@ int main()
 
   // peak, minPeakWidth, maxPeakWidth, xStart, xEnd, binning, fitStart, fitEnd, fitBinning
 
-  MyRooFitSettings myRooFitSettings[] = {
+  MyRooFitSetting myRooFitSettings[] = {
     MyRooFitSetting(3.1,   0.1, 1.0, 2.0,  4.0,   0.1, 2.0,  4.0,   0.1),
     MyRooFitSetting(3.1,   0.1, 1.0, 2.0,  4.0,   0.2, 2.0,  4.0,   0.2),
     MyRooFitSetting(9.46,  0.1, 2.0, 8.0,  12.00, 0.2, 8.0,  12.00, 0.2),
