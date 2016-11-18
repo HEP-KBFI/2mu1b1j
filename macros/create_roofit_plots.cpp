@@ -25,11 +25,16 @@
 #include "TAxis.h"
 #include "TH1.h"
 
+#include "MyRooFitSetting.h";
+#include "MyRooFitResult.h";
+
+
 using namespace RooFit;
 
 
 // Interface
 // =========
+
 
 // Load root file
 
@@ -85,35 +90,6 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
   );
 
 
-// MyRooFitResult
-
-class MyRooFitResult {
-public:
-
-  RooPlot *frame;
-  double   x;
-  double   signalEventsCount;
-  double   fitError;
-  double   backgroundEventsCount;
-  double   breitWignerMean;
-  double   breitWignerWidth;
-  double   gaussMean;
-  double   gaussWidth;
-  double   backgroundA;
-  double   backgroundB;
-  double   backgroundC;
-
-  MyRooFitResult();
-  ~MyRooFitResult() {
-    delete this->frame;
-  }
-
-  double getPull();
-  double getPValue();
-  string getInfo();
-};
-
-
 // Creates RooPlot from TH1F fitting
 
 MyRooFitResult* createRooFit(
@@ -158,7 +134,7 @@ TH1F* rebinHistogram(
 
 // Entry point function. Iterates over interesting years, categories and ranges and creates .pdf files for visual inspection
 
-bool create_roofit_plots()
+bool main()
 {
   string years[] = {
     "2015",
@@ -189,20 +165,20 @@ bool create_roofit_plots()
 
   // peak, minPeakWidth, maxPeakWidth, xStart, xEnd, binning, fitStart, fitEnd, fitBinning
 
-  double ranges[][9] = {
-    {   3.1, 0.1, 1.0,  2.0,   4.0, 0.1,  2.0,   4.0, 0.1 },
-    {   3.1, 0.1, 1.0,  2.0,   4.0, 0.2,  2.0,   4.0, 0.2 },
-    {  9.46, 0.1, 2.0,  8.0, 12.00, 0.2,  8.0, 12.00, 0.2 },
-    {  10.0, 0.1, 2.0,  8.0, 12.00, 0.2,  8.0, 12.00, 0.2 },
-    { 10.35, 0.1, 2.0,  8.0, 12.00, 0.2,  8.0, 12.00, 0.2 },
-    {  28.5, 0.5, 2.0, 20.0,  40.0, 0.5, 20.0,  40.0, 0.5 },
-    {  28.5, 0.5, 5.0, 12.0,  70.0, 0.5, 12.0,  70.0, 0.5 },
-    {  28.5, 0.5, 5.0, 12.0,  70.0, 1.0, 12.0,  70.0, 1.0 },
-    {  28.5, 0.5, 5.0, 12.0,  70.0, 2.0, 12.0,  70.0, 1.0 },
-    {  28.5, 1.0, 2.0, 20.0,  40.0, 1.0, 20.0,  40.0, 1.0 },
-    {  28.5, 1.0, 2.0, 20.0,  40.0, 2.0, 20.0,  40.0, 1.0 },
-    {  91.0, 1.0, 2.0, 80.0, 100.0, 1.0, 80.0, 100.0, 1.0 },
-    {  91.0, 1.0, 2.0,  0.0, 120.0, 1.0,  0.0, 120.0, 1.0 }
+  MyRooFitSettings myRooFitSettings[] = {
+    MyRooFitSetting(3.1,   0.1, 1.0, 2.0,  4.0,   0.1, 2.0,  4.0,   0.1),
+    MyRooFitSetting(3.1,   0.1, 1.0, 2.0,  4.0,   0.2, 2.0,  4.0,   0.2),
+    MyRooFitSetting(9.46,  0.1, 2.0, 8.0,  12.00, 0.2, 8.0,  12.00, 0.2),
+    MyRooFitSetting(10.0,  0.1, 2.0, 8.0,  12.00, 0.2, 8.0,  12.00, 0.2),
+    MyRooFitSetting(10.35, 0.1, 2.0, 8.0,  12.00, 0.2, 8.0,  12.00, 0.2),
+    MyRooFitSetting(28.5,  0.5, 2.0, 20.0, 40.0,  0.5, 20.0, 40.0,  0.5),
+    MyRooFitSetting(28.5,  0.5, 5.0, 12.0, 70.0,  0.5, 12.0, 70.0,  0.5),
+    MyRooFitSetting(28.5,  0.5, 5.0, 12.0, 70.0,  1.0, 12.0, 70.0,  1.0),
+    MyRooFitSetting(28.5,  0.5, 5.0, 12.0, 70.0,  2.0, 12.0, 70.0,  1.0),
+    MyRooFitSetting(28.5,  1.0, 2.0, 20.0, 40.0,  1.0, 20.0, 40.0,  1.0),
+    MyRooFitSetting(28.5,  1.0, 2.0, 20.0, 40.0,  2.0, 20.0, 40.0,  1.0),
+    MyRooFitSetting(91.0,  1.0, 2.0, 80.0, 100.0, 1.0, 80.0, 100.0, 1.0),
+    MyRooFitSetting(91.0,  1.0, 2.0, 0.0,  120.0, 1.0, 0.0,  120.0, 1.0)
   };
 
 
@@ -462,40 +438,6 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
 
 //
 
-MyRooFitResult::MyRooFitResult()
-{}
-
-double MyRooFitResult::getPull() {
-  double pull = this->signalEventsCount / this->fitError;
-
-  return pull;
-}
-
-double MyRooFitResult::getPValue() {
-  double pull   = this->getPull();
-  double pValue = 0.5 * TMath::Erf(pull / TMath::Sqrt(2.0));
-
-  return pValue;
-}
-
-string MyRooFitResult::getInfo() {
-  string info = string("")
-                + "\tx: " + to_string(x)
-                + "\tsignalEventsCount: " + to_string(signalEventsCount)
-                + "\tbackgroundEventsCount: " + to_string(backgroundEventsCount)
-                + "\tfitError: " + to_string(fitError)
-                + "\tbreitWignerMean: " + to_string(breitWignerMean)
-                + "\tbreitWignerWidth: " + to_string(breitWignerWidth)
-                + "\tgaussMean: " + to_string(gaussMean)
-                + "\tgaussWidth: " + to_string(gaussWidth)
-                + "\tbackgroundA: " + to_string(backgroundA)
-                + "\tbackgroundB: " + to_string(backgroundB)
-                + "\tbackgroundC: " + to_string(backgroundC)
-                + "\tpull: " + to_string(this->getPull())
-                + "\tpValue: " + to_string(this->getPValue());
-
-  return info;
-}
 
 MyRooFitResult* createRooFit(
   TH1F  *histogram,
