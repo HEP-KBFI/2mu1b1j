@@ -1,6 +1,10 @@
 #ifndef MY_ROO_FIT_RESULT_H
 #define MY_ROO_FIT_RESULT_H
 
+#include "string.h"
+
+using namespace std;
+
 class MyRooFitResult {
 public:
 
