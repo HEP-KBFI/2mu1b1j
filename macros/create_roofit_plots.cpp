@@ -187,20 +187,22 @@ bool create_roofit_plots()
   };
 
 
-  // peak, minPeakWidth, maxPeakWidth, xStart, xEnd, binning
+  // peak, minPeakWidth, maxPeakWidth, xStart, xEnd, binning, fitStart, fitEnd, fitBinning
 
-  double ranges[][6] = {
-    {     3.1,   0.1,  1.0,    2.0,    4.0,   0.1 },
-    {     3.1,   0.1,  1.0,    2.0,    4.0,   0.2 },
-    {    9.46,   0.1,  2.0,    8.0,  12.00,   0.2 },
-    {    10.0,   0.1,  2.0,    8.0,  12.00,   0.2 },
-    {   10.35,   0.1,  2.0,    8.0,  12.00,   0.2 },
-    {    28.5,   0.5,  2.0,   20.0,   40.0,   0.5 },
-    {    28.5,   0.5,  5.0,   15.0,   70.0,   0.5 },
-    {    28.5,   1.0,  2.0,   20.0,   40.0,     1 },
-    {    28.5,   1.0,  2.0,   20.0,   40.0,     2 },
-    {    91.0,   1.0,  2.0,   80.0,  100.0,     1 },
-    {    91.0,   1.0,  2.0,    0.0,  120.0,     1 }
+  double ranges[][9] = {
+    {   3.1, 0.1, 1.0,  2.0,   4.0, 0.1,  2.0,   4.0, 0.1 },
+    {   3.1, 0.1, 1.0,  2.0,   4.0, 0.2,  2.0,   4.0, 0.2 },
+    {  9.46, 0.1, 2.0,  8.0, 12.00, 0.2,  8.0, 12.00, 0.2 },
+    {  10.0, 0.1, 2.0,  8.0, 12.00, 0.2,  8.0, 12.00, 0.2 },
+    { 10.35, 0.1, 2.0,  8.0, 12.00, 0.2,  8.0, 12.00, 0.2 },
+    {  28.5, 0.5, 2.0, 20.0,  40.0, 0.5, 20.0,  40.0, 0.5 },
+    {  28.5, 0.5, 5.0, 12.0,  70.0, 0.5, 12.0,  70.0, 0.5 },
+    {  28.5, 0.5, 5.0, 12.0,  70.0, 1.0, 12.0,  70.0, 1.0 },
+    {  28.5, 0.5, 5.0, 12.0,  70.0, 2.0, 12.0,  70.0, 1.0 },
+    {  28.5, 1.0, 2.0, 20.0,  40.0, 1.0, 20.0,  40.0, 1.0 },
+    {  28.5, 1.0, 2.0, 20.0,  40.0, 2.0, 20.0,  40.0, 1.0 },
+    {  91.0, 1.0, 2.0, 80.0, 100.0, 1.0, 80.0, 100.0, 1.0 },
+    {  91.0, 1.0, 2.0,  0.0, 120.0, 1.0,  0.0, 120.0, 1.0 }
   };
 
 
@@ -292,29 +294,29 @@ bool createPValuePlotAndSaveAsPdf(
       rebinnedHistogram,
       year,
       categoryName,
-      currentGEV,           // peak
-      minPeakWidth,         // minPeakWidth
-      maxPeakWidth,         // maxPeakWidth
-      xStart,               // xStart
-      xEnd,                 // xEnd
-      backgroundType,       // backgroundType
-      "peakIsConstant"      // peakType
+      currentGEV, // peak
+      minPeakWidth, // minPeakWidth
+      maxPeakWidth, // maxPeakWidth
+      xStart, // xStart
+      xEnd, // xEnd
+      backgroundType, // backgroundType
+      "peakIsConstant" // peakType
       );
 
 
     // Store information about the fit in plot
 
     saveRooPlot(
-      myRooFitResult->frame,    // frame
-      year + "_pValue_",        // year
-      categoryName,             // categoryName
-      currentGEV,               // peak
-      minPeakWidth,             // minPeakWidth
-      maxPeakWidth,             // maxPeakWidth
-      xStart,                   // xStart
-      xEnd,                     // xEnd
-      binWidth,                 // binning
-      backgroundType            // backgroundType
+      myRooFitResult->frame, // frame
+      year + "_pValue_", // year
+      categoryName, // categoryName
+      currentGEV, // peak
+      minPeakWidth, // minPeakWidth
+      maxPeakWidth, // maxPeakWidth
+      xStart, // xStart
+      xEnd, // xEnd
+      binWidth, // binning
+      backgroundType // backgroundType
       );
 
 
@@ -337,16 +339,16 @@ bool createPValuePlotAndSaveAsPdf(
   }
 
   savePValuePlotAsPdf(
-    year,               // year
-    categoryName,       // categoryName
-    minPeakWidth,       // minPeakWidth
-    maxPeakWidth,       // maxPeakWidth
-    xStart,             // xStart
-    xEnd,               // xEnd
-    binWidth,           // binWidth
-    backgroundType,     // backgroundType
-    GEVs,               // GEVs
-    pValues             // pValues
+    year, // year
+    categoryName, // categoryName
+    minPeakWidth, // minPeakWidth
+    maxPeakWidth, // maxPeakWidth
+    xStart, // xStart
+    xEnd, // xEnd
+    binWidth, // binWidth
+    backgroundType, // backgroundType
+    GEVs, // GEVs
+    pValues // pValues
     );
 
   delete[] GEVs;
@@ -423,29 +425,29 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
     rebinnedHistogram,
     year,
     categoryName,
-    range[0],           // peak
-    range[1],           // minPeakWidth
-    range[2],           // maxPeakWidth
-    range[3],           // xStart
-    range[4],           // xEnd
-    backgroundType,     // backgroundType
-    "peakIsVariable"    // peakType
+    range[0], // peak
+    range[1], // minPeakWidth
+    range[2], // maxPeakWidth
+    range[3], // xStart
+    range[4], // xEnd
+    backgroundType, // backgroundType
+    "peakIsVariable" // peakType
     );
 
 
   // Save rooplot to pdf file
 
   saveRooPlot(
-    myRooFitResult->frame,  // frame
-    year,                   // year
-    categoryName,           // categoryName
-    range[0],               // peak
-    range[1],               // minPeakWidth
-    range[2],               // maxPeakWidth
-    range[3],               // xStart
-    range[4],               // xEnd
-    range[5],               // binning
-    backgroundType          // backgroundType
+    myRooFitResult->frame, // frame
+    year, // year
+    categoryName, // categoryName
+    range[0], // peak
+    range[1], // minPeakWidth
+    range[2], // maxPeakWidth
+    range[3], // xStart
+    range[4], // xEnd
+    range[5], // binning
+    backgroundType // backgroundType
     );
 
   // clear reserved memory
@@ -635,11 +637,11 @@ MyRooFitResult* createRooFit(
     // This is old version:
     //
     // background = new RooGenericPdf(
-    //   "background",
-    //   "(a * x * x) + (b * x) + c",
-    //   "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
-    //   backgroundDependents
-    //   );
+    // "background",
+    // "(a * x * x) + (b * x) + c",
+    // "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
+    // backgroundDependents
+    // );
 
     // This is new version (more effective):
 
