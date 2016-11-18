@@ -24,12 +24,13 @@
 #include "TGraph.h"
 #include "TAxis.h"
 #include "TH1.h"
+#include "string.h"
 
 #include "MyRooFitSetting.hpp"
 #include "MyRooFitResult.hpp"
 
 
-using namespace RooFit;
+using namespace std;
 
 
 // Interface
