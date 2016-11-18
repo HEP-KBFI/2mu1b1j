@@ -1,3 +1,5 @@
+#include "MyRooFitSetting.h"
+
 MyRooFitSetting::MyRooFitSetting(
   double peak,
   double minPeakWidth,
