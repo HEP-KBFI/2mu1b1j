@@ -9,10 +9,10 @@ public:
   double maxPeakWidth;
   double xStart;
   double xEnd;
-  double binning;
+  double binWidth;
   double fitStart;
   double fitEnd;
-  double fitBinning;
+  double fitBinWidth;
 
   MyRooFitSetting(
     double peak,
@@ -20,10 +20,10 @@ public:
     double maxPeakWidth,
     double xStart,
     double xEnd,
-    double binning,
+    double binWidth,
     double fitStart,
     double fitEnd,
-    double fitBinning
+    double fitBinWidth
     );
 };
 

@@ -6,10 +6,10 @@ MyRooFitSetting::MyRooFitSetting(
   double maxPeakWidth,
   double xStart,
   double xEnd,
-  double binning,
+  double binWidth,
   double fitStart,
   double fitEnd,
-  double fitBinning
+  double fitBinWidth
   )
 {
   this->peak         = peak;
@@ -17,8 +17,8 @@ MyRooFitSetting::MyRooFitSetting(
   this->maxPeakWidth = maxPeakWidth;
   this->xStart       = xStart;
   this->xEnd         = xEnd;
-  this->binning      = binning;
+  this->binWidth     = binWidth;
   this->fitStart     = fitStart;
   this->fitEnd       = fitEnd;
-  this->fitBinning   = fitBinning;
+  this->fitBinWidth  = fitBinWidth;
 }
