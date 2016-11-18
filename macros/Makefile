@@ -5,7 +5,7 @@ TARGET_EXEC ?= app.exe
 BUILD_DIR ?= ./build
 SRC_DIRS ?= ./src
 
-SRCS := $(shell find $(SRC_DIRS) -name *.cpp)
+SRCS := $(shell find $(SRC_DIRS) | grep .cpp)
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
