@@ -25,8 +25,8 @@
 #include "TAxis.h"
 #include "TH1.h"
 
-#include "MyRooFitSetting.h";
-#include "MyRooFitResult.h";
+#include "MyRooFitSetting.hpp"
+#include "MyRooFitResult.hpp"
 
 
 using namespace RooFit;
