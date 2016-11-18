@@ -135,7 +135,7 @@ TH1F* rebinHistogram(
 
 // Entry point function. Iterates over interesting years, categories and ranges and creates .pdf files for visual inspection
 
-bool main()
+int main()
 {
   string years[] = {
     "2015",
@@ -231,7 +231,7 @@ bool main()
   }
 
 
-  return true;
+  return 0;
 }
 
 //
