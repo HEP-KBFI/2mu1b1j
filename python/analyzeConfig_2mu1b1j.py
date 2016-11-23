@@ -220,15 +220,15 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
 
         lines_makefile = []
         self.addToMakefile_analyze(lines_makefile)
-        self.addToMakefile_hadd_stage1(lines_makefile)
-        self.addToMakefile_backgrounds_from_data(lines_makefile)
-        self.addToMakefile_hadd_stage2(lines_makefile)
-        self.addToMakefile_outRoot(lines_makefile)
-        # self.addToMakefile_prep_dcard(lines_makefile)
-        self.addToMakefile_clean(lines_makefile)
-
-        # TODO hackfix (Margus)
-        self.datacardFiles['dummy'] = self.histogramFile_hadd_stage1
+        # self.addToMakefile_hadd_stage1(lines_makefile)
+        # self.addToMakefile_backgrounds_from_data(lines_makefile)
+        # self.addToMakefile_hadd_stage2(lines_makefile)
+        # self.addToMakefile_outRoot(lines_makefile)
+        # # self.addToMakefile_prep_dcard(lines_makefile)
+        # self.addToMakefile_clean(lines_makefile)
+        #
+        # # TODO hackfix (Margus)
+        # self.datacardFiles['dummy'] = self.histogramFile_hadd_stage1
 
         self.createMakefile(lines_makefile)
 
