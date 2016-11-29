@@ -87,6 +87,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
 
     def addToMakefile_hadd_stage1(self, lines_makefile):
         # this method is useless and should be deleted
+        pass
 
     def create(self):
         """Creates all necessary config files and runs the complete analysis workfow -- either locally or on the batch system
