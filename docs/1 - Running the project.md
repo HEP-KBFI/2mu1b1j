@@ -1,3 +1,14 @@
+# Running the tests (and creating your own)
+
+The most important part for stable software is how well it is tested.
+
+```bash
+cd /home/`whoami`/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/tthAnalysis/HiggsToTauTau/specification
+python run_specs.py
+
+# as a result you will see output and "Successful: 2, Failed: 0"
+```
+
 # Important files and their purpose
 
 In this part of the documentation will be described how to set up your custom analysis.
