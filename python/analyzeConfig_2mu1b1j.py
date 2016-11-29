@@ -86,52 +86,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
         create_cfg(self.cfgFile_analyze_original, cfgFile_modified, lines)
 
     def addToMakefile_hadd_stage1(self, lines_makefile):
-        inputFiles_hadd_stage1 = []
-        for sample_name, sample_info in self.samples.items():
-            if not sample_name in self.inputFileIds.keys():
-                continue
-            process_name = sample_info["process_name_specific"]
-            inputFiles_sample = []
-            for lepton_selection in self.lepton_selections:
-                for central_or_shift in self.central_or_shifts:
-                    inputFiles_jobIds = []
-                    for jobId in range(len(self.inputFileIds[sample_name])):
-                        key_file = getKey(
-                            sample_name, lepton_selection, central_or_shift, jobId)
-                        if key_file in self.histogramFiles.keys():
-                            inputFiles_jobIds.append(
-                                self.histogramFiles[key_file])
-                    if len(inputFiles_jobIds) > 0:
-                        haddFile_jobIds = self.histogramFile_hadd_stage1.replace(".root", "_%s_%s_%s.root" %
-                                                                                 (process_name, lepton_selection, central_or_shift))
-                        lines_makefile.append("%s: %s" % (
-                            haddFile_jobIds, " ".join(inputFiles_jobIds)))
-                        lines_makefile.append("\t%s %s" %
-                                              ("rm -f", haddFile_jobIds))
-                        lines_makefile.append("\t%s %s %s" % (
-                            "hadd", haddFile_jobIds, " ".join(inputFiles_jobIds)))
-                        lines_makefile.append("")
-                        inputFiles_sample.append(haddFile_jobIds)
-                        self.filesToClean.append(haddFile_jobIds)
-            if len(inputFiles_sample) > 0:
-                haddFile_sample = self.histogramFile_hadd_stage1.replace(
-                    ".root", "_%s.root" % process_name)
-                lines_makefile.append("%s: %s" % (
-                    haddFile_sample, " ".join(inputFiles_sample)))
-                lines_makefile.append("\t%s %s" % ("rm -f", haddFile_sample))
-                lines_makefile.append("\t%s %s %s" % (
-                    "hadd", haddFile_sample, " ".join(inputFiles_sample)))
-                lines_makefile.append("")
-                inputFiles_hadd_stage1.append(haddFile_sample)
-                self.filesToClean.append(haddFile_sample)
-        lines_makefile.append("%s: %s" % (
-            self.histogramFile_hadd_stage1, " ".join(inputFiles_hadd_stage1)))
-        lines_makefile.append("\t%s %s" % (
-            "rm -f", self.histogramFile_hadd_stage1))
-        lines_makefile.append("\t%s %s %s" % (
-            "hadd", self.histogramFile_hadd_stage1, " ".join(inputFiles_hadd_stage1)))
-        lines_makefile.append("")
-        self.filesToClean.append(self.histogramFile_hadd_stage1)
+        # this method is useless and should be deleted
 
     def create(self):
         """Creates all necessary config files and runs the complete analysis workfow -- either locally or on the batch system
@@ -213,24 +168,11 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
                 "Creating script for submitting '%s' jobs to batch system" % self.executable_analyze)
             self.createScript_sbatch()
 
-        # logging.info(
-        #    "Creating configuration files for executing 'prepareDatacards'")
-        # for histogramToFit in self.histograms_to_fit:
-        #    self.createCfg_prep_dcard(histogramToFit)
-
         lines_makefile = []
         self.addToMakefile_analyze(lines_makefile)
-        # self.addToMakefile_hadd_stage1(lines_makefile)
-        # self.addToMakefile_backgrounds_from_data(lines_makefile)
-        # self.addToMakefile_hadd_stage2(lines_makefile)
-        # self.addToMakefile_outRoot(lines_makefile)
-        # # self.addToMakefile_prep_dcard(lines_makefile)
-        # self.addToMakefile_clean(lines_makefile)
-        #
         # # TODO hackfix (Margus)
-        # self.datacardFiles['dummy'] = self.histogramFile_hadd_stage1
+        self.datacardFiles['this_value_is_useless_and_not_used_but_somehow_it_is_important_should_be_fixed'] = 'sbatch'
 
         self.createMakefile(lines_makefile)
-
 
         logging.info("Done")
