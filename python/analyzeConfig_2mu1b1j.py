@@ -90,8 +90,8 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
 
         template = """
 hadd_stage1: sbatch
-    python %(hadd_stage1_python_file)s
-        """
+\t: python %(hadd_stage1_python_file)s
+"""
 
         template_vars = {
             'hadd_stage1_python_file': hadd_stage1_python_file
