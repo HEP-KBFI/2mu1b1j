@@ -186,6 +186,7 @@ hadd_stage1: sbatch
 
         lines_makefile = []
         self.addToMakefile_analyze(lines_makefile)
+        self.addToMakefile_hadd_stage1(lines_makefile)
         # # TODO hackfix (Margus)
         self.datacardFiles['this_value_is_useless_and_not_used_but_somehow_it_is_important_should_be_fixed'] = 'hadd_stage1'
 
