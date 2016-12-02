@@ -86,8 +86,23 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
         create_cfg(self.cfgFile_analyze_original, cfgFile_modified, lines)
 
     def addToMakefile_hadd_stage1(self, lines_makefile):
-        # this method is useless and should be deleted
-        pass
+        hadd_stage1_python_file = self.create_hadd_stage1_python_file()
+
+        template = """
+hadd_stage1: sbatch
+    python %(hadd_stage1_python_file)s
+        """
+
+        template_vars = {
+            'hadd_stage1_python_file': hadd_stage1_python_file
+        }
+
+        hadd_stage1 = template % template_vars
+
+        print('Adding to Makefile %s' % hadd_stage1)
+
+        lines_makefile.append(hadd_stage1)
+
 
     def create(self):
         """Creates all necessary config files and runs the complete analysis workfow -- either locally or on the batch system
@@ -172,7 +187,7 @@ class analyzeConfig_2mu1b1j(analyzeConfig):
         lines_makefile = []
         self.addToMakefile_analyze(lines_makefile)
         # # TODO hackfix (Margus)
-        self.datacardFiles['this_value_is_useless_and_not_used_but_somehow_it_is_important_should_be_fixed'] = 'sbatch'
+        self.datacardFiles['this_value_is_useless_and_not_used_but_somehow_it_is_important_should_be_fixed'] = 'hadd_stage1'
 
         self.createMakefile(lines_makefile)
 
