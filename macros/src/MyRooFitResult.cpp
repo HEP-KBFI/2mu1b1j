@@ -1,3 +1,5 @@
+#include "MyRooFitResult.hpp"
+
 MyRooFitResult::MyRooFitResult()
 {}
 

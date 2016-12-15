@@ -1,4 +1,4 @@
-#include "MyRooFitSetting.h"
+#include "MyRooFitSetting.hpp"
 
 MyRooFitSetting::MyRooFitSetting(
   double peak,
