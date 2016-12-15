@@ -12,6 +12,7 @@
 #include "RooBreitWigner.h"
 #include "RooFFTConvPdf.h"
 #include "RooPlot.h"
+#include "RooDataHist.h"
 #include "TCanvas.h"
 #include "TGraph.h"
 #include "TAxis.h"
