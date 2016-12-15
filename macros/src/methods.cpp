@@ -5,6 +5,7 @@
 #include "RooAddPdf.h"
 #include "RooCmdArg.h"
 #include "TFile.h"
+#include "TCanvas.h"
 
 
 bool createPValuePlotAndSaveAsPdf(
