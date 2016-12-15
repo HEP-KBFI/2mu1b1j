@@ -2,6 +2,10 @@
 #include "methods.hpp"
 #include "RooDataHist.h"
 #include "RooGenericPdf.h"
+#include "RooAddPdf.h"
+#include "RooCmdArg.h"
+#include "TFile.h"
+
 
 bool createPValuePlotAndSaveAsPdf(
   string          year,
