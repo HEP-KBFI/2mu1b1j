@@ -5,35 +5,24 @@ bool createPValuePlotAndSaveAsPdf(
   string          year,
   string          categoryName,
   string          backgroundType,
-  MyRooFitSetting myRooFitSetting,
+  MyRooFitSetting settings,
   TH1F           *dataHistogram
   )
 {
-  double peak         = myRooFitSetting.peak;
-  double minPeakWidth = 0.1;
-  double maxPeakWidth = 5.0;
-  double xStart       = myRooFitSetting.xStart;
-  double xEnd         = myRooFitSetting.xEnd;
-  double binWidth     = myRooFitSetting.binWidth;
-  double fitStart     = myRooFitSetting.fitStart;
-  double fitEnd       = myRooFitSetting.fitEnd;
-  double fitBinWidth  = myRooFitSetting.fitBinWidth;
-
-
-  int fitBinsCount = (fitEnd - fitStart) / fitBinWidth;
+  int fitBinsCount = (settings.fitEnd - settings.fitStart) / settings.fitBinWidth;
 
 
   TH1F *rebinnedHistogram = rebinHistogram(
     dataHistogram,
-    0.1,
-    binWidth
+    0.1, // original binning
+    settings.binWidth
     );
 
   auto GEVs    = new double[fitBinsCount]();
   auto pValues = new double[fitBinsCount]();
 
   for (int i = 0; i < fitBinsCount; i++) {
-    double currentGEV = fitStart + (i * fitBinWidth);
+    double currentGEV = settings.fitStart + (i * settings.fitBinWidth);
 
     // Create fit
 
@@ -42,10 +31,10 @@ bool createPValuePlotAndSaveAsPdf(
       year,
       categoryName,
       currentGEV, // peak
-      minPeakWidth, // minPeakWidth
-      maxPeakWidth, // maxPeakWidth
-      xStart, // xStart
-      xEnd, // xEnd
+      settings.minPeakWidth, // minPeakWidth
+      settings.maxPeakWidth, // maxPeakWidth
+      settings.xStart, // xStart
+      settings.xEnd, // xEnd
       backgroundType, // backgroundType
       "peakIsConstant" // peakType
       );
@@ -58,11 +47,11 @@ bool createPValuePlotAndSaveAsPdf(
       year + "_pValue_", // year
       categoryName, // categoryName
       currentGEV, // peak
-      minPeakWidth, // minPeakWidth
-      maxPeakWidth, // maxPeakWidth
-      xStart, // xStart
-      xEnd, // xEnd
-      binWidth, // binning
+      settings.minPeakWidth, // minPeakWidth
+      settings.maxPeakWidth, // maxPeakWidth
+      settings.xStart, // xStart
+      settings.xEnd, // xEnd
+      settings.fitBinWidth, // binning
       backgroundType // backgroundType
       );
 
@@ -151,11 +140,11 @@ bool savePValuePlotAsPdf(
 //
 
 bool createRooFitPlotForRangeAndSaveAsPdf(
-  string year,
-  string categoryName,
-  string backgroundType,
-  double range[],
-  TH1F  *dataHistogram
+  string          year,
+  string          categoryName,
+  string          backgroundType,
+  MyRooFitSetting settings,
+  TH1F           *dataHistogram
   )
 {
   // Create rebinned histogram
@@ -163,7 +152,7 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
   TH1F *rebinnedHistogram = rebinHistogram(
     dataHistogram,
     0.1,
-    range[5]
+    settings.binWidth
     );
 
   // Generate roofit plot
@@ -172,11 +161,11 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
     rebinnedHistogram,
     year,
     categoryName,
-    range[0], // peak
-    range[1], // minPeakWidth
-    range[2], // maxPeakWidth
-    range[3], // xStart
-    range[4], // xEnd
+    settings.peak, // peak
+    settings.minPeakWidth, // minPeakWidth
+    settings.maxPeakWidth, // maxPeakWidth
+    settings.xStart, // xStart
+    settings.xEnd, // xEnd
     backgroundType, // backgroundType
     "peakIsVariable" // peakType
     );
@@ -188,12 +177,12 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
     myRooFitResult->frame, // frame
     year, // year
     categoryName, // categoryName
-    range[0], // peak
-    range[1], // minPeakWidth
-    range[2], // maxPeakWidth
-    range[3], // xStart
-    range[4], // xEnd
-    range[5], // binning
+    settings.peak,
+    settings.minPeakWidth,
+    settings.maxPeakWidth,
+    settings.xStart,
+    settings.xEnd,
+    settings.binWidth
     backgroundType // backgroundType
     );
 
