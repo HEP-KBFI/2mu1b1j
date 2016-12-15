@@ -1,5 +1,7 @@
 #include "string.h"
 #include "methods.hpp"
+#include "RooDataHist.h"
+
 
 bool createPValuePlotAndSaveAsPdf(
   string          year,
