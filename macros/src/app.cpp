@@ -12,6 +12,9 @@
 #ifndef __CINT__
 # include "RooGlobalFunc.h"
 #endif // ifndef __CINT__
+
+#include "string.h"
+
 #include "RooRealVar.h"
 #include "RooDataSet.h"
 #include "RooGaussian.h"
@@ -24,7 +27,7 @@
 #include "TGraph.h"
 #include "TAxis.h"
 #include "TH1.h"
-#include "string.h"
+#include "TFile.h"
 
 #include "methods.hpp"
 #include "MyRooFitSetting.hpp"
