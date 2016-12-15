@@ -9,6 +9,8 @@
 
 #include "MyRooFitSetting.hpp"
 
+using namespace std;
+
 
 // Load root file
 
