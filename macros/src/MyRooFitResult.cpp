@@ -1,5 +1,8 @@
 #include "MyRooFitResult.hpp"
 
+#include "TMath.h"
+
+
 MyRooFitResult::MyRooFitResult()
 {}
 
