@@ -71,11 +71,11 @@ bool savePValuePlotAsPdf(
 // Creates RooPlot fit and saves as PDF file for specific range
 
 bool createRooFitPlotForRangeAndSaveAsPdf(
-  string year,
-  string categoryName,
-  string backgroundType,
-  double range[],
-  TH1F  *dataHistogram
+  string          year,
+  string          categoryName,
+  string          backgroundType,
+  MyRooFitSetting myRooFitSetting,
+  TH1F           *dataHistogram
   );
 
 
