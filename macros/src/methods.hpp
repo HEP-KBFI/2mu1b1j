@@ -1,8 +1,12 @@
 #ifndef METHODS_H
 #define METHODS_H
 
-#include "TH1.h"
+
 #include "string.h"
+
+#include "TH1.h"
+#include "TFile.h"
+
 #include "MyRooFitSetting.hpp"
 
 
