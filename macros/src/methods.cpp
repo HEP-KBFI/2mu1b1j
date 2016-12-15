@@ -17,7 +17,7 @@ bool createPValuePlotAndSaveAsPdf(
   double binWidth     = myRooFitSetting.binWidth;
   double fitStart     = myRooFitSetting.fitStart;
   double fitEnd       = myRooFitSetting.fitEnd;
-  double fitStart     = myRooFitSetting.fitBinWidth;
+  double fitBinWidth  = myRooFitSetting.fitBinWidth;
 
 
   int fitBinsCount = (fitEnd - fitStart) / fitBinWidth;
