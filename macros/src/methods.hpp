@@ -1,6 +1,11 @@
 #ifndef METHODS_H
 #define METHODS_H
 
+#include "TH1.h"
+#include "string.h"
+#include "MyRooFitSetting.hpp"
+
+
 // Load root file
 
 TFile* loadRootFile(
