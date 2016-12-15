@@ -3,6 +3,8 @@
 
 #include "string.h"
 
+#include "RooPlot.h"
+
 using namespace std;
 
 class MyRooFitResult {
