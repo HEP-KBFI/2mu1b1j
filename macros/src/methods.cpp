@@ -419,7 +419,7 @@ MyRooFitResult* createRooFit(
   RooPlot *frame = x.frame();
   dataHist.plotOn(frame);
   signalAndBackground.plotOn(frame);
-  signalAndBackground.plotOn(frame, Components(*background), LineStyle(kDashed));
+  signalAndBackground.plotOn(frame, RooFit::Components(*background), LineStyle(kDashed));
 
 
   // clean reserved memory
