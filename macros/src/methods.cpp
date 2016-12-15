@@ -77,11 +77,11 @@ bool createPValuePlotAndSaveAsPdf(
   savePValuePlotAsPdf(
     year, // year
     categoryName, // categoryName
-    minPeakWidth, // minPeakWidth
-    maxPeakWidth, // maxPeakWidth
-    xStart, // xStart
-    xEnd, // xEnd
-    binWidth, // binWidth
+    settings.minPeakWidth, // minPeakWidth
+    settings.maxPeakWidth, // maxPeakWidth
+    settings.xStart, // xStart
+    settings.xEnd, // xEnd
+    settings.binWidth, // binWidth
     backgroundType, // backgroundType
     GEVs, // GEVs
     pValues // pValues
