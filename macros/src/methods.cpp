@@ -411,7 +411,7 @@ MyRooFitResult* createRooFit(
   // Make fitting
 
   // RooDataSet *data = signalAndBackground.generate(x, 2000);
-  signalAndBackground.fitTo(dataHist, Extended());
+  signalAndBackground.fitTo(dataHist, RooFit::Extended());
 
 
   // Draw fitted result onto RooPlot
