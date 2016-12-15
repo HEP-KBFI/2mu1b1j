@@ -182,7 +182,7 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
     settings.maxPeakWidth,
     settings.xStart,
     settings.xEnd,
-    settings.binWidth
+    settings.binWidth,
     backgroundType // backgroundType
     );
 
