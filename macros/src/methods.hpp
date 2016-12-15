@@ -20,6 +20,7 @@
 
 
 #include "MyRooFitSetting.hpp"
+#include "MyRooFitResult.hpp"
 
 using namespace std;
 
