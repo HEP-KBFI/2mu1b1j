@@ -4,8 +4,20 @@
 
 #include "string.h"
 
+#include "RooRealVar.h"
+#include "RooDataSet.h"
+#include "RooGaussian.h"
+#include "RooLandau.h"
+#include "RooNumConvPdf.h"
+#include "RooBreitWigner.h"
+#include "RooFFTConvPdf.h"
+#include "RooPlot.h"
+#include "TCanvas.h"
+#include "TGraph.h"
+#include "TAxis.h"
 #include "TH1.h"
-#include "TFile.h"
+#include "string.h"
+
 
 #include "MyRooFitSetting.hpp"
 
