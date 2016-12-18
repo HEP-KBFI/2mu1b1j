@@ -39,7 +39,7 @@ using namespace std;
 
 // Entry point function. Iterates over interesting years, categories and ranges and creates .pdf files for visual inspection
 
-int main()
+int app()
 {
   string years[] = {
     "2015",
