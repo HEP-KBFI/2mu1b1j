@@ -6,6 +6,7 @@
 #include "RooCmdArg.h"
 #include "TFile.h"
 #include "TCanvas.h"
+#include "TGraph.h"
 
 
 bool createPValuePlotAndSaveAsPdf(
@@ -37,13 +38,13 @@ bool createPValuePlotAndSaveAsPdf(
       rebinnedHistogram,
       year,
       categoryName,
-      currentGEV, // peak
+      currentGEV,            // peak
       settings.minPeakWidth, // minPeakWidth
       settings.maxPeakWidth, // maxPeakWidth
-      settings.xStart, // xStart
-      settings.xEnd, // xEnd
-      backgroundType, // backgroundType
-      "peakIsConstant" // peakType
+      settings.xStart,       // xStart
+      settings.xEnd,         // xEnd
+      backgroundType,        // backgroundType
+      "peakIsConstant"       // peakType
       );
 
 
@@ -51,15 +52,15 @@ bool createPValuePlotAndSaveAsPdf(
 
     saveRooPlot(
       myRooFitResult->frame, // frame
-      year + "_pValue_", // year
-      categoryName, // categoryName
-      currentGEV, // peak
+      year + "_pValue_",     // year
+      categoryName,          // categoryName
+      currentGEV,            // peak
       settings.minPeakWidth, // minPeakWidth
       settings.maxPeakWidth, // maxPeakWidth
-      settings.xStart, // xStart
-      settings.xEnd, // xEnd
-      settings.fitBinWidth, // binning
-      backgroundType // backgroundType
+      settings.xStart,       // xStart
+      settings.xEnd,         // xEnd
+      settings.fitBinWidth,  // binning
+      backgroundType         // backgroundType
       );
 
 
@@ -82,16 +83,16 @@ bool createPValuePlotAndSaveAsPdf(
   }
 
   savePValuePlotAsPdf(
-    year, // year
-    categoryName, // categoryName
+    year,                  // year
+    categoryName,          // categoryName
     settings.minPeakWidth, // minPeakWidth
     settings.maxPeakWidth, // maxPeakWidth
-    settings.xStart, // xStart
-    settings.xEnd, // xEnd
-    settings.binWidth, // binWidth
-    backgroundType, // backgroundType
-    GEVs, // GEVs
-    pValues // pValues
+    settings.xStart,       // xStart
+    settings.xEnd,         // xEnd
+    settings.binWidth,     // binWidth
+    backgroundType,        // backgroundType
+    GEVs,                  // GEVs
+    pValues                // pValues
     );
 
   delete[] GEVs;
@@ -168,13 +169,13 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
     rebinnedHistogram,
     year,
     categoryName,
-    settings.peak, // peak
+    settings.peak,         // peak
     settings.minPeakWidth, // minPeakWidth
     settings.maxPeakWidth, // maxPeakWidth
-    settings.xStart, // xStart
-    settings.xEnd, // xEnd
-    backgroundType, // backgroundType
-    "peakIsVariable" // peakType
+    settings.xStart,       // xStart
+    settings.xEnd,         // xEnd
+    backgroundType,        // backgroundType
+    "peakIsVariable"       // peakType
     );
 
 
@@ -182,8 +183,8 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
 
   saveRooPlot(
     myRooFitResult->frame, // frame
-    year, // year
-    categoryName, // categoryName
+    year,                  // year
+    categoryName,          // categoryName
     settings.peak,
     settings.minPeakWidth,
     settings.maxPeakWidth,
