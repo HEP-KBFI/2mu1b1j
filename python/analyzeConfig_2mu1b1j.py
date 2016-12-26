@@ -1,6 +1,7 @@
 import logging
 
 from tthAnalysis.HiggsToTauTau.analyzeConfig import *
+from tthAnalysis.HiggsToTauTau.jobTools import generate_file_ids, generate_input_list
 from tthAnalysis.HiggsToTauTau.jobTools import create_if_not_exists
 
 

@@ -10,5 +10,5 @@ mkdir /home/margusp/roofits/
 #make
 #./build/app.exe | grep pValue > /home/margusp/roofits/out-pvalue.log
 
-cd src
-root -q -b app.cpp
+
+g++ -Wall -O2 
