@@ -72,7 +72,7 @@ typedef std::vector<std::string>     vstring;
  */
 bool isHigherPt(const GenParticle *particle1, const GenParticle *particle2)
 {
-  return particle1->pt_ > particle2->pt_;
+  return particle1->pt() > particle2->pt();
 }
 
 /**
@@ -82,7 +82,7 @@ bool isHigherPt(const GenParticle *particle1, const GenParticle *particle2)
  */
 bool isHigherCSV(const RecoJet *jet1, const RecoJet *jet2)
 {
-  return jet1->BtagCSV_ > jet2->BtagCSV_;
+  return jet1->BtagCSV() > jet2->BtagCSV();
 }
 
 /**
@@ -522,7 +522,7 @@ int main(int argc, char *argv[])
 
 
     // check that muons have opposite charge
-    if (!((preselMuon_lead->charge_ + preselMuon_sublead->charge_) == 0.0)) {
+    if (!((preselMuon_lead->charge() + preselMuon_sublead->charge()) == 0.0)) {
       if (run_lumi_eventSelector) {
         std::cout << "event FAILS muons opposite charge criteria." << std::endl;
       }
@@ -531,9 +531,9 @@ int main(int argc, char *argv[])
     cutFlowTable.update("muons opposite charge criteria");
 
 
-    double massOfOppositeChargeMuons   = (preselMuon_lead->p4_ + preselMuon_sublead->p4_).mass();
-    double deltaROfOppositeChargeMuons = deltaR(preselMuon_lead->p4_, preselMuon_sublead->p4_);
-    double ptOfOppositeChargeMuons     = (preselMuon_lead->p4_ + preselMuon_sublead->p4_).pt();
+    double massOfOppositeChargeMuons   = (preselMuon_lead->p4() + preselMuon_sublead->p4()).mass();
+    double deltaROfOppositeChargeMuons = deltaR(preselMuon_lead->p4(), preselMuon_sublead->p4());
+    double ptOfOppositeChargeMuons     = (preselMuon_lead->p4() + preselMuon_sublead->p4()).pt();
 
 
     // --- apply final event selection
@@ -575,11 +575,11 @@ int main(int argc, char *argv[])
 
     // muon pt cuts
 
-    if (!((selMuon_lead->pt_ > 20.) && (selMuon_sublead->pt_ > 10.))) {
+    if (!((selMuon_lead->pt() > 20.) && (selMuon_sublead->pt() > 10.))) {
       if (run_lumi_eventSelector) {
         std::cout << "event FAILS muon pT selection." << std::endl;
-        std::cout << " (leading selMuon pT = " << selMuon_lead->pt_
-                  << ", subleading selMuon pT = " << selMuon_sublead->pt_
+        std::cout << " (leading selMuon pT = " << selMuon_lead->pt()
+                  << ", subleading selMuon pT = " << selMuon_sublead->pt()
                   << std::endl;
       }
       continue;
@@ -589,13 +589,13 @@ int main(int argc, char *argv[])
 
     // check that muon and antimuon
 
-    bool hasTwoOppositeSignMuons = (selMuon_lead->charge_ + selMuon_sublead->charge_) == 0;
+    bool hasTwoOppositeSignMuons = (selMuon_lead->charge() + selMuon_sublead->charge()) == 0;
 
     if (!hasTwoOppositeSignMuons) {
       if (run_lumi_eventSelector) {
         std::cout << "event FAILS muon charge selection." << std::endl;
-        std::cout << " (leading selMuon charge = " << selMuon_lead->charge_
-                  << ", subleading selMuon charge = " << selMuon_sublead->charge_
+        std::cout << " (leading selMuon charge = " << selMuon_lead->charge()
+                  << ", subleading selMuon charge = " << selMuon_sublead->charge()
                   << ")" << std::endl;
       }
       continue;
@@ -610,7 +610,7 @@ int main(int argc, char *argv[])
     for (unsigned int i = 0; i < selBJets_medium.size(); i++) {
       const RecoJet *bJet = selBJets_medium.at(i);
 
-      if ((bJet->pt_ > 30) && (abs(bJet->eta_) < 2.4)) {
+      if ((bJet->pt() > 30) && (abs(bJet->eta()) < 2.4)) {
         bTaggedJetWithPtOver30AndEtaLessThan24Count++;
       }
     }
@@ -621,7 +621,7 @@ int main(int argc, char *argv[])
     for (unsigned int i = 0; i < selJets.size(); i++) {
       const RecoJet *jet = selJets.at(i);
 
-      if ((jet->pt_ > 30) && (abs(jet->eta_) < 2.4)) {
+      if ((jet->pt() > 30) && (abs(jet->eta()) < 2.4)) {
         jetsWithPtOver30AndEtaLessThan24Count++;
       }
     }
@@ -632,7 +632,7 @@ int main(int argc, char *argv[])
     for (unsigned int i = 0; i < selJets.size(); i++) {
       const RecoJet *selJet = selJets.at(i);
 
-      if ((selJet->pt_ > 30) && (abs(selJet->eta_) > 2.4)) {
+      if ((selJet->pt() > 30) && (abs(selJet->eta()) > 2.4)) {
         jetsWithPtOver30AndEtaBigger24Count++;
       }
     }
@@ -643,13 +643,14 @@ int main(int argc, char *argv[])
     //
     // 1. two opposite sign muons with pT > 25 GeV, |η| < 2.1 with tight muon identification and loose tracker isolation
 
-    bool hasTwoMuonsWithPtOver25 = selMuon_lead->pt_ > 25 &&
-                                   selMuon_sublead->pt_ > 25;
+    bool hasTwoMuonsWithPtOver25 = selMuon_lead->pt() > 25 &&
+                                   selMuon_sublead->pt() > 25;
 
-    bool hasFirstMuonPtOver20SecondMuonPtOver10 = selMuon_lead->pt_ > 20 &&
-                                                  selMuon_sublead->pt_ > 10;
+    bool hasFirstMuonPtOver20SecondMuonPtOver10 = selMuon_lead->pt() > 20 &&
+                                                  selMuon_sublead->pt() > 10;
 
-    bool hasTwoMuonsWithAbsValueOfEtaSmallerThan21 = abs(selMuon_lead->eta_) < 2.1 && abs(selMuon_sublead->eta_) < 2.1;
+    bool hasTwoMuonsWithAbsValueOfEtaSmallerThan21 = abs(selMuon_lead->eta()) < 2.1 && abs(selMuon_sublead->eta()) <
+                                                     2.1;
 
     bool hasCategoryACriteria1Passed = hasTwoMuonsWithPtOver25 &&
                                        hasTwoMuonsWithAbsValueOfEtaSmallerThan21;
@@ -783,8 +784,8 @@ int main(int argc, char *argv[])
 
     // 5. di–muon and di–jet system are required to be back–to–back in the transverse plane of the detector, ∆φ(μμ − jj) > 2.5 (against t ̄t background);
 
-    LV diMuonP4 = selMuon_lead->p4_ + selMuon_sublead->p4_;
-    LV diJetP4  = selJet_lead->p4_ + selJet_sublead->p4_;
+    LV diMuonP4 = selMuon_lead->p4() + selMuon_sublead->p4();
+    LV diJetP4  = selJet_lead->p4() + selJet_sublead->p4();
     double dPhi = reco::deltaPhi(diMuonP4.phi(), diJetP4.phi());
 
     bool hasCategoryBCriteria5Passed = dPhi > 2.5;
