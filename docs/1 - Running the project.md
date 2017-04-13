@@ -3,7 +3,7 @@
 The most important part for stable software is how well it is tested.
 
 ```bash
-cd /home/`whoami`/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/tthAnalysis/HiggsToTauTau/specification
+cd /home/`whoami`/VHbbNtuples_8_0_x/CMSSW_8_0_21/src/tthAnalysis/HiggsToTauTau/specification
 python run_specs.py
 
 # as a result you will see output and "Successful: 2, Failed: 0"
@@ -27,7 +27,7 @@ Only point 4 is in the scope of this documentation.
 
 ```bash
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-cd /home/`whoami`/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/
+cd /home/`whoami`/VHbbNtuples_8_0_x/CMSSW_8_0_21/src/
 cmsenv
 python tthAnalysis/HiggsToTauTau/test/NtupleList.py
 export SBATCH_PRIORITY="short"
@@ -59,10 +59,10 @@ git pull
 ## How I run the tests?
 
 ```bash
-cd /home/`whoami`/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/analysis2mu1b1j/analysis2mu1b1j/test
+cd /home/`whoami`/VHbbNtuples_8_0_x/CMSSW_8_0_21/src/analysis2mu1b1j/analysis2mu1b1j/test
 python tthAnalyzeRun_2mu1b1j_2015.py
 
-cd /home/`whoami`/VHbbNtuples_7_6_x/CMSSW_7_6_3/src/analysis2mu1b1j/analysis2mu1b1j/test
+cd /home/`whoami`/VHbbNtuples_8_0_x/CMSSW_8_0_21/src/analysis2mu1b1j/analysis2mu1b1j/test
 python tthAnalyzeRun_2mu1b1j_2016.py
 ```
 
