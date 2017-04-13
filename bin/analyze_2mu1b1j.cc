@@ -224,7 +224,7 @@ int main(int argc, char *argv[])
                                                             run_lumi_eventSelector !=
                                                             0);
 
-  RecoJetReader *jetReader = new RecoJetReader(era, "nJet", "Jet");
+  RecoJetReader *jetReader = new RecoJetReader(era, false, "nJet", "Jet");
   jetReader->setJetPt_central_or_shift(jetPt_option);
   jetReader->setBranchName_BtagWeight(jet_btagWeight_branch);
   jetReader->setBranchAddresses(inputTree);
