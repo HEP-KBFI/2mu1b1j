@@ -1,6 +1,6 @@
 from collections import OrderedDict as OD
 
-from tthAnalysis.HiggsToTauTau.samples_2016 import samples_2016
+from tthAnalysis.HiggsToTauTau.tthAnalyzeSamples_2016 import samples_2016
 
 allowed_datasets = [
     "/DoubleMuon/Run2016B-PromptReco-v2/MINIAOD",
