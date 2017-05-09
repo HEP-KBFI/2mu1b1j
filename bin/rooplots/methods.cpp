@@ -1,296 +1,71 @@
-
-// Intro
-// =====
-//
-// This program creates Roofit plots from TH1F histograms for 2mu1b1j analysis.
-//
-// If you have any questions, send an email to margus@wave.ee
-//
-//
-
-
-#ifndef __CINT__
-# include "RooGlobalFunc.h"
-#endif // ifndef __CINT__
-#include "RooRealVar.h"
-#include "RooDataSet.h"
-#include "RooGaussian.h"
-#include "RooLandau.h"
-#include "RooNumConvPdf.h"
-#include "RooBreitWigner.h"
-#include "RooFFTConvPdf.h"
-#include "RooPlot.h"
+#include "string.h"
+#include "methods.hpp"
+#include "RooDataHist.h"
+#include "RooGenericPdf.h"
+#include "RooAddPdf.h"
+#include "RooCmdArg.h"
+#include "TFile.h"
 #include "TCanvas.h"
 #include "TGraph.h"
-#include "TAxis.h"
-#include "TH1.h"
 
-using namespace RooFit;
-
-
-// Interface
-// =========
-
-// Load root file
-
-TFile* loadRootFile(
-  string year
-  );
-
-
-// Loads TH1F from pregenerated analysis .root file
-
-TH1F* loadTH1F(
-  TFile *rootFile,
-  string year,
-  string categoryName
-  );
-
-
-// Creates pValue plot
 
 bool createPValuePlotAndSaveAsPdf(
-  string year,
-  string categoryName,
-  string backgroundType,
-  TH1F  *dataHistogram
-  );
-
-
-// Saves pValues and GEVs to pdf
-
-bool savePValuePlotAsPdf(
-  string year,
-  string categoryName,
-  string backgroundType,
-  double GEVs[],
-  double pValues[]
-  );
-
-
-// Creates RooPlot fit and saves as PDF file for specific range
-
-bool createRooFitPlotForRangeAndSaveAsPdf(
-  string year,
-  string categoryName,
-  string backgroundType,
-  float  range[],
-  TH1F  * dataHistogram
-  );
-
-
-// MyRooFitResult
-
-class MyRooFitResult {
-public:
-
-  RooPlot *frame;
-  double   x;
-  double   signalEventsCount;
-  double   fitError;
-  double   backgroundEventsCount;
-  double   breitWignerMean;
-  double   breitWignerWidth;
-  double   gaussMean;
-  double   gaussWidth;
-  double   backgroundA;
-  double   backgroundB;
-  double   backgroundC;
-
-  MyRooFitResult();
-
-  double getPull();
-  double getPValue();
-  string getInfo();
-};
-
-
-// Creates RooPlot from TH1F fitting
-
-MyRooFitResult* createRooFit(
-  TH1F  *histogram,
-  string year,
-  string categoryName,
-  float  peak,
-  float  minPeakWidth,
-  float  maxPeakWidth,
-  float  xStart,
-  float  xEnd,
-  string backgroundType,
-  string peakType
-  );
-
-
-// Saves RooPlot into .pdf file
-
-bool saveRooPlot(
-  RooPlot *frame,
-  string   year,
-  string   categoryName,
-  float    peak,
-  float    minPeakWidth,
-  float    maxPeakWidth,
-  float    xStart,
-  float    xEnd,
-  float    binning,
-  string   backgroundType
-  );
-
-
-// Original TH1F files are 10 datapoints per GeV, but you might want to have it different some times
-// so rebinned clone is created
-
-TH1F* rebinHistogram(
-  TH1F  *histogram,
-  double originalPinning,
-  double newPinning
-  );
-
-
-// Entry point function. Iterates over interesting years, categories and ranges and creates .pdf files for visual inspection
-
-bool create_roofit_plots()
-{
-  string years[] = {
-    "2015",
-    "2016"
-  };
-
-  string categoryNames[] = {
-    "CategoryA",
-    "CategoryARelaxed",
-    "CategoryACompare",
-    "CategoryACompareRelaxed",
-    "CategoryB",
-    "CategoryBRelaxed",
-    "CategoryBCompare",
-    "CategoryBCompareRelaxed",
-    "CategoryC",
-    "CategoryCRelaxed",
-    "CategoryCCompare",
-    "CategoryCCompareRelaxed"
-  };
-
-  string backgroundTypes[] = {
-    "polynomial",
-    "exponential"
-  };
-
-
-  // peak, minPeakWidth, maxPeakWidth, xStart, xEnd, binning
-
-  float ranges[][6] = {
-    {     3.1,   0.1,  1.0,    2.0,    4.0,   0.1 },
-    {     3.1,   0.1,  1.0,    2.0,    4.0,   0.2 },
-    {    9.46,   0.1,  2.0,    8.0,  12.00,   0.2 },
-    {    10.0,   0.1,  2.0,    8.0,  12.00,   0.2 },
-    {   10.35,   0.1,  2.0,    8.0,  12.00,   0.2 },
-    {    28.5,   1.0,  2.0,   20.0,   40.0,   0.5 },
-    {    28.5,   1.0,  2.0,   20.0,   40.0,     1 },
-    {    28.5,   1.0,  2.0,   20.0,   40.0,     2 },
-    {    91.0,   1.0,  2.0,   80.0,  100.0,     1 },
-    {    91.0,   1.0,  2.0,    0.0,  120.0,     1 }
-  };
-
-
-  // Generate plots
-
-  for (string year : years) {
-    for (string categoryName : categoryNames) {
-      for (string backgroundType : backgroundTypes) {
-        cout << "Current category: " << categoryName << "\n";
-
-
-        // Load histogram from analysis
-
-        TFile *rootFile                 = loadRootFile(year);
-        TH1F  *dataHistogram            = loadTH1F(rootFile, year, categoryName);
-        TH1F  *dataHistogram1PinsPer1Gv = rebinHistogram(
-          dataHistogram,
-          0.1,
-          1.0
-          );
-
-
-        // Generate pValue plot
-
-        createPValuePlotAndSaveAsPdf(
-          year,
-          categoryName,
-          backgroundType,
-          dataHistogram1PinsPer1Gv
-          );
-
-
-        // Iterate over interesting areas
-
-        for (auto range : ranges) {
-          createRooFitPlotForRangeAndSaveAsPdf(
-            year,
-            categoryName,
-            backgroundType,
-            range,
-            dataHistogram
-            );
-        }
-
-
-        // clear reserved memory
-
-        delete dataHistogram;
-        delete rootFile;
-      }
-    }
-  }
-
-
-  return true;
-}
-
-//
-
-bool createPValuePlotAndSaveAsPdf(
-  string year,
-  string categoryName,
-  string backgroundType,
-  TH1F  *dataHistogram
+  string          year,
+  string          categoryName,
+  string          backgroundType,
+  MyRooFitSetting settings,
+  TH1F           *dataHistogram
   )
 {
-  auto GEVs    = new double[55]();
-  auto pValues = new double[55]();
+  int fitBinsCount = (settings.fitEnd - settings.fitStart) / settings.fitBinWidth;
 
-  for (int i = 0; i < 55; i++) {
-    double currentGEV = 15.0 + i;
+
+  TH1F *rebinnedHistogram = rebinHistogram(
+    dataHistogram,
+    0.1, // original binning
+    settings.binWidth
+    );
+
+  auto GEVs    = new double[fitBinsCount]();
+  auto pValues = new double[fitBinsCount]();
+
+  for (int i = 0; i < fitBinsCount; i++) {
+    double currentGEV = settings.fitStart + (i * settings.fitBinWidth);
 
     // Create fit
+
     MyRooFitResult *myRooFitResult = createRooFit(
-      dataHistogram,
+      rebinnedHistogram,
       year,
       categoryName,
-      currentGEV,      // peak
-      0.1,             // minPeakWidth
-      5.0,             // maxPeakWidth
-      15,              // xStart
-      70,              // xEnd
-      backgroundType,  // backgroundType
-      "peakIsConstant" // peakType
+      currentGEV,            // peak
+      settings.minPeakWidth, // minPeakWidth
+      settings.maxPeakWidth, // maxPeakWidth
+      settings.xStart,       // xStart
+      settings.xEnd,         // xEnd
+      backgroundType,        // backgroundType
+      "peakIsConstant"       // peakType
       );
+
 
     // Store information about the fit in plot
+
     saveRooPlot(
-      myRooFitResult->frame,
-      year,
-      categoryName,
-      currentGEV,
-      0.1,
-      20.0,
-      15.0,
-      70.0,
-      1,
-      backgroundType
+      myRooFitResult->frame, // frame
+      year + "_pValue_",     // year
+      categoryName,          // categoryName
+      currentGEV,            // peak
+      settings.minPeakWidth, // minPeakWidth
+      settings.maxPeakWidth, // maxPeakWidth
+      settings.xStart,       // xStart
+      settings.xEnd,         // xEnd
+      settings.fitBinWidth,  // binning
+      backgroundType         // backgroundType
       );
 
+
     // Calculate p value
+
     double pValue = myRooFitResult->getPValue();
 
     cout << "pValuePlotInfo:"
@@ -298,18 +73,30 @@ bool createPValuePlotAndSaveAsPdf(
          << myRooFitResult->getInfo()
          << "\n";
 
+
     // Store pValue and GEV info
+
     GEVs[i]    = currentGEV;
     pValues[i] = pValue;
+
+    delete myRooFitResult;
   }
 
   savePValuePlotAsPdf(
-    year,
-    categoryName,
-    backgroundType,
-    GEVs,
-    pValues
+    year,                  // year
+    categoryName,          // categoryName
+    settings.minPeakWidth, // minPeakWidth
+    settings.maxPeakWidth, // maxPeakWidth
+    settings.xStart,       // xStart
+    settings.xEnd,         // xEnd
+    settings.binWidth,     // binWidth
+    backgroundType,        // backgroundType
+    GEVs,                  // GEVs
+    pValues                // pValues
     );
+
+  delete[] GEVs;
+  delete[] pValues;
 
   return true;
 }
@@ -319,12 +106,17 @@ bool createPValuePlotAndSaveAsPdf(
 bool savePValuePlotAsPdf(
   string year,
   string categoryName,
+  double minPeakWidth,
+  double maxPeakWidth,
+  double xStart,
+  double xEnd,
+  double binWidth,
   string backgroundType,
   double GEVs[],
   double pValues[]
   )
 {
-  TGraph  *graph  = new TGraph(70 - 15, GEVs, pValues);
+  TGraph  *graph  = new TGraph(xEnd - xStart, GEVs, pValues);
   TCanvas *canvas = new TCanvas();
 
   canvas->SetLogy();
@@ -332,6 +124,16 @@ bool savePValuePlotAsPdf(
                    year +
                    "_" +
                    categoryName +
+                   "_peakWidth-" +
+                   to_string(minPeakWidth) +
+                   "-" +
+                   to_string(maxPeakWidth) +
+                   "_range-" +
+                   to_string(xStart) +
+                   "-" +
+                   to_string(xEnd) +
+                   "_binning-" +
+                   to_string(binWidth) +
                    "_background-" +
                    backgroundType +
                    ".pdf";
@@ -346,11 +148,11 @@ bool savePValuePlotAsPdf(
 //
 
 bool createRooFitPlotForRangeAndSaveAsPdf(
-  string year,
-  string categoryName,
-  string backgroundType,
-  float  range[],
-  TH1F  *dataHistogram
+  string          year,
+  string          categoryName,
+  string          backgroundType,
+  MyRooFitSetting settings,
+  TH1F           *dataHistogram
   )
 {
   // Create rebinned histogram
@@ -358,7 +160,7 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
   TH1F *rebinnedHistogram = rebinHistogram(
     dataHistogram,
     0.1,
-    range[5]
+    settings.binWidth
     );
 
   // Generate roofit plot
@@ -367,29 +169,29 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
     rebinnedHistogram,
     year,
     categoryName,
-    range[0],        // peak
-    range[1],        // minPeakWidth
-    range[2],        // maxPeakWidth
-    range[3],        // xStart
-    range[4],        // xEnd
-    backgroundType,  // backgroundType
-    "peakIsVariable" // peakType
+    settings.peak,         // peak
+    settings.minPeakWidth, // minPeakWidth
+    settings.maxPeakWidth, // maxPeakWidth
+    settings.xStart,       // xStart
+    settings.xEnd,         // xEnd
+    backgroundType,        // backgroundType
+    "peakIsVariable"       // peakType
     );
 
 
   // Save rooplot to pdf file
 
   saveRooPlot(
-    myRooFitResult->frame,
-    year,
-    categoryName,
-    range[0],
-    range[1],
-    range[2],
-    range[3],
-    range[4],
-    range[5],
-    backgroundType
+    myRooFitResult->frame, // frame
+    year,                  // year
+    categoryName,          // categoryName
+    settings.peak,
+    settings.minPeakWidth,
+    settings.maxPeakWidth,
+    settings.xStart,
+    settings.xEnd,
+    settings.binWidth,
+    backgroundType // backgroundType
     );
 
   // clear reserved memory
@@ -404,50 +206,16 @@ bool createRooFitPlotForRangeAndSaveAsPdf(
 
 //
 
-MyRooFitResult::MyRooFitResult()
-{}
-
-double MyRooFitResult::getPull() {
-  double pull = this->signalEventsCount / this->fitError;
-
-  return pull;
-}
-
-double MyRooFitResult::getPValue() {
-  double pull   = this->getPull();
-  double pValue = 0.5 * TMath::Erf(pull / TMath::Sqrt(2.0));
-
-  return pValue;
-}
-
-string MyRooFitResult::getInfo() {
-  string info = string("")
-                + "\tx: " + to_string(x)
-                + "\tsignalEventsCount: " + to_string(signalEventsCount)
-                + "\tbackgroundEventsCount: " + to_string(backgroundEventsCount)
-                + "\tfitError: " + to_string(fitError)
-                + "\tbreitWignerMean: " + to_string(breitWignerMean)
-                + "\tbreitWignerWidth: " + to_string(breitWignerWidth)
-                + "\tgaussMean: " + to_string(gaussMean)
-                + "\tgaussWidth: " + to_string(gaussWidth)
-                + "\tbackgroundA: " + to_string(backgroundA)
-                + "\tbackgroundB: " + to_string(backgroundB)
-                + "\tbackgroundC: " + to_string(backgroundC)
-                + "\tpull: " + to_string(this->getPull())
-                + "\tpValue: " + to_string(this->getPValue());
-
-  return info;
-}
 
 MyRooFitResult* createRooFit(
   TH1F  *histogram,
   string year,
   string categoryName,
-  float  peak,
-  float  minPeakWidth,
-  float  maxPeakWidth,
-  float  xStart,
-  float  xEnd,
+  double peak,
+  double minPeakWidth,
+  double maxPeakWidth,
+  double xStart,
+  double xEnd,
   string backgroundType,
   string peakType
   )
@@ -579,21 +347,27 @@ MyRooFitResult* createRooFit(
     // This is old version:
     //
     // background = new RooGenericPdf(
-    //   "background",
-    //   "(a * x * x) + (b * x) + c",
-    //   "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
-    //   backgroundDependents
-    //   );
+    // "background",
+    // "(a * x * x) + (b * x) + c",
+    // "(backgroundA * x * x) + (backgroundB * x) + backgroundC",
+    // backgroundDependents
+    // );
 
     // This is new version (more effective):
 
     double meanOfTheDistribution = (xStart + xEnd) / 2;
 
-    string formula = string("backgroundA + backgroundB * (x - ")
-                     + to_string(meanOfTheDistribution)
-                     + ") + (0.5 * backgroundC * (3 * ((x - "
-                     + to_string(meanOfTheDistribution)
-                     + ") ^ 2) - 1))";
+    string xMinusMeanOfTheDistribution = string("(x - ")
+                                         + to_string(meanOfTheDistribution)
+                                         + ")";
+
+    string formula = string("backgroundA + backgroundB * ")
+                     + xMinusMeanOfTheDistribution
+                     + " + (0.5 * backgroundC * (3 * ("
+                     + xMinusMeanOfTheDistribution
+                     + " * "
+                     + xMinusMeanOfTheDistribution
+                     + ") - 1))";
 
     cout << "Background is polynomial: " << formula << "\n";
 
@@ -618,7 +392,7 @@ MyRooFitResult* createRooFit(
 
   // Signal + background
 
-  float entriesCount = dataHist.sumEntries();
+  double entriesCount = dataHist.sumEntries();
   RooRealVar signalEventsCount("signalEventsCount", "#signal events", entriesCount, 0.0, entriesCount);
   RooRealVar backgroundEventsCount("backgroundEventsCount", "#background events", 1, 0.0, entriesCount);
 
@@ -639,7 +413,7 @@ MyRooFitResult* createRooFit(
   // Make fitting
 
   // RooDataSet *data = signalAndBackground.generate(x, 2000);
-  signalAndBackground.fitTo(dataHist, Extended());
+  signalAndBackground.fitTo(dataHist, RooFit::Extended());
 
 
   // Draw fitted result onto RooPlot
@@ -647,7 +421,7 @@ MyRooFitResult* createRooFit(
   RooPlot *frame = x.frame();
   dataHist.plotOn(frame);
   signalAndBackground.plotOn(frame);
-  signalAndBackground.plotOn(frame, Components(*background), LineStyle(kDashed));
+  signalAndBackground.plotOn(frame, RooFit::Components(*background), RooFit::LineStyle(kDashed));
 
 
   // clean reserved memory
@@ -746,12 +520,12 @@ bool saveRooPlot(
   RooPlot *frame,
   string   year,
   string   categoryName,
-  float    peak,
-  float    minPeakWidth,
-  float    maxPeakWidth,
-  float    xStart,
-  float    xEnd,
-  float    binning,
+  double   peak,
+  double   minPeakWidth,
+  double   maxPeakWidth,
+  double   xStart,
+  double   xEnd,
+  double   binning,
   string   backgroundType
   )
 {
@@ -762,13 +536,13 @@ bool saveRooPlot(
   frame->Draw();
   string pdfPath = string("/home/margusp/roofits/") +
                    year +
-                   "_" +
+                   "_peak-" +
                    to_string(peak) +
-                   "_" +
+                   "_range-" +
                    to_string(xStart) +
                    "-" +
                    to_string(xEnd) +
-                   "_" +
+                   "_category-" +
                    categoryName +
                    "_binning-" +
                    to_string(binning) +
@@ -787,14 +561,14 @@ bool saveRooPlot(
 
 TH1F* rebinHistogram(
   TH1F  *histogram,
-  double originalPinning,
-  double newPinning
+  double originalBinning,
+  double newBinning
   )
 {
-  double binningMultiplier = (1.0 / originalPinning) * (newPinning);
+  double binningMultiplier = (1.0 / originalBinning) * (newBinning);
 
-  cout << "originalPinning: " << originalPinning
-       << ", newPinning: " << newPinning
+  cout << "originalBinning: " << originalBinning
+       << ", newBinning: " << newBinning
        << ", binningMultiplier: " << binningMultiplier << "\n";
 
   return (TH1F *)histogram->Rebin(binningMultiplier, "suva");
