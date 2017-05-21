@@ -152,25 +152,23 @@ TH1F* rebinHistogram(
 bool create_roofit_plots()
 {
   string years[] = {
-    "2015"
-
-    // "2016"
+    "2015",
+    "2016"
   };
 
   string categoryNames[] = {
-    "CategoryA"
-
-    // "CategoryARelaxed",
-    // "CategoryACompare",
-    // "CategoryACompareRelaxed",
-    // "CategoryB",
-    // "CategoryBRelaxed",
-    // "CategoryBCompare",
-    // "CategoryBCompareRelaxed",
-    // "CategoryC",
-    // "CategoryCRelaxed",
-    // "CategoryCCompare",
-    // "CategoryCCompareRelaxed"
+    "CategoryA",
+    "CategoryARelaxed",
+    "CategoryACompare",
+    "CategoryACompareRelaxed",
+    "CategoryB",
+    "CategoryBRelaxed",
+    "CategoryBCompare",
+    "CategoryBCompareRelaxed",
+    "CategoryC",
+    "CategoryCRelaxed",
+    "CategoryCCompare",
+    "CategoryCCompareRelaxed"
   };
 
   string backgroundTypes[] = {
@@ -468,7 +466,7 @@ MyRooFitResult* createRooFit(
 
   // Create roofit variable
 
-  RooRealVar x("x", "x", xStart, xEnd);
+  RooRealVar x("x", "x", -1000.0, 1000.0);
 
   x.setBins(xEnd - xStart, "fft");
 
