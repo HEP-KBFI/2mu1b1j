@@ -152,23 +152,25 @@ TH1F* rebinHistogram(
 bool create_roofit_plots()
 {
   string years[] = {
-    "2015",
-    "2016"
+    "2015"
+
+    // "2016"
   };
 
   string categoryNames[] = {
-    "CategoryA",
-    "CategoryARelaxed",
-    "CategoryACompare",
-    "CategoryACompareRelaxed",
-    "CategoryB",
-    "CategoryBRelaxed",
-    "CategoryBCompare",
-    "CategoryBCompareRelaxed",
-    "CategoryC",
-    "CategoryCRelaxed",
-    "CategoryCCompare",
-    "CategoryCCompareRelaxed"
+    "CategoryA"
+
+    // "CategoryARelaxed",
+    // "CategoryACompare",
+    // "CategoryACompareRelaxed",
+    // "CategoryB",
+    // "CategoryBRelaxed",
+    // "CategoryBCompare",
+    // "CategoryBCompareRelaxed",
+    // "CategoryC",
+    // "CategoryCRelaxed",
+    // "CategoryCCompare",
+    // "CategoryCCompareRelaxed"
   };
 
   string backgroundTypes[] = {
@@ -180,10 +182,10 @@ bool create_roofit_plots()
   // peak, minPeakWidth, maxPeakWidth, xStart, xEnd, binning
 
   float ranges[][6] = {
-    {    28.5,   1.0,  2.0,    0.0,   70.0,     2 },
-    {    28.5,   1.0,  2.0,    0.0,   70.0,   0.5 },
-    {    28.5,   1.0,  2.0,    0.0,   70.0,     1 }
+    {    28.5,   1.0,  2.0,    0.0,   70.0,     2 }
 
+    // {    28.5,   1.0,  2.0,    0.0,   70.0,   0.5 },
+    // {    28.5,   1.0,  2.0,    0.0,   70.0,     1 },
     // {    28.5,   1.0,  2.0,   20.0,   40.0,   0.5 },
     // {    28.5,   1.0,  2.0,   20.0,   40.0,     1 },
     // {    28.5,   1.0,  2.0,   20.0,   40.0,     2 },
