@@ -651,15 +651,19 @@ MyRooFitResult* createRooFit(
   // Make fitting
 
   // RooDataSet *data = signalAndBackground.generate(x, 2000);
-  signalAndBackground.fitTo(dataHist, Extended());
+  // signalAndBackground.fitTo(dataHist, Extended());
 
+  background->fitTo(dataHist, Extended());
 
   // Draw fitted result onto RooPlot
 
   RooPlot *frame = x.frame();
   dataHist.plotOn(frame);
-  signalAndBackground.plotOn(frame);
-  signalAndBackground.plotOn(frame, Components(*background), LineStyle(kDashed));
+
+  background.plotOn(frame);
+
+  // signalAndBackground.plotOn(frame);
+  // signalAndBackground.plotOn(frame, Components(*background), LineStyle(kDashed));
 
 
   // clean reserved memory
