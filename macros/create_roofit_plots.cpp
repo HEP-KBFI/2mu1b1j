@@ -631,8 +631,8 @@ MyRooFitResult* createRooFit(
   // Signal + background
 
   float entriesCount = dataHist.sumEntries();
-  RooRealVar signalEventsCount("signalEventsCount", "#signal events", entriesCount, 0.0, entriesCount);
-  RooRealVar backgroundEventsCount("backgroundEventsCount", "#background events");
+  RooRealVar signalEventsCount("signalEventsCount", "#signal events", 30.0, 0.0, 1000.0);
+  RooRealVar backgroundEventsCount("backgroundEventsCount", "#background events", 150.0, 0.0, 1000.0);
 
   RooAddPdf signalAndBackground(
     "signalAndBackground",
