@@ -470,7 +470,7 @@ MyRooFitResult* createRooFit(
 
   RooRealVar x("x", "x", xStart, xEnd);
 
-  x.setBins(10000, "fft");
+  x.setBins(xEnd - xStart, "fft");
 
 
   // Import histogram from x range to dataHist
