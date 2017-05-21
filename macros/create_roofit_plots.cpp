@@ -484,8 +484,9 @@ MyRooFitResult* createRooFit(
     "breitWignerMean",
     "breitWignerMean",
     peak,
-    xStart + minPeakWidth,
-    xEnd - minPeakWidth
+
+    // xStart + minPeakWidth,
+    // xEnd - minPeakWidth
     );
 
   if (peakType.compare("peakIsConstant") == 0) {
@@ -496,8 +497,9 @@ MyRooFitResult* createRooFit(
     "breitWignerWidth",
     "breitWignerWidth",
     (minPeakWidth + maxPeakWidth) / 2,
-    minPeakWidth,
-    maxPeakWidth
+
+    // minPeakWidth,
+    // maxPeakWidth
     );
 
   RooBreitWigner breitWigner(
@@ -522,16 +524,18 @@ MyRooFitResult* createRooFit(
     "gaussWidth",
     "gaussWidth",
     (minPeakWidth + maxPeakWidth) / 2,
-    minPeakWidth,
-    maxPeakWidth
+
+    // minPeakWidth,
+    // maxPeakWidth
     );
 
   RooGaussian gauss(
     "gauss",
     "gauss",
     x,
-    gaussMean,
-    gaussWidth
+
+    // gaussMean,
+    // gaussWidth
     );
 
 
@@ -551,25 +555,28 @@ MyRooFitResult* createRooFit(
   RooRealVar backgroundA(
     "backgroundA",
     "backgroundA",
-    -100.0,
-    -10000.0,
-    10000.0
+    100.0,
+
+    // -10000.0,
+    // 10000.0
     );
 
   RooRealVar backgroundB(
     "backgroundB",
     "backgroundB",
     100.0,
-    -10000.0,
-    10000.0
+
+    // -10000.0,
+    // 10000.0
     );
 
   RooRealVar backgroundC(
     "backgroundC",
     "backgroundC",
     500.0,
-    -10000.0,
-    10000.0
+
+    // -10000.0,
+    // 10000.0
     );
 
   RooArgList backgroundDependents(
@@ -606,7 +613,7 @@ MyRooFitResult* createRooFit(
     background = new RooGenericPdf(
       "background",
       "5 * x", // "a + b * (x - meanOfTheDistribution) + (0.5 * c * (3 * ((x - meanOfTheDistribution) ^ 2) - 1))",
-      "5 * x", // formula.data(),
+      "5",     // formula.data(),
       backgroundDependents
       );
   }
@@ -616,7 +623,7 @@ MyRooFitResult* createRooFit(
     background = new RooGenericPdf(
       "background",
       "a * exp(-b * x ^ c)",
-      "backgroundA * exp(-backgroundB * x ^ backgroundC)",
+      "5", // "backgroundA * exp(-backgroundB * x ^ backgroundC)",
       backgroundDependents
       );
   }
