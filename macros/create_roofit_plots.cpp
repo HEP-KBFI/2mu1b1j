@@ -611,8 +611,8 @@ MyRooFitResult* createRooFit(
 
     background = new RooGenericPdf(
       "background",
-      "5 * x",       // "a + b * (x - meanOfTheDistribution) + (0.5 * c * (3 * ((x - meanOfTheDistribution) ^ 2) - 1))",
-      "backgroundB", // formula.data(),
+      "a + b * (x - meanOfTheDistribution) + (0.5 * c * (3 * ((x - meanOfTheDistribution) ^ 2) - 1))",
+      formula.data(),
       backgroundDependents
       );
   }
@@ -622,7 +622,7 @@ MyRooFitResult* createRooFit(
     background = new RooGenericPdf(
       "background",
       "a * exp(-b * x ^ c)",
-      "backgroundB", // "backgroundA * exp(-backgroundB * x ^ backgroundC)",
+      "backgroundA * exp(-backgroundB * x ^ backgroundC)",
       backgroundDependents
       );
   }
