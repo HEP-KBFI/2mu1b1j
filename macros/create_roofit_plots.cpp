@@ -483,7 +483,7 @@ MyRooFitResult* createRooFit(
   RooRealVar breitWignerMean(
     "breitWignerMean",
     "breitWignerMean",
-    peak,
+    peak
 
     // xStart + minPeakWidth,
     // xEnd - minPeakWidth
@@ -496,7 +496,7 @@ MyRooFitResult* createRooFit(
   RooRealVar breitWignerWidth(
     "breitWignerWidth",
     "breitWignerWidth",
-    (minPeakWidth + maxPeakWidth) / 2,
+    (minPeakWidth + maxPeakWidth) / 2
 
     // minPeakWidth,
     // maxPeakWidth
@@ -523,7 +523,7 @@ MyRooFitResult* createRooFit(
   RooRealVar gaussWidth(
     "gaussWidth",
     "gaussWidth",
-    (minPeakWidth + maxPeakWidth) / 2,
+    (minPeakWidth + maxPeakWidth) / 2
 
     // minPeakWidth,
     // maxPeakWidth
@@ -555,7 +555,7 @@ MyRooFitResult* createRooFit(
   RooRealVar backgroundA(
     "backgroundA",
     "backgroundA",
-    100.0,
+    100.0
 
     // -10000.0,
     // 10000.0
@@ -564,7 +564,7 @@ MyRooFitResult* createRooFit(
   RooRealVar backgroundB(
     "backgroundB",
     "backgroundB",
-    100.0,
+    100.0
 
     // -10000.0,
     // 10000.0
@@ -573,7 +573,7 @@ MyRooFitResult* createRooFit(
   RooRealVar backgroundC(
     "backgroundC",
     "backgroundC",
-    500.0,
+    500.0
 
     // -10000.0,
     // 10000.0
