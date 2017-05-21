@@ -532,10 +532,9 @@ MyRooFitResult* createRooFit(
   RooGaussian gauss(
     "gauss",
     "gauss",
-    x
-
-    // gaussMean,
-    // gaussWidth
+    x,
+    gaussMean,
+    gaussWidth
     );
 
 
