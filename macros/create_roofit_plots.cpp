@@ -180,7 +180,7 @@ bool create_roofit_plots()
   // peak, minPeakWidth, maxPeakWidth, xStart, xEnd, binning
 
   float ranges[][6] = {
-    {    28.5,   1.0,  2.0,    0.0,   70.0,     2 }
+    {    28.5,   1.0,  2.0,    10.0,   70.0,     2 }
 
     // {    28.5,   1.0,  2.0,    0.0,   70.0,   0.5 },
     // {    28.5,   1.0,  2.0,    0.0,   70.0,     1 },
