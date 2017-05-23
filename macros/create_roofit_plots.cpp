@@ -218,12 +218,12 @@ bool create_roofit_plots()
 
         // Generate pValue plot
 
-        createPValuePlotAndSaveAsPdf(
-          year,
-          categoryName,
-          backgroundType,
-          dataHistogram1PinsPer1Gv
-          );
+        // createPValuePlotAndSaveAsPdf(
+        //   year,
+        //   categoryName,
+        //   backgroundType,
+        //   dataHistogram1PinsPer1Gv
+        //   );
 
 
         // Iterate over interesting areas
@@ -466,7 +466,7 @@ MyRooFitResult* createRooFit(
 
   // Create roofit variable
 
-  RooRealVar x("x", "x", -1000.0, 1000.0);
+  RooRealVar x("x", "x", xStart, xEnd);
 
   x.setBins(xEnd - xStart, "fft");
 
