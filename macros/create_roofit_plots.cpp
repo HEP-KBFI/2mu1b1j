@@ -658,7 +658,7 @@ MyRooFitResult* createRooFit(
   RooPlot *frame = x.frame();
   dataHist.plotOn(frame);
 
-  background->plotOn(frame);
+  // background->plotOn(frame);
 
   // signalAndBackground.plotOn(frame);
   // signalAndBackground.plotOn(frame, Components(*background), LineStyle(kDashed));
